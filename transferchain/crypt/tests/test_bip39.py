@@ -1,5 +1,5 @@
 import unittest
-import bip39
+from transferchain.crypt import bip39
 
 
 class TestBib39Methods(unittest.TestCase):

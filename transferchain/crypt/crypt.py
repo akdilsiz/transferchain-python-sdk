@@ -1,13 +1,13 @@
 import os
 import ed25519
+import secrets
 import nacl.secret
 import nacl.utils
 from nacl.public import PrivateKey, Box, PublicKey
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
-import secrets
-import address
+from transferchain.crypt import address
 
 
 def encrypt_asymmetric(sender_key_seed, recipient_key, data):

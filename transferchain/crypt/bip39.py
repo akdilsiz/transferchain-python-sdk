@@ -1,6 +1,6 @@
 import hashlib
 import secrets
-from words import word_list
+from transferchain.crypt.words import word_list
 
 
 def create_mnomonics():

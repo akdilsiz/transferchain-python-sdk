@@ -1,6 +1,6 @@
 import unittest
-import address
-import keys
+from transferchain.crypt import address
+from transferchain.crypt import keys
 
 
 class TestAddressMethods(unittest.TestCase):

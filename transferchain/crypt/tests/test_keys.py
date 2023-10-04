@@ -1,5 +1,5 @@
 import unittest
-import keys
+from transferchain.crypt import keys
 
 
 class TestKeysMethods(unittest.TestCase):

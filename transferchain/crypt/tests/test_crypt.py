@@ -1,7 +1,7 @@
 import unittest
-import bip39
-import keys
-import crypt
+from transferchain.crypt import bip39
+from transferchain.crypt import keys
+from transferchain.crypt import crypt
 
 
 class TestAddressMethods(unittest.TestCase):
