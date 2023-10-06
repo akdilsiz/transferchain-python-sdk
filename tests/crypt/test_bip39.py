@@ -21,7 +21,3 @@ class TestBib39Methods(unittest.TestCase):
         r1 = bip39.create_mnomonics()
         self.assertIsNot(r1, '', 'mnemonics are empty')
         self.assertEqual(len(r1.split()), 24, 'incorrect mnemonics count')
-
-
-if __name__ == '__main__':
-    unittest.main()

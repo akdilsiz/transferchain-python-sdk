@@ -21,13 +21,13 @@ class TestKeysMethods(unittest.TestCase):
         expect = 'f1a858e58cc3c6e455224cdbc7e7719abd8f1107706bf9253f5551e5144b8e2d'  # noqa
         self.assertEqual(r1, expect)
 
+    def test_base58_encode(self):
+        result = keys.base58_encode(b'test'.hex())
+        self.assertEqual('3yZe7d', result)
+
     def test_generate_keys(self):
         seed = self.seed()
         seed58 = 'F1Wp1F75u4v9weyVAEfTMfKQUuATN3DP5az63ALLSXo8'
         result = keys.generate_keys(seed)
         self.assertEqual(result['seed'], seed)
         self.assertEqual(result['seed58'], seed58)
-
-
-if __name__ == '__main__':
-    unittest.main()

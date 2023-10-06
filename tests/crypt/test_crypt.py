@@ -27,13 +27,21 @@ class TestAddressMethods(unittest.TestCase):
         result = crypt.sign(pks, b'alles gut')
         self.assertEqual(expected, result.hex())
 
-    def test_verify_sign(self):
+    def test_verify_sign_valid(self):
         mnemonics = bip39.create_mnomonics()
         keys_ = keys.create_keys_with_mnemonic(mnemonics, 'p2')
         data = b'alles gut'
         sign_key = crypt.sign(keys_['private_key_sign'], data)
         result = crypt.verify_sign(keys_['address'], data, sign_key)
         self.assertEqual(True, result)
+
+    def test_verify_sign_invalid(self):
+        mnemonics = bip39.create_mnomonics()
+        keys_ = keys.create_keys_with_mnemonic(mnemonics, 'p2')
+        data = b'alles gut'
+        sign_key = crypt.sign(keys_['private_key_sign'], data)
+        result = crypt.verify_sign('empty', data, sign_key)
+        self.assertEqual(False, result)
 
     def test_generate_encrypt_key(self):
         result = crypt.generate_encrypt_key(10)
@@ -45,7 +53,3 @@ class TestAddressMethods(unittest.TestCase):
         enc_result = crypt.encrypt_byte(message, key)
         dec_result = crypt.decrypt_byte(enc_result, key)
         self.assertEqual(message, dec_result)
-
-
-if __name__ == '__main__':
-    unittest.main()

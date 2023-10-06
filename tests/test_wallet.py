@@ -29,7 +29,3 @@ class TestWalletMethods(unittest.TestCase):
         wallet_uuid = os.environ['TRANSFERCHAIN_TEST_WALLET_UUID']
         result = wallet.get_wallet_info(conf, user_id, wallet_uuid)
         self.assertEqual(True, result.success, result.error_message)
-
-
-if __name__ == '__main__':
-    unittest.main()
