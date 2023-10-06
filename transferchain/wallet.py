@@ -1,7 +1,7 @@
 import json
 from urllib.parse import urljoin
 import requests
-from transferchain import constants
+from transferchain import settings
 from transferchain.utils import datetime_formating
 from transferchain.datastructures import (
     CreateWalletResult, WalletInfoResult, UserPackage,
@@ -15,11 +15,14 @@ def create_wallet(conf, user_id, wallet_uuid):
         'Content-Type': 'application/json'
     }
 
-    uri = constants.CREATE_WALLET_URI.format(user_id=user_id)
-    url = urljoin(constants.TCMP_BASE_URL, uri)
+    uri = settings.CREATE_WALLET_URI.format(user_id=user_id)
+    url = urljoin(settings.TCMP_BASE_URL, uri)
     payload = json.dumps({'uuid': wallet_uuid})
     req = requests.post(url, data=payload, headers=headers)
-    response = req.json()
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
     data = response.get('data') or {}
     return CreateWalletResult(
         success=req.ok,
@@ -34,11 +37,14 @@ def get_wallet_info(conf, user_id, wallet_uuid):
         'Content-Type': 'application/json'
     }
 
-    uri = constants.WALLET_INFORMATION_URI.format(
+    uri = settings.WALLET_INFORMATION_URI.format(
         user_id=user_id, wallet_uuid=wallet_uuid)
-    url = urljoin(constants.TCMP_BASE_URL, uri)
+    url = urljoin(settings.TCMP_BASE_URL, uri)
     req = requests.get(url, headers=headers)
-    response = req.json()
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
     data = response.get('data') or {}
     if not req.ok:
         return WalletInfoResult(

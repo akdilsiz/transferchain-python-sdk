@@ -3,5 +3,6 @@ __pycache__/
 *.pyc
 *.egg-info/
 .installed.cfg
+tc.db
 *.eggs
 dev.sh

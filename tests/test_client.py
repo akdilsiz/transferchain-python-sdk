@@ -1,15 +1,17 @@
 import unittest
-from transferchain.config import create_config
+from transferchain.client import TransferChain
 
 
 class TestClientMethods(unittest.TestCase):
 
-    def test_create_config(self):
-        config = create_config()
-        self.assertIsNotNone(config.api_token)
-        self.assertIsNotNone(config.api_secret)
-        self.assertIsNotNone(config.wallet_id)
-        self.assertIsNotNone(config.wallet_uuid)
-        self.assertIsNotNone(config.user_id)
-        self.assertIsNotNone(config.mnemonics)
-        self.assertIsNotNone(config.db_path)
+    def test_client(self):
+        tc = TransferChain()
+
+        # save_user_addresses in add_user, pass!
+        user_result = tc.add_user()
+        self.assertEqual(True, user_result.success)
+        self.assertEqual(1, len(tc.users))
+
+        tc.users = {}
+        tc.load_users()
+        self.assertEqual(1, len(tc.users))

@@ -19,8 +19,10 @@ def create_config():
     if api_token == "" or api_secret == "":
         raise exceptions.ValidationError(
             "config error: invalid api token or api secret")
+
+    db_path = os.path.join(os.getcwd(), "tc.db")
     conf = Config(api_token=api_token, api_secret=api_secret,
-                  db_path=os.getcwd())
+                  db_path=db_path)
 
     wallet_uuid = os.environ.get('TRANSFERCHAIN_WALLET_UUID')
     if not wallet_uuid:
