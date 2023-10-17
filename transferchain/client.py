@@ -1,5 +1,6 @@
 import uuid
 import json
+import random
 from transferchain.db import DB
 from transferchain.logger import get_logger
 from transferchain.config import create_config
@@ -17,7 +18,8 @@ class TransferChain(object):
 
     def __init__(self, *args, **kwargs):
         self.config = create_config()
-        self.db = DB(self.config.db_path)
+        self.db_path = kwargs.get('db_path') or self.config.db_path
+        self.db = DB(self.db_path)
         self.transfer_service = Transfer(self.config)
         self.storage_service = Storage(self.config)
         self.users = {}
@@ -39,9 +41,12 @@ class TransferChain(object):
             })
 
     def transfer_file(self, file_path, sender_user_id,
-                      recipient_user_id, note):
+                      recipient_addresses, note):
+        user_addresses = self.users[sender_user_id]
+        sender_user_address = user_addresses[
+            random.randint(0, len(user_addresses) - 1)]
         return self.transfer_service.transfer_file(
-            file_path, sender_user_id, recipient_user_id, note)
+            file_path, sender_user_address, recipient_addresses, note)
 
     def load_users(self):
         users = self.db.get_all()

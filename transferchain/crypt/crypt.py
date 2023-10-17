@@ -1,4 +1,6 @@
 import os
+import hmac
+import hashlib
 import ed25519
 import secrets
 import nacl.secret
@@ -64,6 +66,30 @@ def encrypt_byte(plaintext, key):
     encryptor = cipher.encryptor()
     ciphertext = encryptor.update(plaintext) + encryptor.finalize()
     return nonce + ciphertext + encryptor.tag
+
+
+def encrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
+    # infile/outfile are file objects
+    BUFFER_SIZE = 16 * 1024
+
+    nonce = os.urandom(16)
+    hmc = hmac.new(hmac_key, None, hashlib.sha512)
+    cipher = Cipher(algorithms.AES(aes_key), modes.CTR(nonce),
+                    backend=default_backend())
+    encryptor = cipher.encryptor()
+    hmc.update(nonce)
+    outfile.write(nonce)
+    while True:
+        data = infile.read(BUFFER_SIZE)
+        if not data:
+            break
+        try:
+            ciphertext = encryptor.update(data).encode('utf-8')
+        except AttributeError:
+            ciphertext = encryptor.update(data)
+        hmc.update(ciphertext)
+        outfile.write(ciphertext)
+    outfile.write(hmc.digest())
 
 
 def decrypt_byte(encrypted_data, key):
