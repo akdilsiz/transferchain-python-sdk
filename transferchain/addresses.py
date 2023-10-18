@@ -4,7 +4,7 @@ from transferchain import blockchain
 from transferchain.logger import get_logger
 from transferchain.transaction import create_transaction
 from transferchain.datastructures import (
-    DataAddress, DataAddresses, Result)
+    Address, Addresses, Result, User)
 
 
 logger = get_logger(__file__)
@@ -19,11 +19,12 @@ def generate_user_addresses(user_id, mnemonics, sub_user_id):
     user_pass = get_user_password(user_id, sub_user_id)
     user_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
 
-    tx_master_address = DataAddress(
-        master=True, key=user_keys, user_id=user_id, mnemonics=mnemonics)
+    tx_master_address = Address(
+        Master=True, Key=user_keys, UserID=user_id, Mnemonics=mnemonics)
     addresses.append(tx_master_address)
     tx = create_transaction(
-        constants.TX_TYPE_MASTER, user_keys, user_keys, tx_master_address)
+        constants.TX_TYPE_MASTER, user_keys, user_keys['Address'],
+        tx_master_address)
     result = blockchain.broadcast(tx)
     if result.success is False:
         return Result(
@@ -36,20 +37,27 @@ def generate_user_addresses(user_id, mnemonics, sub_user_id):
         user_pass = "{}-{}".format(
             get_user_password(user_id, sub_user_id), i)
         user_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
-        address = DataAddress(
-            master=False, key=user_keys, user_id=user_id, mnemonics=mnemonics)
+        address = Address(
+            Master=False, Key=user_keys, UserID=user_id, Mnemonics=mnemonics,
+            MasterAddress=tx_master_address.Key['Address'])
         addresses.append(address)
-        addresses_payload.append(address.to_json(with_pascal_case=True))
+        addresses_payload.append(address._asdict())
 
     tx = create_transaction(
         constants.TX_TYPE_ADDRESSES,
         user_keys,
-        user_keys,
-        DataAddresses(user_id=user_id, addresses=addresses_payload)
+        user_keys['Address'],
+        Addresses(UserID=user_id, Addresses=addresses_payload)
     )
     result = blockchain.broadcast(tx)
     if result.success is False:
         return Result(
             success=False,
             error_message='The addresses is not published on the blockchain.') # noqa
-    return Result(success=True, data=addresses)
+    user = User(
+        id=sub_user_id,
+        parent_user_id=user_id,
+        addresses=addresses,
+        master_address=addresses[0]
+    )
+    return Result(success=True, data=user)

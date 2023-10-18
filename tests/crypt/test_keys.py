@@ -29,5 +29,5 @@ class TestKeysMethods(unittest.TestCase):
         seed = self.seed()
         seed58 = 'F1Wp1F75u4v9weyVAEfTMfKQUuATN3DP5az63ALLSXo8'
         result = keys.generate_keys(seed)
-        self.assertEqual(result['seed'], seed)
-        self.assertEqual(result['seed58'], seed58)
+        self.assertEqual(result['Seed'], seed)
+        self.assertEqual(result['Seed58'], seed58)

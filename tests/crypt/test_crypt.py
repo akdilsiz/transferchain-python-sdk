@@ -15,10 +15,10 @@ class TestAddressMethods(unittest.TestCase):
         recipient = keys.create_keys_with_mnemonic(recipient_mnemonics, 'p2')
 
         encrypted_data = crypt.encrypt_asymmetric(
-            sender['seed'], recipient['address'], message)
+            sender['Seed'], recipient['Address'], message)
 
         decrypted_data = crypt.decrypt_asymmetric(
-            sender['address'], recipient['seed'], encrypted_data)
+            sender['Address'], recipient['Seed'], encrypted_data)
         self.assertEqual(message, decrypted_data)
 
     def test_sign(self):
@@ -31,15 +31,15 @@ class TestAddressMethods(unittest.TestCase):
         mnemonics = bip39.create_mnomonics()
         keys_ = keys.create_keys_with_mnemonic(mnemonics, 'p2')
         data = b'alles gut'
-        sign_key = crypt.sign(keys_['private_key_sign'], data)
-        result = crypt.verify_sign(keys_['address'], data, sign_key)
+        sign_key = crypt.sign(keys_['PrivateKeySign'], data)
+        result = crypt.verify_sign(keys_['Address'], data, sign_key)
         self.assertEqual(True, result)
 
     def test_verify_sign_invalid(self):
         mnemonics = bip39.create_mnomonics()
         keys_ = keys.create_keys_with_mnemonic(mnemonics, 'p2')
         data = b'alles gut'
-        sign_key = crypt.sign(keys_['private_key_sign'], data)
+        sign_key = crypt.sign(keys_['PrivateKeySign'], data)
         result = crypt.verify_sign('empty', data, sign_key)
         self.assertEqual(False, result)
 

@@ -21,12 +21,11 @@ def sign_transaction(sign_key, transaction):
     return sign
 
 
-def create_transaction(tx_type, sender_keys, recipient_keys, payload):
-    sender_address = sender_keys['address']
-    recipient_address = recipient_keys['address']
+def create_transaction(tx_type, sender_keys, recipient_address, payload):
+    sender_address = sender_keys['Address']
     data = crypt.encrypt_asymmetric(
-        sender_keys['seed'], recipient_address,
-        payload.dump(with_pascal_case=True))
+        sender_keys['Seed'], recipient_address,
+        payload.dump())
 
     tx_id = hashlib.sha256(data).hexdigest()
 
@@ -40,6 +39,6 @@ def create_transaction(tx_type, sender_keys, recipient_keys, payload):
         "sender_address": sender_address,
         "recipient_address": recipient_address
     }
-    tx_sign = sign_transaction(sender_keys['private_key_sign'], transaction)
+    tx_sign = sign_transaction(sender_keys['PrivateKeySign'], transaction)
     transaction["sign"] = base64.b64encode(tx_sign).decode()
     return transaction

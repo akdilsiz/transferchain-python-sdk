@@ -15,3 +15,8 @@ TX_TYPE_TRANSFER_SENT = "transfer_sent"
 TX_TYPE_TRANSFER_RECIEVE_DELETE = "transfer_receive_delete"
 TX_TYPE_STORAGE = "storage"
 TX_TYPE_STORAGE_DELETE = "storage_delete"
+
+
+TransferSent = "sent"
+TransferNormal = "normal"
+TransferNON = "non"

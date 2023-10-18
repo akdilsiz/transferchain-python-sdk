@@ -54,13 +54,13 @@ def generate_keys(seed):
     address = base58_encode(public_key + public_key_encrypt)
 
     result = {
-        'seed': seed,
-        'seed58': seed58,
-        'private_key_sign': private_key,
-        'public_key_sign': public_key,
-        'public_key_sign58': public_key_sign58,
-        'public_key_encrypt': public_key_encrypt,
-        'public_key_encrypt58': public_key_encrypt58,
-        'address': address
+        'Seed': seed,
+        'Seed58': seed58,
+        'PrivateKeySign': private_key,
+        'PublicKeySign': public_key,
+        'PublicKeySign58': public_key_sign58,
+        'PublicKeyEncrypt': public_key_encrypt,
+        'PublicKeyEncrypt58': public_key_encrypt58,
+        'Address': address
     }
     return result
