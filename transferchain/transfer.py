@@ -5,13 +5,15 @@ import tempfile
 import queue
 import threading
 import datetime
+from pathlib import Path
 import grpc
 from transferchain import constants
 from transferchain import blockchain
 from transferchain.utils import datetime_to_str
 from transferchain.crypt import crypt
 from transferchain.datastructures import (
-    Result, DataTransfer, TransferSent, TransferDelete)
+    Result, DataTransfer, TransferSent, TransferDelete,
+    TransferReceiveDelete)
 from transferchain.grpc_client import get_client
 from transferchain.protobuf import service_pb2 as pb
 from transferchain.transaction import create_transaction
@@ -22,8 +24,65 @@ class Transfer(object):
     def __init__(self, config):
         self.config = config
 
+    def download_sent(self, file_uid, slots, file_size, file_name,
+                      key_aes, key_hmac, destination):
+        assert file_uid != "", "invalid file_uuid"
+        assert len(slots) > 0, "invalid slots"
+        assert file_size > 0, "invalid file_size"
+        assert file_name != "", "invalid file_name"
+        assert key_aes != "", "invalid key_aes"
+        assert key_hmac != "", "invalid key_hmac"
+        assert destination != "", "invalid destination"
+        destination_path = Path(destination)
+
+        assert destination_path.exists(), 'destination does not exist'
+        assert destination_path.is_dir(), 'destination must be a folder'
+        destination_file = destination_path.joinpath(file_name)
+
+        grpc_client = get_client()
+        meta_data = [
+            ("user-id", str(self.config.user_id)),
+            ("user-api-token", self.config.api_token),
+            ("user-api-secret", self.config.api_secret)
+        ]
+        try:
+            file_chunks = grpc_client.Download(pb.DownloadRequest(
+                uuid=file_uid,
+                Slots=slots,
+                WalletID=self.config.wallet_id,
+                UserID=self.config.user_id,
+                opCode=pb.UploadOpCode.Transfer,
+            ), metadata=meta_data)
+        except grpc.RpcError as e:
+            error_message = 'download error:{}'.format(e.details())
+            e.cancel()
+            return Result(success=False, error_message=error_message)
+
+        in_file_uid = str(uuid.uuid4())
+        in_file_tmp_folder = tempfile.mkdtemp()
+        in_file_path = os.path.join(in_file_tmp_folder, in_file_uid)
+        totalWrite = 0
+        with open(in_file_path, 'ab') as in_file:
+            for fc in file_chunks:
+                totalWrite + in_file.write(fc.chunk)
+
+        with open(in_file_path, 'rb') as in_file:
+            with destination_file.open(mode='wb') as out_file:
+                try:
+                    crypt.decrypt_aesctr_with_hmac(
+                        in_file, out_file, key_aes.encode('utf-8'),
+                        key_hmac.encode('utf-8'))
+                except Exception as e:
+                    return Result(sucess=False, error_message=str(e))
+        return Result(success=True)
+
     def delete_received_transfer(self, user_first_address,
-                                 user_second_address, tx_data):
+                                 user_second_address, uuid, tx_id=""):
+        tx_data = TransferReceiveDelete(
+            UUID=uuid,
+            TxID=tx_id,
+            Typ=constants.TRANSFER_TYPE_SENT,
+            Timestamp=datetime_to_str(datetime.datetime.now()))
         tx = create_transaction(
             constants.TX_TYPE_TRANSFER_RECIEVE_DELETE,
             user_first_address.Key,
@@ -72,7 +131,7 @@ class Transfer(object):
                              user_second_address, transfer_sent_obj):
         result_queue = queue.Queue()
         threads = []
-        print('marco')
+
         for slot_dict in transfer_sent_obj.slots:
             t = threading.Thread(
                 target=self._delete_slot, args=(slot_dict, result_queue))
@@ -83,7 +142,7 @@ class Transfer(object):
 
         for t in threads:
             t.join()
-        print('polo')
+
         error_messages = ''
         for i in range(len(threads)):
             result = result_queue.get()
@@ -131,9 +190,6 @@ class Transfer(object):
         if error_result:
             return error_result
         return Result(success=True)
-
-    def download(self, user_id, typ, transfer, destination):
-        pass
 
     def upload(self, files, sender, recipient_addresses, note, callback=None):
         assert list == type(recipient_addresses), 'recipient adddress must be list' # noqa

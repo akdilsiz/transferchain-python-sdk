@@ -1,19 +1,12 @@
-#import sys
-#sys.path.append('/home/wade/projects/transferchain-python-sdk')
-
 import os
 import tempfile
 import unittest
 import shutil
-from datetime import datetime
-from transferchain import utils
-from transferchain import constants
+from pathlib import Path
 from transferchain.client import TransferChain
 from transferchain.transfer import Transfer
 from transferchain.config import create_config
 from transferchain.protobuf import service_pb2 as pb
-from transferchain.datastructures import (
-    TransferReceiveDelete)
 
 
 class TestTransferMethods(unittest.TestCase):
@@ -50,6 +43,39 @@ class TestTransferMethods(unittest.TestCase):
         self.assertEqual(True, result.success)
         shutil.rmtree(dir_path)
 
+    def test_transfer_download_sent_is_valid(self):
+        config = create_config()
+        user = self.create_test_user(config)
+        sender = user.data.addresses[1]
+        transfer = Transfer(config)
+        dir_path, file_path = self.create_dummy_file()
+
+        def callback(result):
+            self.assertEqual(True, result.success)
+
+        result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']],
+            note="test transfer",
+            callback=callback)
+        self.assertEqual(True, result.success)
+
+        transfer_sent_obj = result.data[0].data
+        download_result = transfer.download_sent(
+            file_uid=transfer_sent_obj.uuid,
+            slots=transfer_sent_obj.slots,
+            file_size=transfer_sent_obj.size,
+            file_name=transfer_sent_obj.filename,
+            key_aes=transfer_sent_obj.keyAES,
+            key_hmac=transfer_sent_obj.KeyHMAC,
+            destination=tempfile.tempdir
+        )
+        self.assertEqual(True, download_result.success)
+        path = Path(tempfile.tempdir).joinpath(transfer_sent_obj.filename)
+        self.assertEqual(True, path.exists())
+        shutil.rmtree(dir_path)
+
     def test_delete_received_transfer_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
@@ -64,16 +90,11 @@ class TestTransferMethods(unittest.TestCase):
             note="test transfer")
         self.assertEqual(True, transfer_result.success)
 
-        tx_data = TransferReceiveDelete(
-            UUID=transfer_result.data[0].data.uuid,
-            TxID="",
-            Typ=constants.TRANSFER_TYPE_SENT,
-            Timestamp=utils.datetime_to_str(datetime.now())
-        )
         delete_result = transfer.delete_received_transfer(
             user_first_address=user.data.addresses[1],
             user_second_address=user.data.addresses[2],
-            tx_data=tx_data
+            uuid=transfer_result.data[0].data.uuid,
+            tx_id=""
         )
         self.assertEqual(True, delete_result.success)
         shutil.rmtree(dir_path)
@@ -170,7 +191,8 @@ class TestTransferMethods(unittest.TestCase):
             sender=sender,
             recipient_addresses=[sender.Key['Address']],
             note="test transfer")
-        self.assertEqual(True, result.success)
+
+        self.assertEqual(True, result.success, result.error_message)
         slots = [{}]
         cancel_result = transfer.cancel_upload(slots, pb.UploadOpCode.Transfer)
         self.assertEqual(False, cancel_result.success,

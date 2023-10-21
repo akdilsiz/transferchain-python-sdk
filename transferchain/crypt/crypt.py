@@ -12,6 +12,10 @@ from cryptography.hazmat.backends import default_backend
 from transferchain.crypt import address
 
 
+V1 = 0x01
+IV_SIZE = 16
+
+
 def encrypt_asymmetric(sender_key_seed, recipient_key, data):
     recipient_pub_key = address.public_key_encrypt_from_address(recipient_key)
     sk = PrivateKey(private_key=bytes.fromhex(sender_key_seed))
@@ -60,42 +64,100 @@ def hash_to_32_bytes(input_str):
 
 def encrypt_byte(plaintext, key):
     new_key = hash_to_32_bytes(key)
-    nonce = os.urandom(16)
-    cipher = Cipher(algorithms.AES(new_key), modes.GCM(nonce),
+    iv = os.urandom(IV_SIZE)
+    cipher = Cipher(algorithms.AES(new_key), modes.GCM(iv),
                     backend=default_backend())
     encryptor = cipher.encryptor()
     ciphertext = encryptor.update(plaintext) + encryptor.finalize()
-    return nonce + ciphertext + encryptor.tag
+    return iv + ciphertext + encryptor.tag
 
 
-def encrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
-    # infile/outfile are file objects
+def decrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
     BUFFER_SIZE = 16 * 1024
+    offset = 0
 
-    nonce = os.urandom(16)
+    version = infile.read(1)
+    offset += 1
+    if int(version) != V1:
+        raise Exception('invalid version')
+
+    iv = infile.read(IV_SIZE)
+    offset += IV_SIZE
+
+    cipher = Cipher(algorithms.AES(aes_key), modes.CTR(iv))
+    decryptor = cipher.decryptor()
+
     hmc = hmac.new(hmac_key, None, hashlib.sha512)
-    cipher = Cipher(algorithms.AES(aes_key), modes.CTR(nonce),
-                    backend=default_backend())
-    encryptor = cipher.encryptor()
-    hmc.update(nonce)
-    outfile.write(nonce)
+    hmc.update(iv)
+    hmac_size = 64
+
+    file_stat = os.stat(infile.name)
+    reader_size = file_stat.st_size
+
+    infile_hmac = None
     while True:
         data = infile.read(BUFFER_SIZE)
         if not data:
             break
-        try:
-            ciphertext = encryptor.update(data).encode('utf-8')
-        except AttributeError:
-            ciphertext = encryptor.update(data)
+        limit = len(data)
+
+        if (reader_size < BUFFER_SIZE) \
+           or (offset + BUFFER_SIZE >= reader_size):
+            limit = len(data) - hmac_size
+
+        d = data[0:limit]
+        hmc.update(d)
+        result = decryptor.update(d)
+        outfile.write(result)
+        offset += len(data)
+
+        if offset == reader_size:
+            if len(data) < hmac_size:
+                raise Exception('hmac size error')
+            mac = data[-hmac_size:]
+            if len(data[len(data) - hmac_size:]) == hmac_size:
+                infile_hmac = mac
+                break
+
+    if infile_hmac is None:
+        raise Exception('hmac not found')
+
+    if hmac.compare_digest(hmc.digest(), infile_hmac) is False:
+        raise Exception('invalid hmac')
+
+
+def encrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
+    # we need the test
+    # infile/outfile are file objects
+    BUFFER_SIZE = 16 * 1024
+    iv = os.urandom(IV_SIZE)
+
+    hmc = hmac.new(hmac_key, None, hashlib.sha512)
+    cipher = Cipher(algorithms.AES(aes_key), modes.CTR(iv))
+    encryptor = cipher.encryptor()
+
+    hmc.update(iv)
+    outfile.write("{}".format(V1).encode())
+    outfile.write(iv)
+    total_count = 0
+    while True:
+        data = infile.read(BUFFER_SIZE)
+        if not data:
+            break
+        ciphertext = encryptor.update(data)
+
         hmc.update(ciphertext)
-        outfile.write(ciphertext)
+        total_count += outfile.write(ciphertext)
     outfile.write(hmc.digest())
+    return total_count
 
 
 def decrypt_byte(encrypted_data, key):
     new_key = hash_to_32_bytes(key)
     cipher = Cipher(algorithms.AES(new_key),
-                    modes.GCM(encrypted_data[:16], encrypted_data[-16:]),
+                    modes.GCM(encrypted_data[:IV_SIZE],
+                              encrypted_data[-IV_SIZE:]),
                     backend=default_backend())
     decryptor = cipher.decryptor()
-    return decryptor.update(encrypted_data[16:-16]) + decryptor.finalize()
+    return decryptor.update(encrypted_data[IV_SIZE:-IV_SIZE]) \
+        + decryptor.finalize()
