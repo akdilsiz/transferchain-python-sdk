@@ -41,27 +41,6 @@ class TransferChain(object):
         return user.addresses[
             random.randint(1, len(user.addresses) - 1)]
 
-    def transfer_files(self, files, sender_user_id,
-                       recipient_addresses, note):
-        sender_user_address = self.random_user_address(sender_user_id)
-        return self.transfer_service.upload(
-            files, sender_user_address, recipient_addresses, note)
-
-    def transfer_received_delete(self, user_id, uuid, tx_id=None):
-        # tx_id is not necessary
-        return self.transfer_service.delete_received_transfer(
-            user_first_address=self.random_user_address(user_id),
-            user_second_address=self.random_user_address(user_id),
-            uuid=uuid,
-            tx_id=tx_id)
-
-    def transfer_sent_delete(self, user_id, transfer_sent_obj):
-        # transfer_sent_obj->datastructers.TransferSent
-        return self.transfer_service.delete_sent_transfer(
-            user_first_address=self.random_user_address(user_id),
-            user_second_address=self.random_user_address(user_id),
-            transfer_sent_obj=transfer_sent_obj)
-
     def load_users(self):
         users = self.db.get_all()
         for user_id, data in users.items():
@@ -84,3 +63,30 @@ class TransferChain(object):
             json.dumps(user_dict).encode('utf-8'),
             self.config.mnemonics)
         self.db.set(sub_user_id, enc_data)
+
+    def transfer_files(self, files, sender_user_id,
+                       recipient_addresses, note):
+        sender_user_address = self.random_user_address(sender_user_id)
+        return self.transfer_service.upload(
+            files, sender_user_address, recipient_addresses, note)
+
+    def transfer_received_delete(self, user_id, uuid, tx_id=None):
+        # tx_id is not necessary
+        return self.transfer_service.delete_received_transfer(
+            user_first_address=self.random_user_address(user_id),
+            user_second_address=self.random_user_address(user_id),
+            uuid=uuid,
+            tx_id=tx_id)
+
+    def transfer_sent_delete(self, user_id, transfer_sent_obj):
+        # transfer_sent_obj->datastructers.TransferSent
+        return self.transfer_service.delete_sent_transfer(
+            user_first_address=self.random_user_address(user_id),
+            user_second_address=self.random_user_address(user_id),
+            transfer_sent_obj=transfer_sent_obj)
+
+    def transfer_download(self, file_uid, slots, file_size, file_name,
+                          key_aes, key_hmac, destination):
+        return self.transfer_service.download_sent(
+            file_uid, slots, file_size, file_name,
+            key_aes, key_hmac, destination)

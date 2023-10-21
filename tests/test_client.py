@@ -2,6 +2,7 @@ import os
 import tempfile
 import shutil
 import unittest
+from pathlib import Path
 from transferchain.client import TransferChain
 
 
@@ -54,12 +55,26 @@ class TestClientMethods(unittest.TestCase):
             ],
             note='test note')
         self.assertEqual(True, transfer_result.success)
+
+        # transfer download test
+        transfer_sent_obj = transfer_result.data[0].data
+        download_result = tc.transfer_download(
+            file_uid=transfer_sent_obj.uuid,
+            slots=transfer_sent_obj.slots,
+            file_size=transfer_sent_obj.size,
+            file_name=transfer_sent_obj.filename,
+            key_aes=transfer_sent_obj.keyAES,
+            key_hmac=transfer_sent_obj.KeyHMAC,
+            destination=tempfile.tempdir
+        )
+        self.assertEqual(True, download_result.success)
+        path = Path(tempfile.tempdir).joinpath(transfer_sent_obj.filename)
+        self.assertEqual(True, path.exists())
+
         # transfer sent delete
         sent_delete_result = tc.transfer_sent_delete(
             user_id, transfer_sent_obj=transfer_result.data[0].data)
         self.assertEqual(True, sent_delete_result.success,
                          sent_delete_result.error_message)
-
-        # transfer download test
 
         shutil.rmtree(dir_path)
