@@ -20,7 +20,8 @@ def generate_user_addresses(user_id, mnemonics, sub_user_id):
     user_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
 
     tx_master_address = Address(
-        Master=True, Key=user_keys, UserID=user_id, Mnemonics=mnemonics)
+        Master=True, Key=user_keys, UserID=user_id, Mnemonics=mnemonics,
+        MasterAddress=None, SubUserID=sub_user_id)
     addresses.append(tx_master_address)
     tx = create_transaction(
         constants.TX_TYPE_MASTER, user_keys, user_keys['Address'],
@@ -39,7 +40,8 @@ def generate_user_addresses(user_id, mnemonics, sub_user_id):
         user_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
         address = Address(
             Master=False, Key=user_keys, UserID=user_id, Mnemonics=mnemonics,
-            MasterAddress=tx_master_address.Key['Address'])
+            MasterAddress=tx_master_address.Key['Address'],
+            SubUserID=sub_user_id)
         addresses.append(address)
         addresses_payload.append(address._asdict())
 

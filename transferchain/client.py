@@ -34,6 +34,7 @@ class TransferChain(object):
 
         self.save_user(sub_user_id, result.data)
         self.users[sub_user_id] = result.data
+        import ipdb;ipdb.set_trace()
         return Result(success=True, data=result.data)
 
     def random_user_address(self, user_id):

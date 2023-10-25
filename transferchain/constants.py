@@ -20,3 +20,5 @@ TX_TYPE_STORAGE_DELETE = "storage_delete"
 TransferSent = "sent"
 TransferNormal = "normal"
 TransferNON = "non"
+
+STORAGE_MAX_FILE_COUNT = 20

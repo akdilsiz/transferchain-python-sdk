@@ -73,6 +73,7 @@ def encrypt_byte(plaintext, key):
 
 
 def decrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
+    # TODO:TEST
     BUFFER_SIZE = 16 * 1024
     offset = 0
 
@@ -127,6 +128,7 @@ def decrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
 
 
 def encrypt_aesctr_with_hmac(infile, outfile, aes_key, hmac_key):
+    # TODO:TEST
     # we need the test
     # infile/outfile are file objects
     BUFFER_SIZE = 16 * 1024

@@ -1,16 +1,11 @@
 import json
 import gzip
+import random
 from collections import namedtuple
 from transferchain.mixins import TupleMixin
 
-'''
-broadcast datasi, blockchain'e gonderilen datadir ve bu datayi karsilayan
-servis json payload'i camel case/snake cast/pascal case olarak karisik
-bir sekilde handle ediyor. Bu sebeple basinda '# broadcast data' yazan
-namedtupllar pythonic degildir!
-'''
 
-
+# common result tuple
 class Result(TupleMixin, namedtuple(
         'Result', 'success error_message data')):
     __slots__ = ()
@@ -20,6 +15,10 @@ class Result(TupleMixin, namedtuple(
 class User(TupleMixin, namedtuple(
         'User', 'id parent_user_id master_address addresses')):
     __slots__ = ()
+
+    def random_address(self):
+        return self.addresses[
+            random.randint(1, len(self.addresses) - 1)]
 
 
 # broadcast data
@@ -54,8 +53,16 @@ class TransferDelete(TupleMixin, namedtuple(
 
 # broadcast data
 class Address(TupleMixin, namedtuple(
-        'Address', 'Key Mnemonics Master UserID MasterAddress')):
+        'Address', 'Key Mnemonics Master UserID MasterAddress SubUserID')):
     __slots__ = ()
+    '''
+    MasterAddress cikar
+    '''
+
+    def dump(self, *args, **kwargs):
+        excludes = ['MasterAddress']
+        data = {k: getattr(self, k) for k in self._fields if k not in excludes}
+        return json.dumps(data).encode('utf-8')
 
 
 # broadcast data
