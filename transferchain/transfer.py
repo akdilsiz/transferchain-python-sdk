@@ -76,8 +76,9 @@ class Transfer(object):
                     return Result(sucess=False, error_message=str(e))
         return Result(success=True)
 
-    def delete_received_transfer(self, user_first_address,
-                                 user_second_address, uuid, tx_id=""):
+    def delete_received_transfer(self, user, uuid, tx_id=""):
+        user_first_address = user.random_address()
+        user_second_address = user.random_address()
         tx_data = TransferReceiveDelete(
             UUID=uuid,
             TxID=tx_id,
@@ -122,15 +123,17 @@ class Transfer(object):
                 UserID=self.config.user_id
             ), metadata=meta_data)
         except grpc.RpcError as e:
-            error_message = 'cancel upload error:{}'.format(e.details())
+            error_message = 'delete error:{}'.format(e.details())
             result = Result(success=False, error_message=error_message)
         result_queue.put(result)
         return result
 
-    def delete_sent_transfer(self, user_first_address,
-                             user_second_address, transfer_sent_obj):
+    def delete_sent_transfer(self, user, transfer_sent_obj):
         result_queue = queue.Queue()
         threads = []
+
+        user_first_address = user.random_address()
+        user_second_address = user.random_address()
 
         for slot_dict in transfer_sent_obj.slots:
             t = threading.Thread(
@@ -503,7 +506,7 @@ class Transfer(object):
                 StorageCode=slot_dict.get('StorageCode'),
                 userID=slot_dict.get('userID'))
             try:
-                grpc_client.Delete(pb.DeleteRequest(
+                grpc_client.DeleteV2(pb.DeleteRequest(
                     uuid=slot.UUID,
                     StorageCode=slot.StorageCode,
                     WalletID=self.config.wallet_id,

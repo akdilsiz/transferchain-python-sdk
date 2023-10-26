@@ -22,6 +22,28 @@ class User(TupleMixin, namedtuple(
 
 
 # broadcast data
+class DataStorage(TupleMixin, namedtuple(
+        'DataStorage',
+        'UUID FileName Size Slots KeyAES KeyHMAC StorageCode '
+        'Address UploadDate')):
+    __slots__ = ()
+
+
+# broadcast data
+class StorageResult(TupleMixin, namedtuple(
+        'StorageResult',
+        'uuid filename size senderAddress recipientAddress '
+        'txId slots keyAES keyHMAC address storage_code uploadDate')):
+    __slots__ = ()
+
+
+# broadcast data
+class DataStorageDelete(TupleMixin, namedtuple(
+        'DataStorageDelete', 'UUID TxID FileName Timestamp')):
+    __slots__ = ()
+
+
+# broadcast data
 class DataTransfer(TupleMixin, namedtuple(
         'DataTransfer',
         'SenderMasterAddress UUID FileName Size Slots KeyAES KeyHMAC '

@@ -22,12 +22,12 @@ class TestTransferMethods(unittest.TestCase):
         tc = TransferChain(config)
         user_info_result = tc.add_user()
         self.assertEqual(True, user_info_result.success)
-        return user_info_result
+        return user_info_result.data
 
     def test_transfer_file_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -46,7 +46,7 @@ class TestTransferMethods(unittest.TestCase):
     def test_transfer_download_sent_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -79,7 +79,7 @@ class TestTransferMethods(unittest.TestCase):
     def test_delete_received_transfer_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -91,8 +91,7 @@ class TestTransferMethods(unittest.TestCase):
         self.assertEqual(True, transfer_result.success)
 
         delete_result = transfer.delete_received_transfer(
-            user_first_address=user.data.addresses[1],
-            user_second_address=user.data.addresses[2],
+            user=user,
             uuid=transfer_result.data[0].data.uuid,
             tx_id=""
         )
@@ -102,7 +101,7 @@ class TestTransferMethods(unittest.TestCase):
     def test_delete_sent_transfer_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -116,17 +115,14 @@ class TestTransferMethods(unittest.TestCase):
         transfer_sent_obj = transfer_result.data[0].data
 
         delete_result = transfer.delete_sent_transfer(
-            user_first_address=user.data.addresses[1],
-            user_second_address=user.data.addresses[2],
-            transfer_sent_obj=transfer_sent_obj
-        )
+            user=user, transfer_sent_obj=transfer_sent_obj)
         self.assertEqual(True, delete_result.success)
         shutil.rmtree(dir_path)
 
     def test_transfer_file_is_invalid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -163,7 +159,7 @@ class TestTransferMethods(unittest.TestCase):
     def test_cancel_upload_is_valid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 
@@ -182,7 +178,7 @@ class TestTransferMethods(unittest.TestCase):
     def test_cancel_upload_is_invalid(self):
         config = create_config()
         user = self.create_test_user(config)
-        sender = user.data.addresses[1]
+        sender = user.random_address()
         transfer = Transfer(config)
         dir_path, file_path = self.create_dummy_file()
 

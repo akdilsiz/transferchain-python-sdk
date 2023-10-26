@@ -1,6 +1,5 @@
 import uuid
 import json
-import random
 from transferchain.db import DB
 from transferchain.logger import get_logger
 from transferchain.config import create_config
@@ -10,7 +9,7 @@ from transferchain.datastructures import (
 from transferchain.addresses import generate_user_addresses
 from transferchain.transfer import Transfer
 from transferchain.storage import Storage
-
+from transferchain.protobuf import service_pb2 as pb
 
 logger = get_logger(__file__)
 
@@ -34,13 +33,10 @@ class TransferChain(object):
 
         self.save_user(sub_user_id, result.data)
         self.users[sub_user_id] = result.data
-        import ipdb;ipdb.set_trace()
         return Result(success=True, data=result.data)
 
-    def random_user_address(self, user_id):
-        user = self.users[user_id]
-        return user.addresses[
-            random.randint(1, len(user.addresses) - 1)]
+    def get_user(self, user_id):
+        return self.users[user_id]
 
     def load_users(self):
         users = self.db.get_all()
@@ -66,28 +62,41 @@ class TransferChain(object):
         self.db.set(sub_user_id, enc_data)
 
     def transfer_files(self, files, sender_user_id,
-                       recipient_addresses, note):
-        sender_user_address = self.random_user_address(sender_user_id)
+                       recipient_addresses, note, callback=None):
+        user = self.get_user(sender_user_id)
+        sender_user_address = user.random_address()
         return self.transfer_service.upload(
-            files, sender_user_address, recipient_addresses, note)
+            files, sender_user_address, recipient_addresses, note, callback)
 
     def transfer_received_delete(self, user_id, uuid, tx_id=None):
         # tx_id is not necessary
         return self.transfer_service.delete_received_transfer(
-            user_first_address=self.random_user_address(user_id),
-            user_second_address=self.random_user_address(user_id),
-            uuid=uuid,
-            tx_id=tx_id)
+            user=self.get_user(user_id), uuid=uuid, tx_id=tx_id)
 
     def transfer_sent_delete(self, user_id, transfer_sent_obj):
         # transfer_sent_obj->datastructers.TransferSent
         return self.transfer_service.delete_sent_transfer(
-            user_first_address=self.random_user_address(user_id),
-            user_second_address=self.random_user_address(user_id),
-            transfer_sent_obj=transfer_sent_obj)
+            user=self.get_user(user_id), transfer_sent_obj=transfer_sent_obj)
+
+    def transfer_cancel(self, file_slots):
+        return self.transfer_service.cancel_upload(
+            file_slots, pb.UploadOpCode.Transfer)
 
     def transfer_download(self, file_uid, slots, file_size, file_name,
                           key_aes, key_hmac, destination):
         return self.transfer_service.download_sent(
             file_uid, slots, file_size, file_name,
             key_aes, key_hmac, destination)
+
+    def storage_upload(self, user_id, files, callback=None):
+        return self.storage_service.upload(
+            user=self.get_user(user_id), files=files, callback=callback)
+
+    def storage_cancel(self, file_slots):
+        return self.storage_service.cancel_upload(
+            file_slots, pb.UploadOpCode.Storage)
+
+    def storage_delete(self, user_id, storage_result):
+        # storage_result->datastructers.StorageResult
+        return self.storage_service.delete(
+            user=self.get_user(user_id), storage_result_object=storage_result)
