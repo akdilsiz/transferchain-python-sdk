@@ -13,7 +13,7 @@ class Result(TupleMixin, namedtuple(
 
 # generate user address result
 class User(TupleMixin, namedtuple(
-        'User', 'id parent_user_id master_address addresses')):
+        'User', 'id parent_user_id master_address addresses master')):
     __slots__ = ()
 
     def random_address(self):
@@ -77,9 +77,6 @@ class TransferDelete(TupleMixin, namedtuple(
 class Address(TupleMixin, namedtuple(
         'Address', 'Key Mnemonics Master UserID MasterAddress SubUserID')):
     __slots__ = ()
-    '''
-    MasterAddress cikar
-    '''
 
     def dump(self, *args, **kwargs):
         excludes = ['MasterAddress']

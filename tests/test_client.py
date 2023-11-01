@@ -1,6 +1,7 @@
 import os
-import tempfile
+import time
 import shutil
+import tempfile
 import unittest
 from pathlib import Path
 from transferchain.client import TransferChain
@@ -16,18 +17,21 @@ class TestClientMethods(unittest.TestCase):
         return dir_path, file_path
 
     def setUp(self):
-        os.remove(os.path.join(os.getcwd(), 'tc.db'))
+        db_path = os.path.join(os.getcwd(), 'tc.db')
+        if os.path.exists(db_path):
+            os.remove(db_path)
         self.tc = TransferChain()
         # save_user in add_user, pass!
+        self.tc.add_master_user()
         user_result = self.tc.add_user()
 
         self.assertEqual(True, user_result.success)
-        self.assertEqual(1, len(self.tc.users))
+        self.assertEqual(2, len(self.tc.users))  # master and sub user
         self.user = user_result.data
 
         self.tc.users = {}
         self.tc.load_users()
-        self.assertEqual(1, len(self.tc.users))
+        self.assertEqual(2, len(self.tc.users))  # master and sub user
 
     def test_transfer(self):
         dir_path, file_path = self.create_dummy_file()
@@ -121,5 +125,49 @@ class TestClientMethods(unittest.TestCase):
         shutil.rmtree(dir_path)
 
 
-if __name__ == '__main__':
-    unittest.main()
+class TestClientWithRestoreMethods(unittest.TestCase):
+
+    def create_dummy_file(self):
+        dir_path = tempfile.mkdtemp()
+        file_path = os.path.join(dir_path, 'transferchain_test_data.dat')
+        with open(file_path, 'wb') as f:
+            f.write(os.urandom(1024).hex().encode('utf-8'))
+        return dir_path, file_path
+
+    def setUp(self):
+        db_path = os.path.join(os.getcwd(), 'tc.db')
+        if os.path.exists(db_path):
+            os.remove(db_path)
+
+        self.tc = TransferChain()
+        self.tc.add_master_user()
+        self.tc.users = {}
+        self.master_user = None
+
+    def test_restore_master_user(self):
+        self.assertEqual(self.tc.users, {}, 'User should be empty')
+        time.sleep(2)
+        result = self.tc.restore_master_user()
+        self.assertEqual(True, result.success, result.error_message)
+        self.assertNotEqual(self.tc.users, {}, 'restore error')
+
+    def test_restore_sub_users(self):
+        time.sleep(5)
+
+        result = self.tc.restore_master_user()
+        self.assertEqual(True, result.success, result.error_message)
+        self.assertNotEqual(self.tc.users, {}, 'restore error')
+        time.sleep(5)
+
+        user_result = self.tc.add_user()
+        self.assertEqual(True, user_result.success)
+        self.assertEqual(2, len(self.tc.users))
+        time.sleep(5)
+        # pop user
+        user = self.tc.users.pop(user_result.data.id)
+        self.assertEqual(1, len(self.tc.users))
+
+        result = self.tc.restore_sub_users()
+        self.assertEqual(True, result.success)
+        self.assertEqual(2, len(self.tc.users))
+        self.assertEqual(True, user.id in self.tc.users.keys())

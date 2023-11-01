@@ -1,15 +1,19 @@
 import uuid
 import json
+from transferchain import restore
 from transferchain.db import DB
 from transferchain.logger import get_logger
 from transferchain.config import create_config
-from transferchain.crypt import crypt
+from transferchain.crypt import crypt, bip39
 from transferchain.datastructures import (
     Result, Address, User)
-from transferchain.addresses import generate_user_addresses
+from transferchain.addresses import (
+    generate_user_addresses, generate_sub_user_addresses,
+    get_user_password)
 from transferchain.transfer import Transfer
 from transferchain.storage import Storage
 from transferchain.protobuf import service_pb2 as pb
+
 
 logger = get_logger(__file__)
 
@@ -24,10 +28,56 @@ class TransferChain(object):
         self.storage_service = Storage(self.config)
         self.users = {}
 
+        self.master_user = None
+
+    def add_master_user(self):
+        # TODO:TEST
+        mnemonics = bip39.create_mnomonics()
+        result = generate_user_addresses(self.config.user_id, mnemonics)
+        if result.success is False:
+            return result
+
+        user = result.data
+        # logger.info("Mnemonics-> %s" % mnemonics)
+        self.config = self.config._replace(mnemonics=mnemonics)
+        self.save_user(str(self.config.user_id), user)
+        self.users[str(self.config.user_id)] = user
+        self.master_user = user
+        return Result(success=True, data=user)
+
+    def restore_sub_users(self):
+        user_password = get_user_password(self.config.user_id)
+        result = restore.restore_sub_user_with_mnemonics(
+            self.config.mnemonics, user_password, self.config.user_id)
+        if result.success is False:
+            return result
+        for user in result.data:
+            self.save_user(str(user.id), user)
+            self.users[str(user.id)] = user
+        return result
+
+    def restore_master_user(self):
+        user_password = get_user_password(self.config.user_id)
+        result = restore.restore_master_with_mnemonics(
+            self.config.mnemonics, user_password, self.config.user_id)
+        if result.success is False:
+            return result
+        user = result.data
+        self.master_user = user
+        self.save_user(str(self.config.user_id), user)
+        self.users[str(self.config.user_id)] = user
+        return result
+
     def add_user(self):
+        # master user check
+        assert self.master_user is not None, 'you need the master user! '\
+            'if you dont have mnemonics call the add_master_user, '\
+            'if mnemonics already exists, call the restore_master_user.'
         sub_user_id = str(uuid.uuid4())
-        result = generate_user_addresses(
-            self.config.user_id, self.config.mnemonics, sub_user_id)
+        master_user_address = self.master_user.master_address
+        result = generate_sub_user_addresses(
+            self.config.user_id, master_user_address,
+            self.config.mnemonics, sub_user_id)
         if result.success is False:
             return result
 
@@ -47,7 +97,10 @@ class TransferChain(object):
             for address in user_data.pop('addresses'):
                 addresses.append(Address(**address))
             user_data['addresses'] = addresses
-            self.users[user_id] = User(**user_data)
+            user = User(**user_data)
+            self.users[user_id] = user
+            if user.master:
+                self.master_user = user
         return self.users
 
     def save_user(self, sub_user_id, user):
@@ -100,3 +153,8 @@ class TransferChain(object):
         # storage_result->datastructers.StorageResult
         return self.storage_service.delete(
             user=self.get_user(user_id), storage_result_object=storage_result)
+
+    def get_user_address(self):
+        users = self.load_users()
+        if not users:
+            pass

@@ -27,7 +27,7 @@ def create_transaction(tx_type, sender_keys, recipient_address, payload):
         sender_keys['Seed'], recipient_address,
         payload.dump())
 
-    tx_id = hashlib.sha256(data).hexdigest()
+    tx_id = hashlib.sha512(data).hexdigest()
 
     transaction = {
         "fee": 0,

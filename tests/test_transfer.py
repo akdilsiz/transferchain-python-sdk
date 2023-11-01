@@ -20,6 +20,7 @@ class TestTransferMethods(unittest.TestCase):
 
     def create_test_user(self, config):
         tc = TransferChain(config)
+        tc.add_master_user()
         user_info_result = tc.add_user()
         self.assertEqual(True, user_info_result.success)
         return user_info_result.data

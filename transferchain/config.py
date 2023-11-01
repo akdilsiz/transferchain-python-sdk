@@ -2,7 +2,6 @@ import os
 import uuid
 from transferchain import utils
 from transferchain import exceptions
-from transferchain.crypt import bip39
 from transferchain.datastructures import Config
 from transferchain.wallet import create_wallet, get_wallet_info
 
@@ -38,8 +37,9 @@ def create_config():
         wallet_id = wallet_info['wallet_id']
 
     mnemonics = os.environ.get('TRANSFERCHAIN_MNEMONICS', '')
-    if not mnemonics or len(mnemonics.split('')) != 24:
-        mnemonics = bip39.create_mnomonics()
+    # if not mnemonics or len(mnemonics.split('')) != 24:
+    #    mnemonics = bip39.create_mnomonics()
+    #    # create user addresses or  restore
 
     return conf._replace(
         user_id=user_id,

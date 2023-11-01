@@ -6,6 +6,9 @@ SORT_TYPE_DESC = "DESC"
 TRANSFER_TYPE_SENT = "sent"
 TRANSFER_TYPE_RECEIVED = "received"
 
+TX_TYPE_SUB_MASTER = 'initial_sub_storage'
+TX_TYPE_SUB_ADDRESSES = 'interim_sub_storages'
+
 TX_TYPE_MASTER = "initial_storage"
 TX_TYPE_ADDRESS = "interim_storage"
 TX_TYPE_ADDRESSES = "interim_storages"
