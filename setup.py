@@ -3,12 +3,21 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as f:
     page_description = f.read()
 
-with open("requirements.txt") as f:
-    requirements = f.read().splitlines()
-
+requirements = [
+    'base58==2.1.1',
+    'ed25519==1.5',
+    'x25519==0.0.2',
+    'PyNaCl==1.5.0',
+    'cryptography==41.0.2',
+    'requests==2.31.0',
+    'pickleDB==0.9.2',
+    'grpcio==1.59.0',
+    'grpcio-tools==1.59.0',
+    'tcabci-read-client'
+]
 
 setup(
-    name="transferchain",
+    name="transferchain-python-sdk",
     version="v0.1.0",
     author="transferchain",
     description="transferchain python sdk",
