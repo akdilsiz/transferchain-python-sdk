@@ -3,6 +3,12 @@
 
 The Transferchain SDK is a Python library that provides easy integration with the Transferchain platform. With this SDK, you can interact with Transferchain's blockchain technology to create and manage user accounts, perform transactions, and more. To get started, you need to define several environment variables, and this README will guide you through the process.
 
+
+### SDK and User Documentation
+SDK Docs [https://transferchain-python-sdk.readthedocs.io/](https://transferchain-python-sdk.readthedocs.io/)
+User Docs [https://docs.transferchain.io/](https://docs.transferchain.io/)
+
+
 ## Getting Started
 
 ### Prerequisites
