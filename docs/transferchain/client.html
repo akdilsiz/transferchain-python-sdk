@@ -191,9 +191,7 @@ tc = TransferChain()
 tc.add_master_user()
 user_result = tc.add_user()
 user = user_result.data
-storage_result = tc.transfer_files(
-    files=[file_path],
-    user_id=user.id)
+storage_result = tc.storage_upload(files=[file_path], user=user)
 storage_slots = storage_result.data[0].data.slots
 cancel_result = tc.storage_cancel(storage_slots)
 </code></pre></div>
@@ -219,11 +217,55 @@ tc = TransferChain()
 tc.add_master_user()
 user_result = tc.add_user()
 user = user_result.data
-storage_result = tc.transfer_files(
-    files=[file_path],
-    user_id=user.id)
+storage_result = tc.storage_upload(files=[file_path], user=user)
 sent_delete_result = tc.storage_delete(
     user.id, storage_result=storage_result.data[0].data)
+</code></pre></div>
+</dd>
+<dt id="transferchain.client.TransferChain.storage_download"><code class="name flex">
+<span>def <span class="ident">storage_download</span></span>(<span>self, file_uid, slots, file_size, file_name, key_aes, key_hmac, destination)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Download storage file.</p>
+<h2 id="parameters">Parameters</h2>
+<p>file_uid:
+datastructures.StorageResult.uuid</p>
+<p>slots:
+datastructures.StorageResult.slots</p>
+<p>file_size:
+datastructures.StorageResult.size</p>
+<p>file_name:
+datastructures.StorageResult.filename</p>
+<p>key_aes:
+datastructures.StorageResult.keyAES</p>
+<p>key_hmac:
+datastructures.StorageResult.keyHMAC</p>
+<p>destination:
+destination path</p>
+<h2 id="returns">Returns</h2>
+<p>Result object</p>
+<h2 id="example">Example</h2>
+<p>-</p>
+<pre><code>from transferchain.client import TransferChain
+
+file_path = &quot;/tmp/full_file.path&quot;
+tc = TransferChain()
+tc.add_master_user()
+user_result = tc.add_user()
+user = user_result.data
+
+storage_result = tc.storage_upload(files=[file_path], user=user)
+
+storage_result_obj = storage_result.data[0].data
+download_result = tc.storage_download(
+    file_uid=storage_result_obj.uuid,
+    slots=storage_result_obj.slots,
+    file_size=storage_result_obj.size,
+    file_name=storage_result_obj.filename,
+    key_aes=storage_result_obj.keyAES,
+    key_hmac=storage_result_obj.KeyHMAC,
+    destination=tempfile.tempdir
+)
 </code></pre></div>
 </dd>
 <dt id="transferchain.client.TransferChain.storage_upload"><code class="name flex">
@@ -259,7 +301,7 @@ user_result = tc.add_user()
 user = user_result.data
 storage_result = tc.storage_upload(
     files=[file_path],
-    user_id=user.id,
+    user=user,
     callback=callback)
 </code></pre></div>
 </dd>
@@ -489,6 +531,7 @@ sent_delete_result = tc.transfer_sent_delete(
 <li><code><a title="transferchain.client.TransferChain.save_user" href="#transferchain.client.TransferChain.save_user">save_user</a></code></li>
 <li><code><a title="transferchain.client.TransferChain.storage_cancel" href="#transferchain.client.TransferChain.storage_cancel">storage_cancel</a></code></li>
 <li><code><a title="transferchain.client.TransferChain.storage_delete" href="#transferchain.client.TransferChain.storage_delete">storage_delete</a></code></li>
+<li><code><a title="transferchain.client.TransferChain.storage_download" href="#transferchain.client.TransferChain.storage_download">storage_download</a></code></li>
 <li><code><a title="transferchain.client.TransferChain.storage_upload" href="#transferchain.client.TransferChain.storage_upload">storage_upload</a></code></li>
 <li><code><a title="transferchain.client.TransferChain.transfer_cancel" href="#transferchain.client.TransferChain.transfer_cancel">transfer_cancel</a></code></li>
 <li><code><a title="transferchain.client.TransferChain.transfer_download" href="#transferchain.client.TransferChain.transfer_download">transfer_download</a></code></li>

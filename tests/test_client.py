@@ -64,7 +64,7 @@ class TestClientMethods(unittest.TestCase):
                          recevied_delete_result.error_message)
         shutil.rmtree(dir_path)
 
-    def test_download(self):
+    def test_transfer_download(self):
         dir_path, file_path = self.create_dummy_file()
         transfer_result = self.tc.transfer_files(
             files=[file_path],

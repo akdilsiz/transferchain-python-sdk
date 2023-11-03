@@ -529,7 +529,7 @@ class TransferChain(object):
         user = user_result.data
         storage_result = tc.storage_upload(
             files=[file_path],
-            user_id=user.id,
+            user=user,
             callback=callback)
         ```
         """
@@ -558,9 +558,7 @@ class TransferChain(object):
         tc.add_master_user()
         user_result = tc.add_user()
         user = user_result.data
-        storage_result = tc.transfer_files(
-            files=[file_path],
-            user_id=user.id)
+        storage_result = tc.storage_upload(files=[file_path], user=user)
         storage_slots = storage_result.data[0].data.slots
         cancel_result = tc.storage_cancel(storage_slots)
         ```
@@ -592,9 +590,7 @@ class TransferChain(object):
         tc.add_master_user()
         user_result = tc.add_user()
         user = user_result.data
-        storage_result = tc.transfer_files(
-            files=[file_path],
-            user_id=user.id)
+        storage_result = tc.storage_upload(files=[file_path], user=user)
         sent_delete_result = tc.storage_delete(
             user.id, storage_result=storage_result.data[0].data)
         ```
@@ -602,3 +598,62 @@ class TransferChain(object):
         # storage_result->datastructures.StorageResult
         return self.storage_service.delete(
             user=self.get_user(user_id), storage_result_object=storage_result)
+
+    def storage_download(self, file_uid, slots, file_size, file_name,
+                         key_aes, key_hmac, destination):
+        """
+        Download storage file.
+
+        Parameters:
+           file_uid:
+               datastructures.StorageResult.uuid
+
+           slots:
+               datastructures.StorageResult.slots
+
+           file_size:
+               datastructures.StorageResult.size
+
+           file_name:
+               datastructures.StorageResult.filename
+
+           key_aes:
+               datastructures.StorageResult.keyAES
+
+           key_hmac:
+               datastructures.StorageResult.keyHMAC
+
+           destination:
+               destination path
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ```
+        from transferchain.client import TransferChain
+
+        file_path = "/tmp/full_file.path"
+        tc = TransferChain()
+        tc.add_master_user()
+        user_result = tc.add_user()
+        user = user_result.data
+
+        storage_result = tc.storage_upload(files=[file_path], user=user)
+
+        storage_result_obj = storage_result.data[0].data
+        download_result = tc.storage_download(
+            file_uid=storage_result_obj.uuid,
+            slots=storage_result_obj.slots,
+            file_size=storage_result_obj.size,
+            file_name=storage_result_obj.filename,
+            key_aes=storage_result_obj.keyAES,
+            key_hmac=storage_result_obj.KeyHMAC,
+            destination=tempfile.tempdir
+        )
+        ```
+        """
+        return self.transfer_service.download_sent(
+            file_uid, slots, file_size, file_name,
+            key_aes, key_hmac, destination)
