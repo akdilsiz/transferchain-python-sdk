@@ -22,11 +22,11 @@ pip install transferchain-python-sdk
 ### Environment Variables
 To use this SDK, add the following environment variables to your environment:
 
-`TRANSFERCHAIN_USER_ID (int)`: Your account's user ID.
-`TRANSFERCHAIN_API_TOKEN (str)`: Your Transferchain API token.
-`TRANSFERCHAIN_API_SECRET (str)`: Your Transferchain API secret.
-`TRANSFERCHAIN_WALLET_UUID (str)`: An optional value, a random UUID or your current wallet UUID.
-`TRANSFERCHAIN_MNEMONICS (str)`: Your account mnemonics.
+- `TRANSFERCHAIN_USER_ID (int)`: Your account's user ID.
+- `TRANSFERCHAIN_API_TOKEN (str)`: Your Transferchain API token.
+- `TRANSFERCHAIN_API_SECRET (str)`: Your Transferchain API secret.
+- `TRANSFERCHAIN_WALLET_UUID (str)`: An optional value, a random UUID or your current wallet UUID.
+- `TRANSFERCHAIN_MNEMONICS (str)`: Your account mnemonics.
 
 ### Example Usages
 Here are some example usages of the Transferchain SDK:
