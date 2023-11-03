@@ -18,9 +18,10 @@ requirements = [
 
 setup(
     name="transferchain-python-sdk",
-    version="v0.1.0",
-    author="transferchain",
-    description="transferchain python sdk",
+    version="0.1.0",
+    author="TransferChain",
+    author_email="info@transferchain.io",
+    description="TransferChain Python SDK",
     long_description=page_description,
     long_description_content_type="text/markdown",
     url="https://github.com/TransferChain/transferchain-python-sdk",

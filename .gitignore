@@ -7,3 +7,5 @@ tc.db
 *.eggs
 dev.sh
 .coverage
+venv/
+.idea/
