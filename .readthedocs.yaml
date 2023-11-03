@@ -5,5 +5,5 @@ build:
     tools:
       python: "3.12"
     commands: 
-      - mkdir --parents _readthedocs/html/
-      - cp --recursive docs/transferchain/* _readthedocs/html/
+      - mkdir --parents $READTHEDOCS_OUTPUT/html
+      - cp --recursive docs/transferchain/* $READTHEDOCS_OUTPUT/html
