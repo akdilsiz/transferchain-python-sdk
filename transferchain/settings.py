@@ -1,3 +1,6 @@
+'''
+Constants that will change depending on the situation
+in the module are written here.'''
 DEBUG = True
 
 # production urls

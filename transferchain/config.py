@@ -1,3 +1,5 @@
+'''Configs to be used in the module are created here.'''
+
 import os
 import uuid
 from transferchain import utils
@@ -7,6 +9,43 @@ from transferchain.wallet import create_wallet, get_wallet_info
 
 
 def create_config():
+    """
+    This function returns the config object.It takes parameters from env.
+
+    If TRANSFERCHAIN_WALLET_UUID is empty, it is automatic generated.
+
+    If there are no TRANSFERCHAIN_MNEMONICS, call the client.add_master_user.
+
+    If give the TRANSFERCHAIN_MNEMONICS and already have an account you call
+    the client.restore_master_user
+
+    Parameters:
+        TRANSFERCHAIN_USER_ID (int):
+            account user id
+
+        TRANSFERCHAIN_API_TOKEN (str):
+            transferchain api token
+
+        TRANSFERCHAIN_API_SECRET (str):
+            transferchain api secret
+
+        TRANSFERCHAIN_WALLET_UUID (str):
+            optinal value, random uuid generated for subuser
+
+        TRANSFERCHAIN_MNEMONICS (str):
+            account mnemonics
+
+    Returns:
+        datastructers.Config
+
+    Example:
+        -
+    ```
+        from transferchain.config import create_config
+        config = create_config()
+
+    ```
+    """
     user_id = int(os.environ.get('TRANSFERCHAIN_USER_ID', 0))
 
     if not user_id:

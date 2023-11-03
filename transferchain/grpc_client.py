@@ -8,6 +8,11 @@ GRPC_CLIENT = None
 
 
 def get_client():
+    '''
+    Grpc connection function.
+    Once called, grpc connects to the server and stores
+    this connection in a global variable.
+    '''
     global GRPC_CLIENT
     if GRPC_CLIENT is not None:
         return GRPC_CLIENT

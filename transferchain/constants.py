@@ -1,3 +1,5 @@
+'''Constants in the module are written here.'''
+
 UPLOAD_CHUNK_SIZE = 1 * 1024 * 1024
 
 SORT_TYPE_ASC = "ASC"

@@ -19,11 +19,162 @@ from transferchain.datastructures import (
 
 
 class Storage(object):
+    '''Storage processes are managed by the functions in this class.'''
 
     def __init__(self, config):
         self.config = config
 
+    def download(self, file_uid, slots, file_size, file_name,
+                 key_aes, key_hmac, destination):
+        '''
+        Download storage file.
+
+        Parameters:
+            file_uid (str):
+                datastructures.StorageResult.uuid
+
+            slots:
+                datastructures.StorageResult.slots
+
+            file_size:
+                datastructures.StorageResult.size
+
+            file_name:
+                datastructures.StorageResult.filename
+
+            key_aes:
+                datastructures.StorageResult.keyAES
+
+            key_hmac:
+                datastructures.StorageResult.keyHMAC
+
+            destination:
+                destination path
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        import tempfile
+        from transferchain.client import TransferChain
+        from transferchain.storage import Storage
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        storage = Storage(config)
+        file_path = '/tmp/your-test-file'
+
+        result = storage.upload(files=[file_path], user=user)
+
+        storage_result_obj = result.data[0].data
+        download_result = storage.download(
+            file_uid=storage_result_obj.uuid,
+            slots=storage_result_obj.slots,
+            file_size=storage_result_obj.size,
+            file_name=storage_result_obj.filename,
+            key_aes=storage_result_obj.keyAES,
+            key_hmac=storage_result_obj.KeyHMAC,
+            destination=tempfile.tempdir)
+        ````
+        '''
+        assert file_uid != "", "invalid file_uuid"
+        assert len(slots) > 0, "invalid slots"
+        assert file_size > 0, "invalid file_size"
+        assert file_name != "", "invalid file_name"
+        assert key_aes != "", "invalid key_aes"
+        assert key_hmac != "", "invalid key_hmac"
+        assert destination != "", "invalid destination"
+        destination_path = Path(destination)
+
+        assert destination_path.exists(), 'destination does not exist'
+        assert destination_path.is_dir(), 'destination must be a folder'
+        destination_file = destination_path.joinpath(file_name)
+
+        grpc_client = get_client()
+        meta_data = [
+            ("user-id", str(self.config.user_id)),
+            ("user-api-token", self.config.api_token),
+            ("user-api-secret", self.config.api_secret)
+        ]
+        try:
+            file_chunks = grpc_client.Download(pb.DownloadRequest(
+                uuid=file_uid,
+                Slots=slots,
+                WalletID=self.config.wallet_id,
+                UserID=self.config.user_id,
+                opCode=pb.UploadOpCode.Storage,
+            ), metadata=meta_data)
+        except grpc.RpcError as e:
+            error_message = 'download error:{}'.format(e.details())
+            e.cancel()
+            return Result(success=False, error_message=error_message)
+
+        in_file_uid = str(uuid.uuid4())
+        in_file_tmp_folder = tempfile.mkdtemp()
+        in_file_path = os.path.join(in_file_tmp_folder, in_file_uid)
+        totalWrite = 0
+        with open(in_file_path, 'ab') as in_file:
+            for fc in file_chunks:
+                totalWrite + in_file.write(fc.chunk)
+
+        with open(in_file_path, 'rb') as in_file:
+            with destination_file.open(mode='wb') as out_file:
+                try:
+                    crypt.decrypt_aesctr_with_hmac(
+                        in_file, out_file, key_aes.encode('utf-8'),
+                        key_hmac.encode('utf-8'))
+                except Exception as e:
+                    return Result(sucess=False, error_message=str(e))
+        return Result(success=True)
+
     def delete(self, user, storage_result_object):
+        '''
+        Delete storage
+
+        Parameters:
+            user (datastructures.User):
+                datastructures.User object
+
+            storage_result_object (datastructures.StorageResult):
+                datastructures.StorageResult
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.storage import Storage
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        storage = Storage(config)
+        file_path = '/tmp/your-test-file'
+
+        def callback(result):
+            pass
+
+        result = storage.upload(
+            files=[file_path],
+            user=user,
+            callback=callback)
+        storage_result = result.data[0].data
+        cancel_result = storage.delete(user, storage_result)
+        ````
+        '''
         sender = user.random_address().Key
         sender_recipient_address = user.random_address().Key['Address']
 
@@ -63,6 +214,8 @@ class Storage(object):
         return Result(success=True)
 
     def _delete_slot(self, slot_dict, result_queue):
+        '''Delete single Slot'''
+
         grpc_client = get_client()
         meta_data = [
             ("user-id", str(self.config.user_id)),
@@ -96,6 +249,38 @@ class Storage(object):
 
     def upload_single_file(self, session_id, base_uuid_map, process_uuid,
                            user, file_object, result_queue, callback):
+        '''
+        Single file upload. The Storage.upload function uses this.
+
+        Parameters:
+
+           session_id:
+               pb.StorageInitResponse.SessionID
+
+           base_uuid_map:
+               pb.StorageInitResponse.BaseUUIDs
+
+           process_uuid:
+               random uuid
+
+           user:
+               datastructures.User
+
+           file_object:
+               pathlib.Path object
+
+           callback:
+               callback is a function, and take the result parameter
+
+           result_queue:
+               queue.Queue object
+
+        Returns:
+            Result object, payload is [datastructures.StorageResult]
+
+        Example:
+            -
+        '''
         aes_key = crypt.generate_encrypt_key(32).encode('utf-8')
         hmac_key = crypt.generate_encrypt_key(32).encode('utf-8')
 
@@ -238,6 +423,46 @@ class Storage(object):
         return result
 
     def upload(self, user, files, callback=None):
+        '''
+        File storage upload.
+
+        Parameters:
+           files:
+               list of files
+
+           user:
+               datastructures.User
+
+           callback:
+               callback is a function, and take the result parameter
+
+        Returns:
+            Result object, payload is [datastructures.StorageResult]
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.storage import Storage
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        storage = Storage(config)
+        file_path = '/tmp/your-test-file'
+
+        def callback(result):
+            pass
+
+        result = storage.upload(
+            files=[file_path], user=user, callback=callback)
+        ````
+        '''
+
         assert len(files) <= constants.STORAGE_MAX_FILE_COUNT, \
             'file count exceeded'
 
@@ -320,6 +545,35 @@ class Storage(object):
     def prepare_slot_upload_request(
             self, session_id, out_file, slot,
             is_last_slot, file_stat, tweezers):
+        '''
+        Generate UploadV3Request payloads
+
+        Parameters:
+
+           session_id:
+               pb.TransferInitResponse.SessionID
+
+           out_file:
+               opened file object
+
+           slot:
+               pb.UploadSlot
+
+           is_last_slot:
+               bool
+
+           file_stat:
+               target file stat. os.stat
+
+           tweezers:
+               dict. total_write key is required
+
+        Returns:
+           Generator
+
+        Example:
+            -
+        '''
         chunk_size = constants.UPLOAD_CHUNK_SIZE
 
         slot_upload_size = 0
@@ -351,6 +605,42 @@ class Storage(object):
                 break
 
     def cancel_upload(self, slots, op_code):
+        '''
+        Cancel Upload
+
+        Parameters:
+           slots:
+               list of pb.UploadSlot
+
+           op_code:
+               pb.UploadOpCode.<Transfer|Storage>
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.storage import Storage
+        from transferchain.config import create_config
+        from transferchain.protobuf import service_pb2 as pb
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        storage = Storage(config)
+        file_path = '/tmp/your-test-file'
+
+        storage_result = storage.upload(files=[file_path], user=user)
+        slots = storage_result.data[0].data.slots
+        cancel_result = storage.cancel_upload(slots, pb.UploadOpCode.Storage)
+        ````
+        '''
+
         grpc_client = get_client()
         meta_data = [
             ("user-id", str(self.config.user_id)),

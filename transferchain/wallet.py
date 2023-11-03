@@ -9,6 +9,39 @@ from transferchain.datastructures import (
 
 
 def create_wallet(conf, user_id, wallet_uuid):
+    """
+    Create new wallet
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        user_id (int):
+            account user id
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        CreateWalletResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get('TRANSFERCHAIN_USER_ID')
+        api_token = os.environ.get('TRANSFERCHAIN_API_TOKEN')
+        api_secret = os.environ.get('TRANSFERCHAIN_API_SECRET')
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = str(uuid.uuid4())
+        os.environ['TRANSFERCHAIN_TEST_WALLET_UUID'] = wallet_uuid
+        result = wallet.create_wallet(conf, user_id, wallet_uuid)
+    ```
+    """
     headers = {
         'api_token': conf.api_token,
         'api_secret': conf.api_secret,
@@ -31,6 +64,38 @@ def create_wallet(conf, user_id, wallet_uuid):
 
 
 def get_wallet_info(conf, user_id, wallet_uuid):
+    """
+    Get wallet info
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        user_id (int):
+            account user id
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        WalletInfoResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get('TRANSFERCHAIN_USER_ID')
+        api_token = os.environ.get('TRANSFERCHAIN_API_TOKEN')
+        api_secret = os.environ.get('TRANSFERCHAIN_API_SECRET')
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = os.environ['TRANSFERCHAIN_TEST_WALLET_UUID']
+        result = wallet.get_wallet_info(conf, user_id, wallet_uuid)
+    ```
+    """
     headers = {
         'api_token': conf.api_token,
         'api_secret': conf.api_secret,

@@ -20,12 +20,75 @@ from transferchain.transaction import create_transaction
 
 
 class Transfer(object):
+    '''Transfer processes are managed by the functions in this class.'''
 
     def __init__(self, config):
         self.config = config
 
     def download_sent(self, file_uid, slots, file_size, file_name,
                       key_aes, key_hmac, destination):
+        '''
+        Download transfer file.
+
+        Parameters:
+            file_uid (str):
+                datastructures.TransferSent.uuid
+
+            slots:
+                datastructures.TransferSent.slots
+
+            file_size:
+                datastructures.TransferSent.size
+
+            file_name:
+                datastructures.TransferSent.filename
+
+            key_aes:
+                datastructures.TransferSent.keyAES
+
+            key_hmac:
+                datastructures.TransferSent.keyHMAC
+
+            destination:
+                destination path
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.transfer import Transfer
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        sender = user.random_address()
+
+        transfer = Transfer(config)
+        file_path = '/tmp/your-test-file'
+
+        result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']])
+
+        transfer_sent_obj = result.data[0].data
+        download_result = transfer.download_sent(
+            file_uid=transfer_sent_obj.uuid,
+            slots=transfer_sent_obj.slots,
+            file_size=transfer_sent_obj.size,
+            file_name=transfer_sent_obj.filename,
+            key_aes=transfer_sent_obj.keyAES,
+            key_hmac=transfer_sent_obj.KeyHMAC,
+            destination=tempfile.tempdir)
+        ````
+        '''
         assert file_uid != "", "invalid file_uuid"
         assert len(slots) > 0, "invalid slots"
         assert file_size > 0, "invalid file_size"
@@ -77,6 +140,49 @@ class Transfer(object):
         return Result(success=True)
 
     def delete_received_transfer(self, user, uuid, tx_id=""):
+        '''
+        Delete received transfer
+
+        Parameters:
+            user (datastructures.User):
+                datastructures.User object
+
+            uuid (str):
+                transfer uuid
+
+            tx_id:
+                transfer transaction id. optional
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.transfer import Transfer
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        sender = user.random_address()
+
+        transfer = Transfer(config)
+        file_path = '/tmp/your-test-file'
+
+        result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']])
+        delete_result = transfer.delete_received_transfer(
+            user=user,
+            uuid=transfer_result.data[0].data.uuid))
+        ````
+        '''
         user_first_address = user.random_address()
         user_second_address = user.random_address()
         tx_data = TransferReceiveDelete(
@@ -97,6 +203,7 @@ class Transfer(object):
         return Result(success=True)
 
     def _delete_slot(self, slot_dict, result_queue):
+        '''Delete single Slot'''
         grpc_client = get_client()
         meta_data = [
             ("user-id", str(self.config.user_id)),
@@ -129,6 +236,47 @@ class Transfer(object):
         return result
 
     def delete_sent_transfer(self, user, transfer_sent_obj):
+        '''
+        Delete sent transfer
+
+        Parameters:
+            user (datastructures.User):
+                datastructures.User object
+
+            transfer_sent_obj (datastructures.TransferSent):
+                datastructures.TransferSent
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.transfer import Transfer
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        sender = user.random_address()
+
+        transfer = Transfer(config)
+        file_path = '/tmp/your-test-file'
+
+        transfer_result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']])
+        transfer_sent_obj = transfer_result.data[0].data
+
+        delete_result = transfer.delete_sent_transfer(
+            user=user, transfer_sent_obj=transfer_sent_obj)
+        ````
+        '''
         result_queue = queue.Queue()
         threads = []
 
@@ -195,6 +343,52 @@ class Transfer(object):
         return Result(success=True)
 
     def upload(self, files, sender, recipient_addresses, note, callback=None):
+        '''
+        File transfer
+
+        Parameters:
+           files:
+               list of files
+
+           sender:
+               datastructures.User.addresses.Address
+
+           recipient_addresses:
+               datastructures.User.addresses[random].Key['Address']
+
+           note:
+               text note
+
+           callback:
+               callback is a function, and take the result parameter
+
+        Returns:
+            Result object, payload is [datastructures.TransferSent]
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.transfer import Transfer
+        from transferchain.config import create_config
+
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        sender = user.random_address()
+
+        transfer = Transfer(config)
+        file_path = '/tmp/your-test-file'
+
+        transfer_result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']])
+        ````
+        '''
         assert list == type(recipient_addresses), 'recipient adddress must be list' # noqa
         assert len(recipient_addresses) > 0, 'recipient_addresses is required'
         assert len(files) > 0, 'files required'
@@ -283,7 +477,47 @@ class Transfer(object):
     def upload_single_file(self, op_code, session_id, base_uuid_map,
                            process_uuid, sender, recipients, note,
                            file_path, callback, result_queue):
+        '''
+        Single file upload. The transfer.upload function uses this.
 
+        Parameters:
+           op_code:
+               pb.UploadOpCode.<Transfer|Storage>
+
+           session_id:
+               pb.TransferInitResponse.SessionID
+
+           base_uuid_map:
+               pb.TransferInitResponse.BaseUUIDs
+
+           process_uuid:
+               random uuid
+
+           sender:
+               datastructures.User.addresses.Address
+
+           recipients:
+               list of recipient addresses.
+               datastructures.Address.Key['Address']
+
+           note:
+               transfer note
+
+           file_path:
+               transfer file path
+
+           callback:
+               callback is a function, and take the result parameter
+
+           result_queue:
+               queue.Queue object
+
+        Returns:
+            Result object, payload is [datastructures.TransferSent]
+
+        Example:
+            -
+        '''
         tmp_folder = tempfile.mkdtemp()
         aes_key = crypt.generate_encrypt_key(32).encode('utf-8')
         hmac_key = crypt.generate_encrypt_key(32).encode('utf-8')
@@ -458,6 +692,36 @@ class Transfer(object):
     def prepare_slot_upload_request(
             self, session_id, out_file, slot,
             is_last_slot, file_stat, tweezers):
+
+        '''
+        Generate UploadV3Request payloads
+
+        Parameters:
+
+           session_id:
+               pb.TransferInitResponse.SessionID
+
+           out_file:
+               opened file object
+
+           slot:
+               pb.UploadSlot
+
+           is_last_slot:
+               bool
+
+           file_stat:
+               target file stat. os.stat
+
+           tweezers:
+               dict. total_write key is required
+
+        Returns:
+           Generator
+
+        Example:
+            -
+        '''
         chunk_size = constants.UPLOAD_CHUNK_SIZE
 
         slot_upload_size = 0
@@ -489,6 +753,46 @@ class Transfer(object):
                 break
 
     def cancel_upload(self, slots, op_code):
+        '''
+        Cancel Upload
+
+        Parameters:
+           slots:
+               list of pb.UploadSlot
+
+           op_code:
+               pb.UploadOpCode.<Transfer|Storage>
+
+        Returns:
+            Result object
+
+        Example:
+            -
+        ````
+        from transferchain.client import TransferChain
+        from transferchain.transfer import Transfer
+        from transferchain.config import create_config
+        from transferchain.protobuf import service_pb2 as pb
+        config = create_config()
+        tc = TransferChain(config)
+        tc.add_master_user()
+        user_info_result = tc.add_user()
+        user = user_info_result.data
+
+        sender = user.random_address()
+
+        transfer = Transfer(config)
+        file_path = '/tmp/your-test-file'
+
+        transfer_result = transfer.upload(
+            files=[file_path],
+            sender=sender,
+            recipient_addresses=[sender.Key['Address']])
+        slots = transfer_result.data[0].data.slots
+        cancel_result = transfer.cancel_upload(slots, pb.UploadOpCode.Transfer)
+        ````
+        '''
+
         grpc_client = get_client()
         meta_data = [
             ("user-id", str(self.config.user_id)),

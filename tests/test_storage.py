@@ -1,5 +1,6 @@
 import os
 import tempfile
+from pathlib import Path
 import unittest
 import shutil
 from transferchain.client import TransferChain
@@ -74,4 +75,32 @@ class TestStorageMethods(unittest.TestCase):
         cancel_result = storage.delete(user, storage_result)
         self.assertEqual(True, cancel_result.success,
                          cancel_result.error_message)
+        shutil.rmtree(dir_path)
+
+    def test_storage_download_is_valid(self):
+        config = create_config()
+        user = self.create_test_user(config)
+        storage = Storage(config)
+        dir_path, file_path = self.create_dummy_file()
+
+        def callback(result):
+            self.assertEqual(True, result.success)
+
+        result = storage.upload(
+            user=user, files=[file_path], callback=callback)
+        self.assertEqual(True, result.success)
+
+        storage_reuslt_obj = result.data[0].data
+        download_result = storage.download(
+            file_uid=storage_reuslt_obj.uuid,
+            slots=storage_reuslt_obj.slots,
+            file_size=storage_reuslt_obj.size,
+            file_name=storage_reuslt_obj.filename,
+            key_aes=storage_reuslt_obj.keyAES,
+            key_hmac=storage_reuslt_obj.keyHMAC,
+            destination=tempfile.tempdir
+        )
+        self.assertEqual(True, download_result.success)
+        path = Path(tempfile.tempdir).joinpath(storage_reuslt_obj.filename)
+        self.assertEqual(True, path.exists())
         shutil.rmtree(dir_path)

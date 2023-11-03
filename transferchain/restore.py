@@ -10,6 +10,49 @@ from transferchain.datastructures import (
 
 
 def restore_master(mnemonics, password, tx_type, limit=1, offset=0):
+    """
+    This function is called to fetch the master address of
+    the user of the specified type.
+
+    Parameters:
+        mnemonics (str):
+            mnemonics of account
+
+        password (str):
+            password
+
+        tx_type (str):
+            master txn types; constants.TX_TYPE_MASTER,
+                              constants.TX_TYPE_SUB_MASTER
+
+        limit (int):
+            data limit
+
+        offset (int):
+            offset
+
+    Returns:
+        Return dict. user keys and read client response.
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain import constants
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_master(
+            tc.config.mnemonics, user_password, constants.TX_TYPE_MASTER)
+
+    ```
+    """
     user_keys = keys.create_keys_with_mnemonic(mnemonics, password)
     client = HttpClient(settings.READ_NODE_ADDRESS)
     response = client.tx_search(
@@ -28,16 +71,124 @@ def restore_master(mnemonics, password, tx_type, limit=1, offset=0):
 
 
 def restore_master_user(mnemonics, password):
+    """
+    This function is called to fetch the master address of
+    the master user.
+
+    Parameters:
+        mnemonics (str):
+            mnemonics of account
+
+        password (str):
+            password
+
+    Returns:
+        Return dict. user keys and read client response.
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_master_user(
+            tc.config.mnemonics, user_password)
+
+    ```
+    """
     return restore_master(mnemonics, password, constants.TX_TYPE_MASTER)
 
 
 def restore_sub_user(mnemonics, password, page=1, limit=100):
+    """
+    This function is called to fetch the master address of
+    the sub user.
+
+    Parameters:
+        mnemonics (str):
+            mnemonics of account
+
+        password (str):
+            password
+
+        limit (int):
+            page limit
+
+        page (int):
+            number of page
+
+    Returns:
+        Return dict. user keys and read client response.
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_sub_user(
+            tc.config.mnemonics, user_password, page=1)
+
+    ```
+    """
+
     offset = ((page - 1) * limit + 1) - 1
     return restore_master(mnemonics, password, constants.TX_TYPE_SUB_MASTER,
                           limit=limit, offset=offset)
 
 
 def extract_txn(txn, key, with_gzip=False):
+    """
+    This function is called to fetch the master address of
+    the master user.
+
+    Parameters:
+        txn:
+            blockchain transaction
+
+        key (keys):
+            transaction keys
+
+        with_gzip (bool):
+            If the transaction is compressed with gzip, use this.
+
+    Returns:
+        Return transaction dict.
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_master_user(
+            tc.config.mnemonics, user_password)
+        txn_result = restore.extract_txn(
+            result['response'].result['txs'][0], result['user_keys'])
+
+    ```
+    """
     data = txn['data']['Bytes']
     decoded_data = base64.b64decode(data)
     tx = crypt.decrypt_asymmetric(
@@ -48,7 +199,47 @@ def extract_txn(txn, key, with_gzip=False):
 
 
 def get_addresses(typ, recipient_addrs, limit=1, offset=0):
-    # TEST
+    """
+    Fetch addresses
+
+    Parameters:
+        type (str):
+            transaction type
+
+        recipient addres (str):
+            broadcast address
+
+        limit (int):
+            page limit
+
+        offset (int):
+            page offset
+
+    Returns:
+        Return Result object.Payload is read client http response
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain import constants
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+
+        password = get_user_password(tc.config.user_id)
+        result = restore_master_user(tc.config.mnemonics, password)
+        user_keys = result['user_keys']
+        addresses_result = restore.get_addresses(
+            constants.TX_TYPE_ADDRESSES, user_keys['Address'],
+            limit=1, offset=0)
+
+    ```
+    """
     client = HttpClient(settings.READ_NODE_ADDRESS)
     response = client.tx_search(
         recipient_addrs=[recipient_addrs],
@@ -70,6 +261,41 @@ def get_addresses(typ, recipient_addrs, limit=1, offset=0):
 
 
 def restore_master_with_mnemonics(mnemonics, password, user_id):
+    """
+    The addresses of the master user are fetched with this
+    function and the user object is created.
+
+    Parameters:
+        mnemonics (str):
+            account mnemonics
+
+        password (str):
+            password
+
+        user_id (bool):
+            account id
+
+    Returns:
+        Return datastructures.User
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_master_with_mnemonics(
+            tc.config.mnemonics, user_password, tc.config.user_id)
+
+    ```
+    """
     result = restore_master_user(mnemonics, password)
     user_keys = result['user_keys']
     response = result['response']
@@ -112,6 +338,40 @@ def restore_master_with_mnemonics(mnemonics, password, user_id):
 
 
 def restore_sub_user_with_mnemonics(mnemonics, password, user_id):
+    """
+    The addresses of the sub users are fetched with this
+    function and the user object is created.
+
+    Parameters:
+        mnemonics (str):
+            account mnemonics
+
+        password (str):
+            password
+
+        user_id (bool):
+            account id
+
+    Returns:
+        Return list of datastructures.User
+
+    Example:
+        -
+    ```
+        from transferchain import restore
+        from transferchain.addresses import get_user_password
+        from transferchain.config import create_config
+        from transferchain.client import TransferChain
+
+        config = create_config()
+        tc = TransferChain(config)
+        result = tc.add_master_user()
+        # if result is oke, continue;
+        user_password = get_user_password(tc.config.user_id)
+        result = restore.restore_sub_user_with_mnemonics(
+            tc.config.mnemonics, user_password, tc.config.user_id)
+    ```
+    """
     page = 1
     users = []
     while True:

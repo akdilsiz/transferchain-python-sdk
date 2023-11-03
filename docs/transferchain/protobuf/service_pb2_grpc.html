@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>transferchain.protobuf.service_pb2_grpc API documentation</title>
+<meta name="description" content="Client and server classes corresponding to protobuf-defined services." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>transferchain.protobuf.service_pb2_grpc</code></h1>
+</header>
+<section id="section-intro">
+<p>Client and server classes corresponding to protobuf-defined services.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="transferchain.protobuf.service_pb2_grpc.add_tcRpcServicer_to_server"><code class="name flex">
+<span>def <span class="ident">add_tcRpcServicer_to_server</span></span>(<span>servicer, server)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc"><code class="flex name class">
+<span>class <span class="ident">tcRpc</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDelete"><code class="name flex">
+<span>def <span class="ident">AuthDelete</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDeleteV3"><code class="name flex">
+<span>def <span class="ident">AuthDeleteV3</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownload"><code class="name flex">
+<span>def <span class="ident">AuthDownload</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadInfo"><code class="name flex">
+<span>def <span class="ident">AuthDownloadInfo</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV2"><code class="name flex">
+<span>def <span class="ident">AuthDownloadV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV4"><code class="name flex">
+<span>def <span class="ident">AuthDownloadV4</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDropAccount"><code class="name flex">
+<span>def <span class="ident">AuthDropAccount</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthMessage"><code class="name flex">
+<span>def <span class="ident">AuthMessage</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsCreate"><code class="name flex">
+<span>def <span class="ident">AuthRequestsCreate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsUpdate"><code class="name flex">
+<span>def <span class="ident">AuthRequestsUpdate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageFinish"><code class="name flex">
+<span>def <span class="ident">AuthStorageFinish</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageInit"><code class="name flex">
+<span>def <span class="ident">AuthStorageInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransfer"><code class="name flex">
+<span>def <span class="ident">AuthTransfer</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferFinish"><code class="name flex">
+<span>def <span class="ident">AuthTransferFinish</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferInit"><code class="name flex">
+<span>def <span class="ident">AuthTransferInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToStorage"><code class="name flex">
+<span>def <span class="ident">AuthTransferToStorage</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToUpload"><code class="name flex">
+<span>def <span class="ident">AuthTransferToUpload</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthUploadInit"><code class="name flex">
+<span>def <span class="ident">AuthUploadInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataLogs"><code class="name flex">
+<span>def <span class="ident">DataLogs</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyCreate"><code class="name flex">
+<span>def <span class="ident">DataPolicyCreate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyDelete"><code class="name flex">
+<span>def <span class="ident">DataPolicyDelete</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomCreate"><code class="name flex">
+<span>def <span class="ident">DataRoomCreate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomDelete"><code class="name flex">
+<span>def <span class="ident">DataRoomDelete</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyCreate"><code class="name flex">
+<span>def <span class="ident">DataRoomPolicyCreate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyDelete"><code class="name flex">
+<span>def <span class="ident">DataRoomPolicyDelete</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.Delete"><code class="name flex">
+<span>def <span class="ident">Delete</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV2"><code class="name flex">
+<span>def <span class="ident">DeleteV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV3"><code class="name flex">
+<span>def <span class="ident">DeleteV3</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.Download"><code class="name flex">
+<span>def <span class="ident">Download</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadInfo"><code class="name flex">
+<span>def <span class="ident">DownloadInfo</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV2"><code class="name flex">
+<span>def <span class="ident">DownloadV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV3"><code class="name flex">
+<span>def <span class="ident">DownloadV3</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV4"><code class="name flex">
+<span>def <span class="ident">DownloadV4</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.DropAccount"><code class="name flex">
+<span>def <span class="ident">DropAccount</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.Heartbeat"><code class="name flex">
+<span>def <span class="ident">Heartbeat</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.Message"><code class="name flex">
+<span>def <span class="ident">Message</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsCreate"><code class="name flex">
+<span>def <span class="ident">RequestsCreate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsUpdate"><code class="name flex">
+<span>def <span class="ident">RequestsUpdate</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinish"><code class="name flex">
+<span>def <span class="ident">StorageFinish</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinishV2"><code class="name flex">
+<span>def <span class="ident">StorageFinishV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInit"><code class="name flex">
+<span>def <span class="ident">StorageInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInitV2"><code class="name flex">
+<span>def <span class="ident">StorageInitV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.Transfer"><code class="name flex">
+<span>def <span class="ident">Transfer</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinish"><code class="name flex">
+<span>def <span class="ident">TransferFinish</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinishV2"><code class="name flex">
+<span>def <span class="ident">TransferFinishV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInit"><code class="name flex">
+<span>def <span class="ident">TransferInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInitV2"><code class="name flex">
+<span>def <span class="ident">TransferInitV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToStorage"><code class="name flex">
+<span>def <span class="ident">TransferToStorage</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToUpload"><code class="name flex">
+<span>def <span class="ident">TransferToUpload</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferV2"><code class="name flex">
+<span>def <span class="ident">TransferV2</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasic"><code class="name flex">
+<span>def <span class="ident">UploadBasic</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV2"><code class="name flex">
+<span>def <span class="ident">UploadBasicV2</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV3"><code class="name flex">
+<span>def <span class="ident">UploadBasicV3</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV4"><code class="name flex">
+<span>def <span class="ident">UploadBasicV4</span></span>(<span>request_iterator, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInit"><code class="name flex">
+<span>def <span class="ident">UploadInit</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInitV2"><code class="name flex">
+<span>def <span class="ident">UploadInitV2</span></span>(<span>request, target, options=(), channel_credentials=None, call_credentials=None, insecure=False, compression=None, wait_for_ready=None, timeout=None, metadata=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer"><code class="flex name class">
+<span>class <span class="ident">tcRpcServicer</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDelete"><code class="name flex">
+<span>def <span class="ident">AuthDelete</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDeleteV3"><code class="name flex">
+<span>def <span class="ident">AuthDeleteV3</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownload"><code class="name flex">
+<span>def <span class="ident">AuthDownload</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadInfo"><code class="name flex">
+<span>def <span class="ident">AuthDownloadInfo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV2"><code class="name flex">
+<span>def <span class="ident">AuthDownloadV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV4"><code class="name flex">
+<span>def <span class="ident">AuthDownloadV4</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDropAccount"><code class="name flex">
+<span>def <span class="ident">AuthDropAccount</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthMessage"><code class="name flex">
+<span>def <span class="ident">AuthMessage</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsCreate"><code class="name flex">
+<span>def <span class="ident">AuthRequestsCreate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsUpdate"><code class="name flex">
+<span>def <span class="ident">AuthRequestsUpdate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageFinish"><code class="name flex">
+<span>def <span class="ident">AuthStorageFinish</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageInit"><code class="name flex">
+<span>def <span class="ident">AuthStorageInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransfer"><code class="name flex">
+<span>def <span class="ident">AuthTransfer</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferFinish"><code class="name flex">
+<span>def <span class="ident">AuthTransferFinish</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferInit"><code class="name flex">
+<span>def <span class="ident">AuthTransferInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToStorage"><code class="name flex">
+<span>def <span class="ident">AuthTransferToStorage</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToUpload"><code class="name flex">
+<span>def <span class="ident">AuthTransferToUpload</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthUploadInit"><code class="name flex">
+<span>def <span class="ident">AuthUploadInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataLogs"><code class="name flex">
+<span>def <span class="ident">DataLogs</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyCreate"><code class="name flex">
+<span>def <span class="ident">DataPolicyCreate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyDelete"><code class="name flex">
+<span>def <span class="ident">DataPolicyDelete</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomCreate"><code class="name flex">
+<span>def <span class="ident">DataRoomCreate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>DataRoom and Data</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomDelete"><code class="name flex">
+<span>def <span class="ident">DataRoomDelete</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyCreate"><code class="name flex">
+<span>def <span class="ident">DataRoomPolicyCreate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyDelete"><code class="name flex">
+<span>def <span class="ident">DataRoomPolicyDelete</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Delete"><code class="name flex">
+<span>def <span class="ident">Delete</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV2"><code class="name flex">
+<span>def <span class="ident">DeleteV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV3"><code class="name flex">
+<span>def <span class="ident">DeleteV3</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Download"><code class="name flex">
+<span>def <span class="ident">Download</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadInfo"><code class="name flex">
+<span>def <span class="ident">DownloadInfo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV2"><code class="name flex">
+<span>def <span class="ident">DownloadV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV3"><code class="name flex">
+<span>def <span class="ident">DownloadV3</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV4"><code class="name flex">
+<span>def <span class="ident">DownloadV4</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DropAccount"><code class="name flex">
+<span>def <span class="ident">DropAccount</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Heartbeat"><code class="name flex">
+<span>def <span class="ident">Heartbeat</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Message"><code class="name flex">
+<span>def <span class="ident">Message</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsCreate"><code class="name flex">
+<span>def <span class="ident">RequestsCreate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsUpdate"><code class="name flex">
+<span>def <span class="ident">RequestsUpdate</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinish"><code class="name flex">
+<span>def <span class="ident">StorageFinish</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinishV2"><code class="name flex">
+<span>def <span class="ident">StorageFinishV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInit"><code class="name flex">
+<span>def <span class="ident">StorageInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInitV2"><code class="name flex">
+<span>def <span class="ident">StorageInitV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Transfer"><code class="name flex">
+<span>def <span class="ident">Transfer</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinish"><code class="name flex">
+<span>def <span class="ident">TransferFinish</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinishV2"><code class="name flex">
+<span>def <span class="ident">TransferFinishV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInit"><code class="name flex">
+<span>def <span class="ident">TransferInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInitV2"><code class="name flex">
+<span>def <span class="ident">TransferInitV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToStorage"><code class="name flex">
+<span>def <span class="ident">TransferToStorage</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToUpload"><code class="name flex">
+<span>def <span class="ident">TransferToUpload</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferV2"><code class="name flex">
+<span>def <span class="ident">TransferV2</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasic"><code class="name flex">
+<span>def <span class="ident">UploadBasic</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV2"><code class="name flex">
+<span>def <span class="ident">UploadBasicV2</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV3"><code class="name flex">
+<span>def <span class="ident">UploadBasicV3</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV4"><code class="name flex">
+<span>def <span class="ident">UploadBasicV4</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInit"><code class="name flex">
+<span>def <span class="ident">UploadInit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInitV2"><code class="name flex">
+<span>def <span class="ident">UploadInitV2</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="transferchain.protobuf.service_pb2_grpc.tcRpcStub"><code class="flex name class">
+<span>class <span class="ident">tcRpcStub</span></span>
+<span>(</span><span>channel)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Missing associated documentation comment in .proto file.</p>
+<p>Constructor.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>channel</code></strong></dt>
+<dd>A grpc.Channel.</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="transferchain.protobuf" href="index.html">transferchain.protobuf</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.add_tcRpcServicer_to_server" href="#transferchain.protobuf.service_pb2_grpc.add_tcRpcServicer_to_server">add_tcRpcServicer_to_server</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc" href="#transferchain.protobuf.service_pb2_grpc.tcRpc">tcRpc</a></code></h4>
+<ul class="">
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDelete">AuthDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDeleteV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDeleteV3">AuthDeleteV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownload" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownload">AuthDownload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadInfo" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadInfo">AuthDownloadInfo</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV2">AuthDownloadV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDownloadV4">AuthDownloadV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDropAccount" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthDropAccount">AuthDropAccount</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthMessage" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthMessage">AuthMessage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsCreate">AuthRequestsCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsUpdate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthRequestsUpdate">AuthRequestsUpdate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageFinish">AuthStorageFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthStorageInit">AuthStorageInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransfer" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransfer">AuthTransfer</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferFinish">AuthTransferFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferInit">AuthTransferInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToStorage" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToStorage">AuthTransferToStorage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToUpload" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthTransferToUpload">AuthTransferToUpload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.AuthUploadInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.AuthUploadInit">AuthUploadInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataLogs" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataLogs">DataLogs</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyCreate">DataPolicyCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataPolicyDelete">DataPolicyDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomCreate">DataRoomCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomDelete">DataRoomDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyCreate">DataRoomPolicyCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DataRoomPolicyDelete">DataRoomPolicyDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.Delete" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.Delete">Delete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV2">DeleteV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DeleteV3">DeleteV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.Download" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.Download">Download</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadInfo" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadInfo">DownloadInfo</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV2">DownloadV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV3">DownloadV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DownloadV4">DownloadV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.DropAccount" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.DropAccount">DropAccount</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.Heartbeat" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.Heartbeat">Heartbeat</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.Message" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.Message">Message</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsCreate">RequestsCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsUpdate" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.RequestsUpdate">RequestsUpdate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinish">StorageFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinishV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.StorageFinishV2">StorageFinishV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInit">StorageInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.StorageInitV2">StorageInitV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.Transfer" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.Transfer">Transfer</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinish">TransferFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinishV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferFinishV2">TransferFinishV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInit">TransferInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferInitV2">TransferInitV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToStorage" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToStorage">TransferToStorage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToUpload" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferToUpload">TransferToUpload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.TransferV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.TransferV2">TransferV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasic" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasic">UploadBasic</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV2">UploadBasicV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV3">UploadBasicV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadBasicV4">UploadBasicV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInit">UploadInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpc.UploadInitV2">UploadInitV2</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer">tcRpcServicer</a></code></h4>
+<ul class="">
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDelete">AuthDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDeleteV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDeleteV3">AuthDeleteV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownload" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownload">AuthDownload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadInfo" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadInfo">AuthDownloadInfo</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV2">AuthDownloadV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDownloadV4">AuthDownloadV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDropAccount" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthDropAccount">AuthDropAccount</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthMessage" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthMessage">AuthMessage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsCreate">AuthRequestsCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsUpdate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthRequestsUpdate">AuthRequestsUpdate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageFinish">AuthStorageFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthStorageInit">AuthStorageInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransfer" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransfer">AuthTransfer</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferFinish">AuthTransferFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferInit">AuthTransferInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToStorage" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToStorage">AuthTransferToStorage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToUpload" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthTransferToUpload">AuthTransferToUpload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthUploadInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.AuthUploadInit">AuthUploadInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataLogs" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataLogs">DataLogs</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyCreate">DataPolicyCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataPolicyDelete">DataPolicyDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomCreate">DataRoomCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomDelete">DataRoomDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyCreate">DataRoomPolicyCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyDelete" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DataRoomPolicyDelete">DataRoomPolicyDelete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Delete" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Delete">Delete</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV2">DeleteV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DeleteV3">DeleteV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Download" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Download">Download</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadInfo" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadInfo">DownloadInfo</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV2">DownloadV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV3">DownloadV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DownloadV4">DownloadV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DropAccount" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.DropAccount">DropAccount</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Heartbeat" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Heartbeat">Heartbeat</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Message" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Message">Message</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsCreate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsCreate">RequestsCreate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsUpdate" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.RequestsUpdate">RequestsUpdate</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinish">StorageFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinishV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageFinishV2">StorageFinishV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInit">StorageInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.StorageInitV2">StorageInitV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Transfer" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.Transfer">Transfer</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinish" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinish">TransferFinish</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinishV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferFinishV2">TransferFinishV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInit">TransferInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferInitV2">TransferInitV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToStorage" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToStorage">TransferToStorage</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToUpload" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferToUpload">TransferToUpload</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.TransferV2">TransferV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasic" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasic">UploadBasic</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV2">UploadBasicV2</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV3" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV3">UploadBasicV3</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV4" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadBasicV4">UploadBasicV4</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInit" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInit">UploadInit</a></code></li>
+<li><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInitV2" href="#transferchain.protobuf.service_pb2_grpc.tcRpcServicer.UploadInitV2">UploadInitV2</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="transferchain.protobuf.service_pb2_grpc.tcRpcStub" href="#transferchain.protobuf.service_pb2_grpc.tcRpcStub">tcRpcStub</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
