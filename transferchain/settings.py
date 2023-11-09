@@ -1,7 +1,7 @@
 '''
 Constants that will change depending on the situation
 in the module are written here.'''
-DEBUG = True
+DEBUG = False
 
 # production urls
 RPC_ADDRESS = "node1.transferchain.io:50051"
