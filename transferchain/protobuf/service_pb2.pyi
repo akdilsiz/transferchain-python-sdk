@@ -148,7 +148,7 @@ class TransferToStorageRequest(_message.Message):
     def __init__(self, UUID: _Optional[str] = ..., UserID: _Optional[int] = ..., Slots: _Optional[_Iterable[_Union[UploadSlot, _Mapping]]] = ..., JWT: _Optional[str] = ...) -> None: ...
 
 class TransferInitRequest(_message.Message):
-    __slots__ = ["files", "totalSize", "opCode", "userID", "walletID", "recipientCount", "transferOpCode", "emails", "notes", "sourceEmail", "UID", "paths", "Non2Non", "NonUID", "URLFlag", "JWT"]
+    __slots__ = ["files", "totalSize", "opCode", "userID", "walletID", "recipientCount", "transferOpCode", "emails", "notes", "sourceEmail", "UID", "paths", "Non2Non", "NonUID", "URLFlag", "DeleteAfter", "JWT"]
     FILES_FIELD_NUMBER: _ClassVar[int]
     TOTALSIZE_FIELD_NUMBER: _ClassVar[int]
     OPCODE_FIELD_NUMBER: _ClassVar[int]
@@ -164,6 +164,7 @@ class TransferInitRequest(_message.Message):
     NON2NON_FIELD_NUMBER: _ClassVar[int]
     NONUID_FIELD_NUMBER: _ClassVar[int]
     URLFLAG_FIELD_NUMBER: _ClassVar[int]
+    DELETEAFTER_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
     files: _containers.RepeatedScalarFieldContainer[str]
     totalSize: int
@@ -180,8 +181,9 @@ class TransferInitRequest(_message.Message):
     Non2Non: bool
     NonUID: str
     URLFlag: bool
+    DeleteAfter: int
     JWT: str
-    def __init__(self, files: _Optional[_Iterable[str]] = ..., totalSize: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., userID: _Optional[int] = ..., walletID: _Optional[int] = ..., recipientCount: _Optional[int] = ..., transferOpCode: _Optional[_Union[TransferOpCode, str]] = ..., emails: _Optional[_Iterable[str]] = ..., notes: _Optional[str] = ..., sourceEmail: _Optional[str] = ..., UID: _Optional[str] = ..., paths: _Optional[_Iterable[str]] = ..., Non2Non: bool = ..., NonUID: _Optional[str] = ..., URLFlag: bool = ..., JWT: _Optional[str] = ...) -> None: ...
+    def __init__(self, files: _Optional[_Iterable[str]] = ..., totalSize: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., userID: _Optional[int] = ..., walletID: _Optional[int] = ..., recipientCount: _Optional[int] = ..., transferOpCode: _Optional[_Union[TransferOpCode, str]] = ..., emails: _Optional[_Iterable[str]] = ..., notes: _Optional[str] = ..., sourceEmail: _Optional[str] = ..., UID: _Optional[str] = ..., paths: _Optional[_Iterable[str]] = ..., Non2Non: bool = ..., NonUID: _Optional[str] = ..., URLFlag: bool = ..., DeleteAfter: _Optional[int] = ..., JWT: _Optional[str] = ...) -> None: ...
 
 class TransferInitResponse(_message.Message):
     __slots__ = ["SessionID", "BaseUUIDs", "UID", "Address", "UserID", "errorCode", "errorMessage"]
@@ -257,7 +259,7 @@ class TransferResponse(_message.Message):
     def __init__(self, StatusCode: _Optional[_Union[UploadStatusCode, str]] = ...) -> None: ...
 
 class UploadInitRequest(_message.Message):
-    __slots__ = ["sessionID", "fileName", "senderAddress", "fileSize", "opCode", "userID", "walletID", "DeleteAfter", "recipientCount", "transferOpCode", "Non2Non", "DownloadLimit", "JWT"]
+    __slots__ = ["sessionID", "fileName", "senderAddress", "fileSize", "opCode", "userID", "walletID", "DeleteAfter", "recipientCount", "transferOpCode", "Non2Non", "DownloadLimit", "JWT", "RoomID", "Owner", "PolicyID"]
     SESSIONID_FIELD_NUMBER: _ClassVar[int]
     FILENAME_FIELD_NUMBER: _ClassVar[int]
     SENDERADDRESS_FIELD_NUMBER: _ClassVar[int]
@@ -271,6 +273,9 @@ class UploadInitRequest(_message.Message):
     NON2NON_FIELD_NUMBER: _ClassVar[int]
     DOWNLOADLIMIT_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     sessionID: str
     fileName: str
     senderAddress: str
@@ -284,7 +289,10 @@ class UploadInitRequest(_message.Message):
     Non2Non: bool
     DownloadLimit: int
     JWT: str
-    def __init__(self, sessionID: _Optional[str] = ..., fileName: _Optional[str] = ..., senderAddress: _Optional[str] = ..., fileSize: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., userID: _Optional[int] = ..., walletID: _Optional[int] = ..., DeleteAfter: _Optional[int] = ..., recipientCount: _Optional[int] = ..., transferOpCode: _Optional[_Union[TransferOpCode, str]] = ..., Non2Non: bool = ..., DownloadLimit: _Optional[int] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, sessionID: _Optional[str] = ..., fileName: _Optional[str] = ..., senderAddress: _Optional[str] = ..., fileSize: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., userID: _Optional[int] = ..., walletID: _Optional[int] = ..., DeleteAfter: _Optional[int] = ..., recipientCount: _Optional[int] = ..., transferOpCode: _Optional[_Union[TransferOpCode, str]] = ..., Non2Non: bool = ..., DownloadLimit: _Optional[int] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class UploadSlot(_message.Message):
     __slots__ = ["BaseUUID", "UUID", "StorageService", "Address", "Size", "SizeRL", "ProvData", "Data", "UploadData", "StorageCode", "userID", "LastPartSize", "Storage", "ChunkSize"]
@@ -397,7 +405,7 @@ class RequestsResponse(_message.Message):
     def __init__(self, ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ...) -> None: ...
 
 class StorageInitRequest(_message.Message):
-    __slots__ = ["TotalSize", "Paths", "OpCode", "UserID", "WalletID", "notes", "UID", "Requests", "RequestsUUID", "Expire", "JWT"]
+    __slots__ = ["TotalSize", "Paths", "OpCode", "UserID", "WalletID", "notes", "UID", "Requests", "RequestsUUID", "Expire", "JWT", "RoomID", "Owner", "PolicyID"]
     TOTALSIZE_FIELD_NUMBER: _ClassVar[int]
     PATHS_FIELD_NUMBER: _ClassVar[int]
     OPCODE_FIELD_NUMBER: _ClassVar[int]
@@ -409,6 +417,9 @@ class StorageInitRequest(_message.Message):
     REQUESTSUUID_FIELD_NUMBER: _ClassVar[int]
     EXPIRE_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     TotalSize: int
     Paths: _containers.RepeatedScalarFieldContainer[str]
     OpCode: UploadOpCode
@@ -420,7 +431,10 @@ class StorageInitRequest(_message.Message):
     RequestsUUID: str
     Expire: str
     JWT: str
-    def __init__(self, TotalSize: _Optional[int] = ..., Paths: _Optional[_Iterable[str]] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., UserID: _Optional[int] = ..., WalletID: _Optional[int] = ..., notes: _Optional[str] = ..., UID: _Optional[str] = ..., Requests: bool = ..., RequestsUUID: _Optional[str] = ..., Expire: _Optional[str] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, TotalSize: _Optional[int] = ..., Paths: _Optional[_Iterable[str]] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., UserID: _Optional[int] = ..., WalletID: _Optional[int] = ..., notes: _Optional[str] = ..., UID: _Optional[str] = ..., Requests: bool = ..., RequestsUUID: _Optional[str] = ..., Expire: _Optional[str] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class StorageInitResponse(_message.Message):
     __slots__ = ["SessionID", "BaseUUIDs", "UID", "Address", "UserID", "ErrorCode", "ErrorMessage"]
@@ -494,7 +508,7 @@ class StorageFinishResponse(_message.Message):
     def __init__(self, Code: _Optional[_Union[StorageStatusCodes, str]] = ...) -> None: ...
 
 class DownloadRequest(_message.Message):
-    __slots__ = ["pubKey", "uuid", "Slots", "StorageCode", "WalletID", "UserID", "opCode", "JWT"]
+    __slots__ = ["pubKey", "uuid", "Slots", "StorageCode", "WalletID", "UserID", "opCode", "JWT", "RoomID", "Owner", "PolicyID"]
     PUBKEY_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     SLOTS_FIELD_NUMBER: _ClassVar[int]
@@ -503,6 +517,9 @@ class DownloadRequest(_message.Message):
     USERID_FIELD_NUMBER: _ClassVar[int]
     OPCODE_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     pubKey: str
     uuid: str
     Slots: _containers.RepeatedCompositeFieldContainer[UploadSlot]
@@ -511,10 +528,13 @@ class DownloadRequest(_message.Message):
     UserID: int
     opCode: UploadOpCode
     JWT: str
-    def __init__(self, pubKey: _Optional[str] = ..., uuid: _Optional[str] = ..., Slots: _Optional[_Iterable[_Union[UploadSlot, _Mapping]]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, pubKey: _Optional[str] = ..., uuid: _Optional[str] = ..., Slots: _Optional[_Iterable[_Union[UploadSlot, _Mapping]]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DownloadV2Request(_message.Message):
-    __slots__ = ["pubKey", "uuid", "Slot", "StorageCode", "WalletID", "UserID", "opCode", "Non", "Last", "JWT"]
+    __slots__ = ["pubKey", "uuid", "Slot", "StorageCode", "WalletID", "UserID", "opCode", "Non", "Last", "JWT", "RoomID", "Owner", "PolicyID"]
     PUBKEY_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     SLOT_FIELD_NUMBER: _ClassVar[int]
@@ -525,6 +545,9 @@ class DownloadV2Request(_message.Message):
     NON_FIELD_NUMBER: _ClassVar[int]
     LAST_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     pubKey: str
     uuid: str
     Slot: UploadSlot
@@ -535,10 +558,13 @@ class DownloadV2Request(_message.Message):
     Non: bool
     Last: bool
     JWT: str
-    def __init__(self, pubKey: _Optional[str] = ..., uuid: _Optional[str] = ..., Slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., Non: bool = ..., Last: bool = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, pubKey: _Optional[str] = ..., uuid: _Optional[str] = ..., Slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., Non: bool = ..., Last: bool = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DownloadV4Request(_message.Message):
-    __slots__ = ["Slot", "StorageCode", "WalletID", "UserID", "OpCode", "Non", "Last", "Seek", "ChunkSize", "JWT"]
+    __slots__ = ["Slot", "StorageCode", "WalletID", "UserID", "OpCode", "Non", "Last", "Seek", "ChunkSize", "JWT", "RoomID", "Owner", "PolicyID"]
     SLOT_FIELD_NUMBER: _ClassVar[int]
     STORAGECODE_FIELD_NUMBER: _ClassVar[int]
     WALLETID_FIELD_NUMBER: _ClassVar[int]
@@ -549,6 +575,9 @@ class DownloadV4Request(_message.Message):
     SEEK_FIELD_NUMBER: _ClassVar[int]
     CHUNKSIZE_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     Slot: UploadSlot
     StorageCode: str
     WalletID: int
@@ -559,7 +588,10 @@ class DownloadV4Request(_message.Message):
     Seek: int
     ChunkSize: int
     JWT: str
-    def __init__(self, Slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., Non: bool = ..., Last: bool = ..., Seek: _Optional[int] = ..., ChunkSize: _Optional[int] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, Slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., UserID: _Optional[int] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., Non: bool = ..., Last: bool = ..., Seek: _Optional[int] = ..., ChunkSize: _Optional[int] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DownloadResponse(_message.Message):
     __slots__ = ["chunk"]
@@ -576,12 +608,18 @@ class DownloadV4Response(_message.Message):
     def __init__(self, chunk: _Optional[bytes] = ..., ContentLength: _Optional[int] = ...) -> None: ...
 
 class DownloadInfoRequest(_message.Message):
-    __slots__ = ["BaseUUID", "JWT"]
+    __slots__ = ["BaseUUID", "JWT", "RoomID", "Owner", "PolicyID"]
     BASEUUID_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     BaseUUID: str
     JWT: str
-    def __init__(self, BaseUUID: _Optional[str] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, BaseUUID: _Optional[str] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DownloadInfoResponse(_message.Message):
     __slots__ = ["DownloadLimit", "RemainingDownloadLimit"]
@@ -592,7 +630,7 @@ class DownloadInfoResponse(_message.Message):
     def __init__(self, DownloadLimit: _Optional[int] = ..., RemainingDownloadLimit: _Optional[int] = ...) -> None: ...
 
 class DeleteRequest(_message.Message):
-    __slots__ = ["uuid", "StorageCode", "WalletID", "slot", "opCode", "UserID", "Cancel", "JWT"]
+    __slots__ = ["uuid", "StorageCode", "WalletID", "slot", "opCode", "UserID", "Cancel", "JWT", "RoomID", "Owner", "PolicyID"]
     UUID_FIELD_NUMBER: _ClassVar[int]
     STORAGECODE_FIELD_NUMBER: _ClassVar[int]
     WALLETID_FIELD_NUMBER: _ClassVar[int]
@@ -601,6 +639,9 @@ class DeleteRequest(_message.Message):
     USERID_FIELD_NUMBER: _ClassVar[int]
     CANCEL_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     uuid: str
     StorageCode: str
     WalletID: int
@@ -609,21 +650,30 @@ class DeleteRequest(_message.Message):
     UserID: int
     Cancel: bool
     JWT: str
-    def __init__(self, uuid: _Optional[str] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., UserID: _Optional[int] = ..., Cancel: bool = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, uuid: _Optional[str] = ..., StorageCode: _Optional[str] = ..., WalletID: _Optional[int] = ..., slot: _Optional[_Union[UploadSlot, _Mapping]] = ..., opCode: _Optional[_Union[UploadOpCode, str]] = ..., UserID: _Optional[int] = ..., Cancel: bool = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DeleteV3Request(_message.Message):
-    __slots__ = ["UserID", "WalletID", "Slots", "OpCode", "JWT"]
+    __slots__ = ["UserID", "WalletID", "Slots", "OpCode", "JWT", "RoomID", "Owner", "PolicyID"]
     USERID_FIELD_NUMBER: _ClassVar[int]
     WALLETID_FIELD_NUMBER: _ClassVar[int]
     SLOTS_FIELD_NUMBER: _ClassVar[int]
     OPCODE_FIELD_NUMBER: _ClassVar[int]
     JWT_FIELD_NUMBER: _ClassVar[int]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    OWNER_FIELD_NUMBER: _ClassVar[int]
+    POLICYID_FIELD_NUMBER: _ClassVar[int]
     UserID: int
     WalletID: int
     Slots: _containers.RepeatedCompositeFieldContainer[UploadSlot]
     OpCode: UploadOpCode
     JWT: str
-    def __init__(self, UserID: _Optional[int] = ..., WalletID: _Optional[int] = ..., Slots: _Optional[_Iterable[_Union[UploadSlot, _Mapping]]] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., JWT: _Optional[str] = ...) -> None: ...
+    RoomID: str
+    Owner: str
+    PolicyID: str
+    def __init__(self, UserID: _Optional[int] = ..., WalletID: _Optional[int] = ..., Slots: _Optional[_Iterable[_Union[UploadSlot, _Mapping]]] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., JWT: _Optional[str] = ..., RoomID: _Optional[str] = ..., Owner: _Optional[str] = ..., PolicyID: _Optional[str] = ...) -> None: ...
 
 class DeleteResponse(_message.Message):
     __slots__ = ["statusCode"]
@@ -730,11 +780,12 @@ class DataRoomDeleteResponse(_message.Message):
     def __init__(self, Success: bool = ..., ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ...) -> None: ...
 
 class DataPolicy(_message.Message):
-    __slots__ = ["ID", "Identifier", "SourceIdentifier", "TargetIdentifier", "RoomID", "OpCode", "Policy", "CreatedAt"]
+    __slots__ = ["ID", "Identifier", "SourceIdentifier", "TargetIdentifier", "SlotsIdentifiers", "RoomID", "OpCode", "Policy", "CreatedAt"]
     ID_FIELD_NUMBER: _ClassVar[int]
     IDENTIFIER_FIELD_NUMBER: _ClassVar[int]
     SOURCEIDENTIFIER_FIELD_NUMBER: _ClassVar[int]
     TARGETIDENTIFIER_FIELD_NUMBER: _ClassVar[int]
+    SLOTSIDENTIFIERS_FIELD_NUMBER: _ClassVar[int]
     ROOMID_FIELD_NUMBER: _ClassVar[int]
     OPCODE_FIELD_NUMBER: _ClassVar[int]
     POLICY_FIELD_NUMBER: _ClassVar[int]
@@ -743,11 +794,12 @@ class DataPolicy(_message.Message):
     Identifier: str
     SourceIdentifier: str
     TargetIdentifier: str
+    SlotsIdentifiers: _containers.RepeatedScalarFieldContainer[str]
     RoomID: str
     OpCode: UploadOpCode
     Policy: Policy
     CreatedAt: _timestamp_pb2.Timestamp
-    def __init__(self, ID: _Optional[str] = ..., Identifier: _Optional[str] = ..., SourceIdentifier: _Optional[str] = ..., TargetIdentifier: _Optional[str] = ..., RoomID: _Optional[str] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., Policy: _Optional[_Union[Policy, str]] = ..., CreatedAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, ID: _Optional[str] = ..., Identifier: _Optional[str] = ..., SourceIdentifier: _Optional[str] = ..., TargetIdentifier: _Optional[str] = ..., SlotsIdentifiers: _Optional[_Iterable[str]] = ..., RoomID: _Optional[str] = ..., OpCode: _Optional[_Union[UploadOpCode, str]] = ..., Policy: _Optional[_Union[Policy, str]] = ..., CreatedAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class DataPolicyCreateRequest(_message.Message):
     __slots__ = ["Policy", "Policies", "JWT"]
@@ -802,14 +854,16 @@ class DataRoomPolicyCreateRequest(_message.Message):
     def __init__(self, Policy: _Optional[_Union[DataRoomPolicy, _Mapping]] = ..., Policies: _Optional[_Iterable[_Union[DataRoomPolicy, _Mapping]]] = ..., JWT: _Optional[str] = ...) -> None: ...
 
 class DataRoomPolicyCreateResponse(_message.Message):
-    __slots__ = ["Success", "ErrorCode", "ErrorMessage"]
+    __slots__ = ["Success", "ErrorCode", "ErrorMessage", "Policies"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     ERRORCODE_FIELD_NUMBER: _ClassVar[int]
     ERRORMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    POLICIES_FIELD_NUMBER: _ClassVar[int]
     Success: bool
     ErrorCode: int
     ErrorMessage: str
-    def __init__(self, Success: bool = ..., ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ...) -> None: ...
+    Policies: _containers.RepeatedCompositeFieldContainer[DataRoomPolicy]
+    def __init__(self, Success: bool = ..., ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ..., Policies: _Optional[_Iterable[_Union[DataRoomPolicy, _Mapping]]] = ...) -> None: ...
 
 class DataRoomPolicyDeleteRequest(_message.Message):
     __slots__ = ["Policy", "Policies", "JWT"]

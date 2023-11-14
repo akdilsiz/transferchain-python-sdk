@@ -421,7 +421,8 @@ class Transfer(object):
                     recipientCount=len(recipient_addresses),
                     transferOpCode=pb.TransferOpCode.Normal,
                     notes=note,
-                    paths=files
+                    paths=files,
+                    DeleteAfter=7 * 24
                 ), metadata=meta_data)
         except grpc.RpcError as e:
             error_message = "transfer init request error: {}".format(
