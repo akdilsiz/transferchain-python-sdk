@@ -23,6 +23,98 @@
 </header>
 <section id="section-intro">
 <p>Configs to be used in the module are created here.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;Configs to be used in the module are created here.&#39;&#39;&#39;
+
+import os
+import uuid
+from transferchain import utils
+from transferchain import exceptions
+from transferchain.datastructures import Config
+from transferchain.wallet import create_wallet, get_wallet_info
+
+
+def create_config():
+    &#34;&#34;&#34;
+    This function returns the config object.It takes parameters from env.
+
+    If TRANSFERCHAIN_WALLET_UUID is empty, it is automatic generated.
+
+    If there are no TRANSFERCHAIN_MNEMONICS, call the client.add_master_user.
+
+    If give the TRANSFERCHAIN_MNEMONICS and already have an account you call
+    the client.restore_master_user
+
+    Parameters:
+        TRANSFERCHAIN_USER_ID (int):
+            account user id
+
+        TRANSFERCHAIN_API_TOKEN (str):
+            transferchain api token
+
+        TRANSFERCHAIN_API_SECRET (str):
+            transferchain api secret
+
+        TRANSFERCHAIN_WALLET_UUID (str):
+            optinal value, random uuid generated for subuser
+
+        TRANSFERCHAIN_MNEMONICS (str):
+            account mnemonics
+
+    Returns:
+        datastructers.Config
+
+    Example:
+        -
+    ```
+        from transferchain.config import create_config
+        config = create_config()
+
+    ```
+    &#34;&#34;&#34;
+    user_id = int(os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;, 0))
+
+    if not user_id:
+        raise exceptions.ValidationError(&#34;config error: invalid user id&#34;)
+
+    api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+    api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+
+    if api_token == &#34;&#34; or api_secret == &#34;&#34;:
+        raise exceptions.ValidationError(
+            &#34;config error: invalid api token or api secret&#34;)
+
+    db_path = os.path.join(os.getcwd(), &#34;tc.db&#34;)
+    conf = Config(api_token=api_token, api_secret=api_secret,
+                  db_path=db_path)
+
+    wallet_uuid = os.environ.get(&#39;TRANSFERCHAIN_WALLET_UUID&#39;)
+    if not wallet_uuid:
+        wallet_uuid = str(uuid.uuid4())
+        result = create_wallet(conf, user_id, wallet_uuid)
+        if result.success is False:
+            raise exceptions.ValidationError(result.error_message)
+        wallet_id = result.wallet_id
+    else:
+        if not utils.is_valid_uuid(wallet_uuid):
+            raise exceptions.ValidationError(&#39;invalid wallet uuid&#39;)
+        wallet_info = get_wallet_info(conf, wallet_uuid)
+        wallet_id = wallet_info.id
+
+    mnemonics = os.environ.get(&#39;TRANSFERCHAIN_MNEMONICS&#39;, &#39;&#39;)
+    # if not mnemonics or len(mnemonics.split(&#39;&#39;)) != 24:
+    #    mnemonics = bip39.create_mnomonics()
+    #    # create user addresses or  restore
+
+    return conf._replace(
+        user_id=user_id,
+        wallet_uuid=wallet_uuid,
+        wallet_id=wallet_id,
+        mnemonics=mnemonics)</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -59,6 +151,88 @@ account mnemonics</p>
     config = create_config()
 
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_config():
+    &#34;&#34;&#34;
+    This function returns the config object.It takes parameters from env.
+
+    If TRANSFERCHAIN_WALLET_UUID is empty, it is automatic generated.
+
+    If there are no TRANSFERCHAIN_MNEMONICS, call the client.add_master_user.
+
+    If give the TRANSFERCHAIN_MNEMONICS and already have an account you call
+    the client.restore_master_user
+
+    Parameters:
+        TRANSFERCHAIN_USER_ID (int):
+            account user id
+
+        TRANSFERCHAIN_API_TOKEN (str):
+            transferchain api token
+
+        TRANSFERCHAIN_API_SECRET (str):
+            transferchain api secret
+
+        TRANSFERCHAIN_WALLET_UUID (str):
+            optinal value, random uuid generated for subuser
+
+        TRANSFERCHAIN_MNEMONICS (str):
+            account mnemonics
+
+    Returns:
+        datastructers.Config
+
+    Example:
+        -
+    ```
+        from transferchain.config import create_config
+        config = create_config()
+
+    ```
+    &#34;&#34;&#34;
+    user_id = int(os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;, 0))
+
+    if not user_id:
+        raise exceptions.ValidationError(&#34;config error: invalid user id&#34;)
+
+    api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+    api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+
+    if api_token == &#34;&#34; or api_secret == &#34;&#34;:
+        raise exceptions.ValidationError(
+            &#34;config error: invalid api token or api secret&#34;)
+
+    db_path = os.path.join(os.getcwd(), &#34;tc.db&#34;)
+    conf = Config(api_token=api_token, api_secret=api_secret,
+                  db_path=db_path)
+
+    wallet_uuid = os.environ.get(&#39;TRANSFERCHAIN_WALLET_UUID&#39;)
+    if not wallet_uuid:
+        wallet_uuid = str(uuid.uuid4())
+        result = create_wallet(conf, user_id, wallet_uuid)
+        if result.success is False:
+            raise exceptions.ValidationError(result.error_message)
+        wallet_id = result.wallet_id
+    else:
+        if not utils.is_valid_uuid(wallet_uuid):
+            raise exceptions.ValidationError(&#39;invalid wallet uuid&#39;)
+        wallet_info = get_wallet_info(conf, wallet_uuid)
+        wallet_id = wallet_info.id
+
+    mnemonics = os.environ.get(&#39;TRANSFERCHAIN_MNEMONICS&#39;, &#39;&#39;)
+    # if not mnemonics or len(mnemonics.split(&#39;&#39;)) != 24:
+    #    mnemonics = bip39.create_mnomonics()
+    #    # create user addresses or  restore
+
+    return conf._replace(
+        user_id=user_id,
+        wallet_uuid=wallet_uuid,
+        wallet_id=wallet_id,
+        mnemonics=mnemonics)</code></pre>
+</details>
 </dd>
 </dl>
 </section>

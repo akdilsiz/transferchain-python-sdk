@@ -1,7 +1,7 @@
 '''
 Constants that will change depending on the situation
 in the module are written here.'''
-DEBUG = False
+DEBUG = True
 
 # production urls
 RPC_ADDRESS = "node1.transferchain.io:50051"
@@ -10,8 +10,8 @@ READ_NODE_WS_ADDRESS = "wss://read-node-01.transferchain.io/ws"
 TCMP_BASE_URL = "https://api-tcmp.transferchain.io"
 
 # uri
-WALLET_INFORMATION_URI = "/v1/user/{user_id}/wallet/{wallet_uuid}"
-CREATE_WALLET_URI = "/v1/user/{user_id}/wallet"
+WALLET_INFORMATION_URI = "/v1/wallet/{wallet_uuid}?type=uuid"
+CREATE_WALLET_URI = "/v1/wallet"
 
 if DEBUG:
     # testurls

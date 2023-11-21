@@ -22,6 +22,43 @@
 <h1 class="title">Module <code>transferchain.db</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import base64
+import pickledb
+
+
+class DB(object):
+    &#39;&#39;&#39;
+    Pickledb is used as key value storage. The data stored here is encrypted.
+    &#39;&#39;&#39;
+    def __init__(self, path):
+        self.db = pickledb.load(path, auto_dump=True, sig=True)
+
+    def set(self, key, value):
+        &#39;&#39;&#39;insert value with key&#39;&#39;&#39;
+        if isinstance(value, str):
+            value = value.encode(&#39;utf-8&#39;)
+
+        self.db.set(key, base64.b64encode(value).decode())
+
+    def get(self, key):
+        &#39;&#39;&#39;Return db item&#39;&#39;&#39;
+        return base64.b64decode(self.db.get(key))
+
+    def get_all(self):
+        &#39;&#39;&#39;Return all items of db&#39;&#39;&#39;
+        items = {}
+        for k in self.db.getall():
+            items[k] = self.get(k)
+        return items
+
+    def dump(self):
+        &#39;&#39;&#39;Return db dump&#39;&#39;&#39;
+        self.db.dump()</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -38,6 +75,39 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Pickledb is used as key value storage. The data stored here is encrypted.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DB(object):
+    &#39;&#39;&#39;
+    Pickledb is used as key value storage. The data stored here is encrypted.
+    &#39;&#39;&#39;
+    def __init__(self, path):
+        self.db = pickledb.load(path, auto_dump=True, sig=True)
+
+    def set(self, key, value):
+        &#39;&#39;&#39;insert value with key&#39;&#39;&#39;
+        if isinstance(value, str):
+            value = value.encode(&#39;utf-8&#39;)
+
+        self.db.set(key, base64.b64encode(value).decode())
+
+    def get(self, key):
+        &#39;&#39;&#39;Return db item&#39;&#39;&#39;
+        return base64.b64decode(self.db.get(key))
+
+    def get_all(self):
+        &#39;&#39;&#39;Return all items of db&#39;&#39;&#39;
+        items = {}
+        for k in self.db.getall():
+            items[k] = self.get(k)
+        return items
+
+    def dump(self):
+        &#39;&#39;&#39;Return db dump&#39;&#39;&#39;
+        self.db.dump()</code></pre>
+</details>
 <h3>Methods</h3>
 <dl>
 <dt id="transferchain.db.DB.dump"><code class="name flex">
@@ -45,24 +115,62 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Return db dump</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dump(self):
+    &#39;&#39;&#39;Return db dump&#39;&#39;&#39;
+    self.db.dump()</code></pre>
+</details>
 </dd>
 <dt id="transferchain.db.DB.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, key)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return db item</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, key):
+    &#39;&#39;&#39;Return db item&#39;&#39;&#39;
+    return base64.b64decode(self.db.get(key))</code></pre>
+</details>
 </dd>
 <dt id="transferchain.db.DB.get_all"><code class="name flex">
 <span>def <span class="ident">get_all</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return all items of db</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all(self):
+    &#39;&#39;&#39;Return all items of db&#39;&#39;&#39;
+    items = {}
+    for k in self.db.getall():
+        items[k] = self.get(k)
+    return items</code></pre>
+</details>
 </dd>
 <dt id="transferchain.db.DB.set"><code class="name flex">
 <span>def <span class="ident">set</span></span>(<span>self, key, value)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>insert value with key</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set(self, key, value):
+    &#39;&#39;&#39;insert value with key&#39;&#39;&#39;
+    if isinstance(value, str):
+        value = value.encode(&#39;utf-8&#39;)
+
+    self.db.set(key, base64.b64encode(value).decode())</code></pre>
+</details>
 </dd>
 </dl>
 </dd>

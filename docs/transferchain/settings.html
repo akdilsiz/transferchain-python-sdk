@@ -25,6 +25,32 @@ in the module are written here." />
 <section id="section-intro">
 <p>Constants that will change depending on the situation
 in the module are written here.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Constants that will change depending on the situation
+in the module are written here.&#39;&#39;&#39;
+DEBUG = True
+
+# production urls
+RPC_ADDRESS = &#34;node1.transferchain.io:50051&#34;
+READ_NODE_ADDRESS = &#34;https://read-node-01.transferchain.io&#34;
+READ_NODE_WS_ADDRESS = &#34;wss://read-node-01.transferchain.io/ws&#34;
+TCMP_BASE_URL = &#34;https://api-tcmp.transferchain.io&#34;
+
+# uri
+WALLET_INFORMATION_URI = &#34;/v1/wallet/{wallet_uuid}?type=uuid&#34;
+CREATE_WALLET_URI = &#34;/v1/wallet&#34;
+
+if DEBUG:
+    # testurls
+    RPC_ADDRESS = &#34;test-file-operation.transferchain.io:50051&#34;
+    TCMP_BASE_URL = &#34;https://api-test-tcmp.transferchain.io&#34;
+    READ_NODE_ADDRESS = &#34;https://test-read-node-01.transferchain.io&#34;
+    READ_NODE_WS_ADDRESS = &#34;wss://test-read-node-01.transferchain.io/ws&#34;</code></pre>
+</details>
 </section>
 <section>
 </section>

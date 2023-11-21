@@ -22,6 +22,33 @@
 <h1 class="title">Module <code>transferchain.grpc_client</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import grpc
+from transferchain.cert import RPC_CERT
+from transferchain.settings import RPC_ADDRESS
+from transferchain.protobuf import service_pb2_grpc
+
+
+GRPC_CLIENT = None
+
+
+def get_client():
+    &#39;&#39;&#39;
+    Grpc connection function.
+    Once called, grpc connects to the server and stores
+    this connection in a global variable.
+    &#39;&#39;&#39;
+    global GRPC_CLIENT
+    if GRPC_CLIENT is not None:
+        return GRPC_CLIENT
+    creds = grpc.ssl_channel_credentials(root_certificates=RPC_CERT)
+    channel = grpc.secure_channel(RPC_ADDRESS, creds)
+    GRPC_CLIENT = service_pb2_grpc.tcRpcStub(channel)
+    return GRPC_CLIENT</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -37,6 +64,24 @@
 <div class="desc"><p>Grpc connection function.
 Once called, grpc connects to the server and stores
 this connection in a global variable.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_client():
+    &#39;&#39;&#39;
+    Grpc connection function.
+    Once called, grpc connects to the server and stores
+    this connection in a global variable.
+    &#39;&#39;&#39;
+    global GRPC_CLIENT
+    if GRPC_CLIENT is not None:
+        return GRPC_CLIENT
+    creds = grpc.ssl_channel_credentials(root_certificates=RPC_CERT)
+    channel = grpc.secure_channel(RPC_ADDRESS, creds)
+    GRPC_CLIENT = service_pb2_grpc.tcRpcStub(channel)
+    return GRPC_CLIENT</code></pre>
+</details>
 </dd>
 </dl>
 </section>

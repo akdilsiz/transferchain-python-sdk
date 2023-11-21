@@ -22,6 +22,155 @@
 <h1 class="title">Module <code>transferchain.datastructures</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+import gzip
+import random
+from collections import namedtuple
+from transferchain.mixins import TupleMixin
+
+
+class Result(TupleMixin, namedtuple(
+        &#39;Result&#39;, &#39;success error_message data&#39;)):
+    &#39;&#39;&#39;Common result tuple&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class User(TupleMixin, namedtuple(
+        &#39;User&#39;, &#39;id parent_user_id master_address addresses master&#39;)):
+    &#39;&#39;&#39;Generate user address result&#39;&#39;&#39;
+    __slots__ = ()
+
+    def random_address(self):
+        &#39;&#39;&#39;Return random user address&#39;&#39;&#39;
+        return self.addresses[
+            random.randint(1, len(self.addresses) - 1)]
+
+
+class DataStorage(TupleMixin, namedtuple(
+        &#39;DataStorage&#39;,
+        &#39;UUID FileName Size Slots KeyAES KeyHMAC StorageCode &#39;
+        &#39;Address UploadDate&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class StorageResult(TupleMixin, namedtuple(
+        &#39;StorageResult&#39;,
+        &#39;uuid filename size senderAddress recipientAddress &#39;
+        &#39;txId slots keyAES keyHMAC address storage_code uploadDate&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class DataStorageDelete(TupleMixin, namedtuple(
+        &#39;DataStorageDelete&#39;, &#39;UUID TxID FileName Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class DataTransfer(TupleMixin, namedtuple(
+        &#39;DataTransfer&#39;,
+        &#39;SenderMasterAddress UUID FileName Size Slots KeyAES KeyHMAC &#39;
+        &#39;Message StorageCode Address UploadDate EndTime Typ &#39;
+        &#39;ReceivedAddress&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class TransferSent(TupleMixin, namedtuple(
+        &#39;DataTransferSent&#39;,
+        &#39;filename uuid txId senderAddress senderMasterAddress &#39;
+        &#39;receivedAddresses size uploadDate endTime keyAES KeyHMAC &#39;
+        &#39;address storage_code slots ReceivedAddress&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class TransferReceiveDelete(TupleMixin, namedtuple(
+        &#39;TransferReceiveDelete&#39;, &#39;UUID TxID Typ Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class TransferDelete(TupleMixin, namedtuple(
+        &#39;TransferDelete&#39;, &#39;UUID TxID FileName Typ Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+
+class Address(TupleMixin, namedtuple(
+        &#39;Address&#39;, &#39;Key Mnemonics Master UserID MasterAddress SubUserID&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+    def dump(self, *args, **kwargs):
+        &#39;&#39;&#39;Named tuple to json&#39;&#39;&#39;
+        excludes = [&#39;MasterAddress&#39;]
+        data = {k: getattr(self, k) for k in self._fields if k not in excludes}
+        return json.dumps(data).encode(&#39;utf-8&#39;)
+
+
+class Addresses(TupleMixin, namedtuple(
+        &#39;Addresses&#39;, &#39;UserID Addresses&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+    def dump(self, *args, **kwargs):
+        &#39;&#39;&#39;Named tuple to json with gzip&#39;&#39;&#39;
+        data = {k: getattr(self, k) for k in self._fields}
+        return gzip.compress(json.dumps(data).encode(&#39;utf-8&#39;))
+
+
+# config
+class Config(TupleMixin, namedtuple(
+        &#39;Config&#39;,
+        &#39;api_token api_secret user_id wallet_uuid wallet_id mnemonics &#39;
+        &#39;db_path&#39;)):
+    __slots__ = ()
+
+
+# wallet result
+class CreateWalletResult(TupleMixin, namedtuple(
+        &#39;CreateWalletResult&#39;, &#39;wallet_id success error_message&#39;)):
+    __slots__ = ()
+
+
+# wallet result
+class UserPackage(TupleMixin, namedtuple(&#39;UserPackage&#39;, &#39;transfer &#39;
+                                         &#39;transfer_size transfer_count &#39;
+                                         &#39;transfer_recipient_count messaging &#39;
+                                         &#39;messaging_count storage storage_size &#39;
+                                         &#39;storage_upload_size share share_size &#39;
+                                         &#39;share_count share_recipient_count &#39;
+                                         &#39;ipclaim ipclaim_count&#39;)):
+    __slots__ = ()
+
+
+# wallet result
+class UserCompany(TupleMixin, namedtuple(&#39;UserCompany&#39;, &#39;id code title&#39;)):
+    __slots__ = ()
+
+
+# wallet result
+class WalletUser(TupleMixin, namedtuple(
+        &#39;WalletUser&#39;,
+        &#39;id uuid type username is_active is_suspended full_name email mobile &#39;
+        &#39;role_code role_title last_hash old_hash confirmation_code package &#39;
+        &#39;account_create_code password_reset_code created_at updated_at &#39;
+        &#39;company status&#39;)):
+    __slots__ = ()
+
+
+# wallet result
+class WalletInfoResult(TupleMixin, namedtuple(
+        &#39;WalletInfoResult&#39;,
+        &#39;id created_at updated_at user success error_message&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -38,6 +187,21 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Address(TupleMixin, namedtuple(
+        &#39;Address&#39;, &#39;Key Mnemonics Master UserID MasterAddress SubUserID&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+    def dump(self, *args, **kwargs):
+        &#39;&#39;&#39;Named tuple to json&#39;&#39;&#39;
+        excludes = [&#39;MasterAddress&#39;]
+        data = {k: getattr(self, k) for k in self._fields if k not in excludes}
+        return json.dumps(data).encode(&#39;utf-8&#39;)</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -58,6 +222,20 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Addresses(TupleMixin, namedtuple(
+        &#39;Addresses&#39;, &#39;UserID Addresses&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()
+
+    def dump(self, *args, **kwargs):
+        &#39;&#39;&#39;Named tuple to json with gzip&#39;&#39;&#39;
+        data = {k: getattr(self, k) for k in self._fields}
+        return gzip.compress(json.dumps(data).encode(&#39;utf-8&#39;))</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -70,6 +248,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Named tuple to json with gzip</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dump(self, *args, **kwargs):
+    &#39;&#39;&#39;Named tuple to json with gzip&#39;&#39;&#39;
+    data = {k: getattr(self, k) for k in self._fields}
+    return gzip.compress(json.dumps(data).encode(&#39;utf-8&#39;))</code></pre>
+</details>
 </dd>
 </dl>
 </dd>
@@ -79,6 +266,16 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Config(TupleMixin, namedtuple(
+        &#39;Config&#39;,
+        &#39;api_token api_secret user_id wallet_uuid wallet_id mnemonics &#39;
+        &#39;db_path&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -99,6 +296,14 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CreateWalletResult(TupleMixin, namedtuple(
+        &#39;CreateWalletResult&#39;, &#39;wallet_id success error_message&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -119,6 +324,17 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataStorage(TupleMixin, namedtuple(
+        &#39;DataStorage&#39;,
+        &#39;UUID FileName Size Slots KeyAES KeyHMAC StorageCode &#39;
+        &#39;Address UploadDate&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -139,6 +355,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataStorageDelete(TupleMixin, namedtuple(
+        &#39;DataStorageDelete&#39;, &#39;UUID TxID FileName Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -159,6 +384,18 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataTransfer(TupleMixin, namedtuple(
+        &#39;DataTransfer&#39;,
+        &#39;SenderMasterAddress UUID FileName Size Slots KeyAES KeyHMAC &#39;
+        &#39;Message StorageCode Address UploadDate EndTime Typ &#39;
+        &#39;ReceivedAddress&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -179,6 +416,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Common result tuple</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Result(TupleMixin, namedtuple(
+        &#39;Result&#39;, &#39;success error_message data&#39;)):
+    &#39;&#39;&#39;Common result tuple&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -199,6 +445,17 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StorageResult(TupleMixin, namedtuple(
+        &#39;StorageResult&#39;,
+        &#39;uuid filename size senderAddress recipientAddress &#39;
+        &#39;txId slots keyAES keyHMAC address storage_code uploadDate&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -219,6 +476,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TransferDelete(TupleMixin, namedtuple(
+        &#39;TransferDelete&#39;, &#39;UUID TxID FileName Typ Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -239,6 +505,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TransferReceiveDelete(TupleMixin, namedtuple(
+        &#39;TransferReceiveDelete&#39;, &#39;UUID TxID Typ Timestamp&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -259,6 +534,18 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Broadcast data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TransferSent(TupleMixin, namedtuple(
+        &#39;DataTransferSent&#39;,
+        &#39;filename uuid txId senderAddress senderMasterAddress &#39;
+        &#39;receivedAddresses size uploadDate endTime keyAES KeyHMAC &#39;
+        &#39;address storage_code slots ReceivedAddress&#39;)):
+    &#39;&#39;&#39;Broadcast data&#39;&#39;&#39;
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -280,6 +567,20 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Generate user address result</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class User(TupleMixin, namedtuple(
+        &#39;User&#39;, &#39;id parent_user_id master_address addresses master&#39;)):
+    &#39;&#39;&#39;Generate user address result&#39;&#39;&#39;
+    __slots__ = ()
+
+    def random_address(self):
+        &#39;&#39;&#39;Return random user address&#39;&#39;&#39;
+        return self.addresses[
+            random.randint(1, len(self.addresses) - 1)]</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -292,6 +593,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Return random user address</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def random_address(self):
+    &#39;&#39;&#39;Return random user address&#39;&#39;&#39;
+    return self.addresses[
+        random.randint(1, len(self.addresses) - 1)]</code></pre>
+</details>
 </dd>
 </dl>
 <h3>Inherited members</h3>
@@ -309,6 +619,13 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserCompany(TupleMixin, namedtuple(&#39;UserCompany&#39;, &#39;id code title&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -329,6 +646,19 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserPackage(TupleMixin, namedtuple(&#39;UserPackage&#39;, &#39;transfer &#39;
+                                         &#39;transfer_size transfer_count &#39;
+                                         &#39;transfer_recipient_count messaging &#39;
+                                         &#39;messaging_count storage storage_size &#39;
+                                         &#39;storage_upload_size share share_size &#39;
+                                         &#39;share_count share_recipient_count &#39;
+                                         &#39;ipclaim ipclaim_count&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -349,6 +679,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class WalletInfoResult(TupleMixin, namedtuple(
+        &#39;WalletInfoResult&#39;,
+        &#39;id created_at updated_at user success error_message&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>
@@ -369,6 +708,18 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class WalletUser(TupleMixin, namedtuple(
+        &#39;WalletUser&#39;,
+        &#39;id uuid type username is_active is_suspended full_name email mobile &#39;
+        &#39;role_code role_title last_hash old_hash confirmation_code package &#39;
+        &#39;account_create_code password_reset_code created_at updated_at &#39;
+        &#39;company status&#39;)):
+    __slots__ = ()</code></pre>
+</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="transferchain.mixins.TupleMixin" href="mixins.html#transferchain.mixins.TupleMixin">TupleMixin</a></li>

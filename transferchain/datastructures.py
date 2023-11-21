@@ -112,7 +112,13 @@ class CreateWalletResult(TupleMixin, namedtuple(
 
 
 # wallet result
-class UserPackage(TupleMixin, namedtuple('UserPackage', 'id title code')):
+class UserPackage(TupleMixin, namedtuple('UserPackage', 'transfer '
+                                         'transfer_size transfer_count '
+                                         'transfer_recipient_count messaging '
+                                         'messaging_count storage storage_size '
+                                         'storage_upload_size share share_size '
+                                         'share_count share_recipient_count '
+                                         'ipclaim ipclaim_count')):
     __slots__ = ()
 
 

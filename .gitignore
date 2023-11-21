@@ -10,3 +10,4 @@ dev.sh
 venv/
 .idea/
 dist/
+.env
