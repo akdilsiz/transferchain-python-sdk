@@ -22,6 +22,106 @@
 <h1 class="title">Module <code>transferchain.crypt.bip39</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import hashlib
+import secrets
+from transferchain.crypt.words import word_list
+
+
+def create_mnomonics():
+    &#34;&#34;&#34;
+    Generate a 24-word mnemonic phrase for cryptographic purposes.
+
+    Returns:
+        Mnemonic phrase (str): A 24-word phrase for cryptographic use.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.create_mnomonics()
+    ```
+    &#34;&#34;&#34;
+    chunk_size = 11
+    entropy = bytearray(secrets.randbits(8) for _ in range(int(256 / 8)))
+    final_entropy = checksum(entropy)
+    entropy_length = len(final_entropy)
+    words = [&#39;&#39;] * 24
+
+    for i in range(0, entropy_length, chunk_size):
+        val = final_entropy[i: chunk_size + i]
+        int_val = int(&#39;&#39;.join(val), 2)
+        word = word_list[int_val]
+        words[int((chunk_size + i) / 11 - 1)] = word
+    return &#39; &#39;.join(words)
+
+
+def bytes_to_bits(byte_array):
+    &#34;&#34;&#34;
+    Convert a byte array to a list of bits.
+    This function takes a byte array and converts it into a list of bits,
+    which can be used in various cryptographic operations.
+
+    Parameters:
+        byte_array (Byte array (bytearray)):
+            The byte array to convert to bits.
+    Returns:
+        List of bits (list): A list of bits representing the byte array.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.bytes_to_bits(b&#39;test&#39;)
+    ```
+    &#34;&#34;&#34;
+    length = len(byte_array)
+    bits = [0] * (length * 8)
+
+    for i in range(length):
+        b = byte_array[i]
+        for j in range(8):
+            mask = 1 &lt;&lt; j
+            bit = b &amp; mask
+            if bit == 0:
+                bits[(i * 8) + 8 - (j + 1)] = &#39;0&#39;
+            else:
+                bits[(i * 8) + 8 - (j + 1)] = &#39;1&#39;
+    return bits
+
+
+def checksum(e):
+    &#34;&#34;&#34;
+    Calculate a checksum for a given byte array.
+    This function computes a checksum for a given byte array and
+    returns the checksum bits, which are often used in cryptographic
+    processes to ensure data integrity.
+
+    Parameters:
+        e (Byte array (bytearray)):
+            The byte array for which the checksum will be calculated.
+
+    Returns:
+        Checksum bits (list): The calculated checksum bits.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.checksum(b&#39;test&#39;)
+    ```
+    &#34;&#34;&#34;
+    _h = hashlib.sha256(e)
+    bits = bytes_to_bits(_h.digest())
+    cur = int(len(e) * 8 / 32)
+    cs = bits[:cur]
+    bits = bytes_to_bits(e)
+    bits.extend(cs)
+    return bits</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -47,6 +147,43 @@ The byte array to convert to bits.</p>
 <pre><code>    from transferchain.crypt import bip39
     result = bip39.bytes_to_bits(b'test')
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bytes_to_bits(byte_array):
+    &#34;&#34;&#34;
+    Convert a byte array to a list of bits.
+    This function takes a byte array and converts it into a list of bits,
+    which can be used in various cryptographic operations.
+
+    Parameters:
+        byte_array (Byte array (bytearray)):
+            The byte array to convert to bits.
+    Returns:
+        List of bits (list): A list of bits representing the byte array.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.bytes_to_bits(b&#39;test&#39;)
+    ```
+    &#34;&#34;&#34;
+    length = len(byte_array)
+    bits = [0] * (length * 8)
+
+    for i in range(length):
+        b = byte_array[i]
+        for j in range(8):
+            mask = 1 &lt;&lt; j
+            bit = b &amp; mask
+            if bit == 0:
+                bits[(i * 8) + 8 - (j + 1)] = &#39;0&#39;
+            else:
+                bits[(i * 8) + 8 - (j + 1)] = &#39;1&#39;
+    return bits</code></pre>
+</details>
 </dd>
 <dt id="transferchain.crypt.bip39.checksum"><code class="name flex">
 <span>def <span class="ident">checksum</span></span>(<span>e)</span>
@@ -66,6 +203,39 @@ The byte array for which the checksum will be calculated.</p>
 <pre><code>    from transferchain.crypt import bip39
     result = bip39.checksum(b'test')
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checksum(e):
+    &#34;&#34;&#34;
+    Calculate a checksum for a given byte array.
+    This function computes a checksum for a given byte array and
+    returns the checksum bits, which are often used in cryptographic
+    processes to ensure data integrity.
+
+    Parameters:
+        e (Byte array (bytearray)):
+            The byte array for which the checksum will be calculated.
+
+    Returns:
+        Checksum bits (list): The calculated checksum bits.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.checksum(b&#39;test&#39;)
+    ```
+    &#34;&#34;&#34;
+    _h = hashlib.sha256(e)
+    bits = bytes_to_bits(_h.digest())
+    cur = int(len(e) * 8 / 32)
+    cs = bits[:cur]
+    bits = bytes_to_bits(e)
+    bits.extend(cs)
+    return bits</code></pre>
+</details>
 </dd>
 <dt id="transferchain.crypt.bip39.create_mnomonics"><code class="name flex">
 <span>def <span class="ident">create_mnomonics</span></span>(<span>)</span>
@@ -79,6 +249,37 @@ The byte array for which the checksum will be calculated.</p>
 <pre><code>    from transferchain.crypt import bip39
     result = bip39.create_mnomonics()
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_mnomonics():
+    &#34;&#34;&#34;
+    Generate a 24-word mnemonic phrase for cryptographic purposes.
+
+    Returns:
+        Mnemonic phrase (str): A 24-word phrase for cryptographic use.
+
+    Example:
+        -
+    ```
+        from transferchain.crypt import bip39
+        result = bip39.create_mnomonics()
+    ```
+    &#34;&#34;&#34;
+    chunk_size = 11
+    entropy = bytearray(secrets.randbits(8) for _ in range(int(256 / 8)))
+    final_entropy = checksum(entropy)
+    entropy_length = len(final_entropy)
+    words = [&#39;&#39;] * 24
+
+    for i in range(0, entropy_length, chunk_size):
+        val = final_entropy[i: chunk_size + i]
+        int_val = int(&#39;&#39;.join(val), 2)
+        word = word_list[int_val]
+        words[int((chunk_size + i) / 11 - 1)] = word
+    return &#39; &#39;.join(words)</code></pre>
+</details>
 </dd>
 </dl>
 </section>

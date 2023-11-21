@@ -22,6 +22,29 @@
 <h1 class="title">Module <code>transferchain.mixins</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+
+
+class TupleMixin(object):
+    &#39;&#39;&#39;Namedtuple mixin was used because we want to leave some values empty.&#39;&#39;&#39;
+
+    def __new__(cls, *args, **kwargs):
+        if not kwargs:
+            return super(TupleMixin, cls).__new__(cls, *args, **kwargs)
+
+        defaults = {f: None for f in cls._fields}
+        defaults.update({k: v for k, v in kwargs.items() if k in cls._fields})
+        return super(TupleMixin, cls).__new__(cls, *args, **defaults)
+
+    def dump(self):
+        &#39;&#39;&#39;Named tuple to json&#39;&#39;&#39;
+        data = {k: getattr(self, k) for k in self._fields}
+        return json.dumps(data).encode(&#39;utf-8&#39;)</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -38,6 +61,26 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Namedtuple mixin was used because we want to leave some values empty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TupleMixin(object):
+    &#39;&#39;&#39;Namedtuple mixin was used because we want to leave some values empty.&#39;&#39;&#39;
+
+    def __new__(cls, *args, **kwargs):
+        if not kwargs:
+            return super(TupleMixin, cls).__new__(cls, *args, **kwargs)
+
+        defaults = {f: None for f in cls._fields}
+        defaults.update({k: v for k, v in kwargs.items() if k in cls._fields})
+        return super(TupleMixin, cls).__new__(cls, *args, **defaults)
+
+    def dump(self):
+        &#39;&#39;&#39;Named tuple to json&#39;&#39;&#39;
+        data = {k: getattr(self, k) for k in self._fields}
+        return json.dumps(data).encode(&#39;utf-8&#39;)</code></pre>
+</details>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="transferchain.datastructures.Address" href="datastructures.html#transferchain.datastructures.Address">Address</a></li>
@@ -65,6 +108,15 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Named tuple to json</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dump(self):
+    &#39;&#39;&#39;Named tuple to json&#39;&#39;&#39;
+    data = {k: getattr(self, k) for k in self._fields}
+    return json.dumps(data).encode(&#39;utf-8&#39;)</code></pre>
+</details>
 </dd>
 </dl>
 </dd>

@@ -22,6 +22,90 @@
 <h1 class="title">Module <code>transferchain.utils</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import uuid
+from datetime import datetime
+
+
+def datetime_formating(date_str, format=&#39;%Y-%m-%dT%H:%M:%S.%fZ&#39;):
+    &#34;&#34;&#34;
+    String datetime to datetime object
+
+    Parameters:
+        date_str (str):
+            string datetime
+
+        format (str):
+            datetime format. optional
+
+    Returns:
+        Datetime object
+
+    Example:
+        -
+    ```
+        from transferchain import utils
+        result = utils.datetime_formating(&#39;2023-09-21T09:07:57.620532Z&#39;)
+
+    ```
+    &#34;&#34;&#34;
+    return datetime.strptime(date_str, format)
+
+
+def datetime_to_str(date_obj, format=&#39;%Y-%m-%dT%H:%M:%SZ&#39;):
+    &#34;&#34;&#34;
+    Datetime to string
+
+    Parameters:
+        date_obj (str):
+            datetime object
+
+        format (str):
+            datetime format. optional
+
+    Returns:
+        String datetime
+
+    Example:
+        -
+    ```
+        import datetime
+        from transferchain import utils
+        date_obj = utils.datetime_formating(&#39;2023-09-21T09:07:57.620532Z&#39;)
+        result = utils.datetime_to_str(date_obj)
+    ```
+    &#34;&#34;&#34;
+    return date_obj.strftime(format)
+
+
+def is_valid_uuid(val):
+    &#34;&#34;&#34;
+    UUId validation
+
+    Parameters:
+        val (str):
+            uuid string
+
+    Returns:
+        Boolean
+
+    Example:
+        -
+    ```
+        import datetime
+        from transferchain import utils
+        result = utils.is_valid_uuid(str(uuid.uuid4()))
+    ```
+    &#34;&#34;&#34;
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -48,6 +132,34 @@ datetime format. optional</p>
     result = utils.datetime_formating('2023-09-21T09:07:57.620532Z')
 
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def datetime_formating(date_str, format=&#39;%Y-%m-%dT%H:%M:%S.%fZ&#39;):
+    &#34;&#34;&#34;
+    String datetime to datetime object
+
+    Parameters:
+        date_str (str):
+            string datetime
+
+        format (str):
+            datetime format. optional
+
+    Returns:
+        Datetime object
+
+    Example:
+        -
+    ```
+        from transferchain import utils
+        result = utils.datetime_formating(&#39;2023-09-21T09:07:57.620532Z&#39;)
+
+    ```
+    &#34;&#34;&#34;
+    return datetime.strptime(date_str, format)</code></pre>
+</details>
 </dd>
 <dt id="transferchain.utils.datetime_to_str"><code class="name flex">
 <span>def <span class="ident">datetime_to_str</span></span>(<span>date_obj, format='%Y-%m-%dT%H:%M:%SZ')</span>
@@ -68,6 +180,35 @@ datetime format. optional</p>
     date_obj = utils.datetime_formating('2023-09-21T09:07:57.620532Z')
     result = utils.datetime_to_str(date_obj)
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def datetime_to_str(date_obj, format=&#39;%Y-%m-%dT%H:%M:%SZ&#39;):
+    &#34;&#34;&#34;
+    Datetime to string
+
+    Parameters:
+        date_obj (str):
+            datetime object
+
+        format (str):
+            datetime format. optional
+
+    Returns:
+        String datetime
+
+    Example:
+        -
+    ```
+        import datetime
+        from transferchain import utils
+        date_obj = utils.datetime_formating(&#39;2023-09-21T09:07:57.620532Z&#39;)
+        result = utils.datetime_to_str(date_obj)
+    ```
+    &#34;&#34;&#34;
+    return date_obj.strftime(format)</code></pre>
+</details>
 </dd>
 <dt id="transferchain.utils.is_valid_uuid"><code class="name flex">
 <span>def <span class="ident">is_valid_uuid</span></span>(<span>val)</span>
@@ -85,6 +226,35 @@ uuid string</p>
     from transferchain import utils
     result = utils.is_valid_uuid(str(uuid.uuid4()))
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_valid_uuid(val):
+    &#34;&#34;&#34;
+    UUId validation
+
+    Parameters:
+        val (str):
+            uuid string
+
+    Returns:
+        Boolean
+
+    Example:
+        -
+    ```
+        import datetime
+        from transferchain import utils
+        result = utils.is_valid_uuid(str(uuid.uuid4()))
+    ```
+    &#34;&#34;&#34;
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False</code></pre>
+</details>
 </dd>
 </dl>
 </section>

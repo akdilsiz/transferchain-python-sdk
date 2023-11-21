@@ -22,6 +22,136 @@
 <h1 class="title">Module <code>transferchain.wallet</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+from urllib.parse import urljoin
+import requests
+from transferchain import settings
+from transferchain.utils import datetime_formating
+from transferchain.datastructures import (
+    CreateWalletResult, WalletInfoResult, UserPackage,
+    UserCompany, WalletUser)
+
+
+def create_wallet(conf, wallet_uuid):
+    &#34;&#34;&#34;
+    Create new wallet
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        CreateWalletResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;)
+        api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+        api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = str(uuid.uuid4())
+        os.environ[&#39;TRANSFERCHAIN_TEST_WALLET_UUID&#39;] = wallet_uuid
+        result = wallet.create_wallet(conf, wallet_uuid)
+    ```
+    &#34;&#34;&#34;
+    headers = {
+        &#39;api_token&#39;: conf.api_token,
+        &#39;api_secret&#39;: conf.api_secret,
+        &#39;Content-Type&#39;: &#39;application/json&#39;
+    }
+
+    uri = settings.CREATE_WALLET_URI
+    url = urljoin(settings.TCMP_BASE_URL, uri)
+    payload = json.dumps({&#39;uuid&#39;: wallet_uuid})
+    req = requests.post(url, data=payload, headers=headers)
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
+    data = response.get(&#39;data&#39;) or {}
+    return CreateWalletResult(
+        success=req.ok,
+        wallet_id=data.get(&#39;wallet_id&#39;),
+        error_message=response.get(&#39;message&#39;, &#39;&#39;))
+
+
+def get_wallet_info(conf, wallet_uuid):
+    &#34;&#34;&#34;
+    Get wallet info
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        WalletInfoResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;)
+        api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+        api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = os.environ[&#39;TRANSFERCHAIN_TEST_WALLET_UUID&#39;]
+        result = wallet.get_wallet_info(conf, wallet_uuid)
+    ```
+    &#34;&#34;&#34;
+    headers = {
+        &#39;api_token&#39;: conf.api_token,
+        &#39;api_secret&#39;: conf.api_secret,
+        &#39;Content-Type&#39;: &#39;application/json&#39;
+    }
+
+    uri = settings.WALLET_INFORMATION_URI.format(
+        wallet_uuid=wallet_uuid)
+    url = urljoin(settings.TCMP_BASE_URL, uri)
+    req = requests.get(url, headers=headers)
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
+    data = response.get(&#39;data&#39;) or {}
+    if not req.ok:
+        return WalletInfoResult(
+            success=False,
+            error_message=response.get(&#39;message&#39;, &#39;&#39;))
+
+    user = data[&#39;user&#39;]
+    package = UserPackage(
+        id=user[&#39;mmitem_id&#39;],
+        code=user[&#39;mmitem_code&#39;],
+        title=user[&#39;mmitem_title&#39;])
+
+    return WalletInfoResult(
+        id=data[&#39;id&#39;],
+        package=package,
+        success=True,
+        created_at=datetime_formating(data[&#39;zlins_dttm&#39;]),
+        updated_at=datetime_formating(data[&#39;zlupd_dttm&#39;]),
+    )</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -31,15 +161,13 @@
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="transferchain.wallet.create_wallet"><code class="name flex">
-<span>def <span class="ident">create_wallet</span></span>(<span>conf, user_id, wallet_uuid)</span>
+<span>def <span class="ident">create_wallet</span></span>(<span>conf, wallet_uuid)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create new wallet</p>
 <h2 id="parameters">Parameters</h2>
 <p>conf (datastructures.Config):
 config</p>
-<p>user_id (int):
-account user id</p>
 <p>wallet_uuid (str):
 wallet uuid</p>
 <h2 id="returns">Returns</h2>
@@ -57,19 +185,72 @@ wallet uuid</p>
     conf = Config(api_token=api_token, api_secret=api_secret)
     wallet_uuid = str(uuid.uuid4())
     os.environ['TRANSFERCHAIN_TEST_WALLET_UUID'] = wallet_uuid
-    result = wallet.create_wallet(conf, user_id, wallet_uuid)
+    result = wallet.create_wallet(conf, wallet_uuid)
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_wallet(conf, wallet_uuid):
+    &#34;&#34;&#34;
+    Create new wallet
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        CreateWalletResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;)
+        api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+        api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = str(uuid.uuid4())
+        os.environ[&#39;TRANSFERCHAIN_TEST_WALLET_UUID&#39;] = wallet_uuid
+        result = wallet.create_wallet(conf, wallet_uuid)
+    ```
+    &#34;&#34;&#34;
+    headers = {
+        &#39;api_token&#39;: conf.api_token,
+        &#39;api_secret&#39;: conf.api_secret,
+        &#39;Content-Type&#39;: &#39;application/json&#39;
+    }
+
+    uri = settings.CREATE_WALLET_URI
+    url = urljoin(settings.TCMP_BASE_URL, uri)
+    payload = json.dumps({&#39;uuid&#39;: wallet_uuid})
+    req = requests.post(url, data=payload, headers=headers)
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
+    data = response.get(&#39;data&#39;) or {}
+    return CreateWalletResult(
+        success=req.ok,
+        wallet_id=data.get(&#39;wallet_id&#39;),
+        error_message=response.get(&#39;message&#39;, &#39;&#39;))</code></pre>
+</details>
 </dd>
 <dt id="transferchain.wallet.get_wallet_info"><code class="name flex">
-<span>def <span class="ident">get_wallet_info</span></span>(<span>conf, user_id, wallet_uuid)</span>
+<span>def <span class="ident">get_wallet_info</span></span>(<span>conf, wallet_uuid)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get wallet info</p>
 <h2 id="parameters">Parameters</h2>
 <p>conf (datastructures.Config):
 config</p>
-<p>user_id (int):
-account user id</p>
 <p>wallet_uuid (str):
 wallet uuid</p>
 <h2 id="returns">Returns</h2>
@@ -86,8 +267,76 @@ wallet uuid</p>
     api_secret = os.environ.get('TRANSFERCHAIN_API_SECRET')
     conf = Config(api_token=api_token, api_secret=api_secret)
     wallet_uuid = os.environ['TRANSFERCHAIN_TEST_WALLET_UUID']
-    result = wallet.get_wallet_info(conf, user_id, wallet_uuid)
+    result = wallet.get_wallet_info(conf, wallet_uuid)
 </code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_wallet_info(conf, wallet_uuid):
+    &#34;&#34;&#34;
+    Get wallet info
+
+    Parameters:
+        conf (datastructures.Config):
+            config
+
+        wallet_uuid (str):
+            wallet uuid
+
+    Returns:
+        WalletInfoResult
+
+    Example:
+        -
+    ```
+        import os
+        import uuid
+        from transferchain.datastructures import Config
+        from transferchain import wallet
+
+        user_id = os.environ.get(&#39;TRANSFERCHAIN_USER_ID&#39;)
+        api_token = os.environ.get(&#39;TRANSFERCHAIN_API_TOKEN&#39;)
+        api_secret = os.environ.get(&#39;TRANSFERCHAIN_API_SECRET&#39;)
+        conf = Config(api_token=api_token, api_secret=api_secret)
+        wallet_uuid = os.environ[&#39;TRANSFERCHAIN_TEST_WALLET_UUID&#39;]
+        result = wallet.get_wallet_info(conf, wallet_uuid)
+    ```
+    &#34;&#34;&#34;
+    headers = {
+        &#39;api_token&#39;: conf.api_token,
+        &#39;api_secret&#39;: conf.api_secret,
+        &#39;Content-Type&#39;: &#39;application/json&#39;
+    }
+
+    uri = settings.WALLET_INFORMATION_URI.format(
+        wallet_uuid=wallet_uuid)
+    url = urljoin(settings.TCMP_BASE_URL, uri)
+    req = requests.get(url, headers=headers)
+    try:
+        response = req.json()
+    except requests.exceptions.JSONDecodeError as e:
+        return CreateWalletResult(success=False, error_message=str(e))
+    data = response.get(&#39;data&#39;) or {}
+    if not req.ok:
+        return WalletInfoResult(
+            success=False,
+            error_message=response.get(&#39;message&#39;, &#39;&#39;))
+
+    user = data[&#39;user&#39;]
+    package = UserPackage(
+        id=user[&#39;mmitem_id&#39;],
+        code=user[&#39;mmitem_code&#39;],
+        title=user[&#39;mmitem_title&#39;])
+
+    return WalletInfoResult(
+        id=data[&#39;id&#39;],
+        package=package,
+        success=True,
+        created_at=datetime_formating(data[&#39;zlins_dttm&#39;]),
+        updated_at=datetime_formating(data[&#39;zlupd_dttm&#39;]),
+    )</code></pre>
+</details>
 </dd>
 </dl>
 </section>

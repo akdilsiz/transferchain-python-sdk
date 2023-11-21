@@ -22,6 +22,25 @@
 <h1 class="title">Module <code>transferchain.logger</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import logging
+
+
+def get_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)  # noqa
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    return logger</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -35,6 +54,22 @@
 </code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)  # noqa
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    return logger</code></pre>
+</details>
 </dd>
 </dl>
 </section>
