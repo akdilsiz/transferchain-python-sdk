@@ -73,7 +73,7 @@ def create_config():
         if not utils.is_valid_uuid(wallet_uuid):
             raise exceptions.ValidationError('invalid wallet uuid')
         wallet_info = get_wallet_info(conf, wallet_uuid)
-        wallet_id = wallet_info['id']
+        wallet_id = wallet_info.id
 
     mnemonics = os.environ.get('TRANSFERCHAIN_MNEMONICS', '')
     # if not mnemonics or len(mnemonics.split('')) != 24:
