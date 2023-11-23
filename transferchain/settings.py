@@ -5,7 +5,7 @@ import os
 
 
 # For the test environment, set DEBUG to True; otherwise, it will work with the production environment.
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = os.getenv('TRANSFERCHAIN_DEBUG', False)
 
 # production urls
 RPC_ADDRESS = "node1.transferchain.io:50051"
