@@ -98,7 +98,8 @@ def get_wallet_info(conf, wallet_uuid):
 
     uri = settings.WALLET_INFORMATION_URI.format(
         wallet_uuid=wallet_uuid)
-    url = urljoin(settings.TCMP_BASE_URL, uri)
+    query = settings.WALLET_INFORMATION_QUERY
+    url = urljoin(settings.TCMP_BASE_URL, (uri + query))
     req = requests.get(url, headers=headers)
     try:
         response = req.json()

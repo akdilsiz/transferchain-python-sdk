@@ -15,6 +15,8 @@ To use this SDK, add the following definitions to your env.
 
         TRANSFERCHAIN_MNEMONICS (str): Account mnemonics
 
+        TRANSFERCHAIN_DEBUG (bool): Transferchain testing environment
+
 ## Example Usages;
 Important!
 
