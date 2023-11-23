@@ -1,7 +1,11 @@
 '''
 Constants that will change depending on the situation
 in the module are written here.'''
-DEBUG = True
+import os
+
+
+# For the test environment, set DEBUG to True; otherwise, it will work with the production environment.
+DEBUG = os.getenv('DEBUG', False)
 
 # production urls
 RPC_ADDRESS = "node1.transferchain.io:50051"
