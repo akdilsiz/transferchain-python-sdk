@@ -32,7 +32,11 @@ in the module are written here.</p>
 <pre><code class="python">&#39;&#39;&#39;
 Constants that will change depending on the situation
 in the module are written here.&#39;&#39;&#39;
-DEBUG = True
+import os
+
+
+# For the test environment, set DEBUG to True; otherwise, it will work with the production environment.
+DEBUG = os.getenv(&#39;TRANSFERCHAIN_DEBUG&#39;, False)
 
 # production urls
 RPC_ADDRESS = &#34;node1.transferchain.io:50051&#34;
@@ -41,7 +45,8 @@ READ_NODE_WS_ADDRESS = &#34;wss://read-node-01.transferchain.io/ws&#34;
 TCMP_BASE_URL = &#34;https://api-tcmp.transferchain.io&#34;
 
 # uri
-WALLET_INFORMATION_URI = &#34;/v1/wallet/{wallet_uuid}?type=uuid&#34;
+WALLET_INFORMATION_URI = &#34;/v1/wallet/{wallet_uuid}&#34;
+WALLET_INFORMATION_QUERY = &#34;?type=uuid&#34;
 CREATE_WALLET_URI = &#34;/v1/wallet&#34;
 
 if DEBUG:
