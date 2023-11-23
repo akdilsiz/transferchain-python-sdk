@@ -10,7 +10,8 @@ READ_NODE_WS_ADDRESS = "wss://read-node-01.transferchain.io/ws"
 TCMP_BASE_URL = "https://api-tcmp.transferchain.io"
 
 # uri
-WALLET_INFORMATION_URI = "/v1/wallet/{wallet_uuid}?type=uuid"
+WALLET_INFORMATION_URI = "/v1/wallet/{wallet_uuid}"
+WALLET_INFORMATION_QUERY = "?type=uuid"
 CREATE_WALLET_URI = "/v1/wallet"
 
 if DEBUG:
