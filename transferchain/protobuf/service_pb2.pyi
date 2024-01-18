@@ -779,6 +779,24 @@ class DataRoomDeleteResponse(_message.Message):
     ErrorMessage: str
     def __init__(self, Success: bool = ..., ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ...) -> None: ...
 
+class DataRoomLeaveRequest(_message.Message):
+    __slots__ = ["RoomID", "SourceIdentifier"]
+    ROOMID_FIELD_NUMBER: _ClassVar[int]
+    SOURCEIDENTIFIER_FIELD_NUMBER: _ClassVar[int]
+    RoomID: str
+    SourceIdentifier: str
+    def __init__(self, RoomID: _Optional[str] = ..., SourceIdentifier: _Optional[str] = ...) -> None: ...
+
+class DataRoomLeaveResponse(_message.Message):
+    __slots__ = ["Success", "ErrorCode", "ErrorMessage"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ERRORCODE_FIELD_NUMBER: _ClassVar[int]
+    ERRORMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    Success: bool
+    ErrorCode: int
+    ErrorMessage: str
+    def __init__(self, Success: bool = ..., ErrorCode: _Optional[int] = ..., ErrorMessage: _Optional[str] = ...) -> None: ...
+
 class DataPolicy(_message.Message):
     __slots__ = ["ID", "Identifier", "SourceIdentifier", "TargetIdentifier", "SlotsIdentifiers", "RoomID", "OpCode", "Policy", "CreatedAt"]
     ID_FIELD_NUMBER: _ClassVar[int]
