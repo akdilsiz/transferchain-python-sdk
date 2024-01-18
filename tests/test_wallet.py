@@ -14,12 +14,12 @@ class TestWalletMethods(unittest.TestCase):
         conf = Config(api_token=api_token, api_secret=api_secret)
         wallet_uuid = str(uuid.uuid4())
         os.environ['TRANSFERCHAIN_TEST_WALLET_UUID'] = wallet_uuid
-        result = wallet.create_wallet(conf, user_id, wallet_uuid)
+        result = wallet.create_wallet(conf, wallet_uuid)
         self.assertEqual(True, result.success, result.error_message)
 
     def test_create_wallet_invalid(self):
         conf = Config(api_token=None, api_secret=None)
-        result = wallet.create_wallet(conf, None, None)
+        result = wallet.create_wallet(conf, None)
         self.assertEqual(False, result.success, result.error_message)
 
     def test_get_wallet_info_valid(self):

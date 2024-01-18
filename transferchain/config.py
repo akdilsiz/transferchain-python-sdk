@@ -65,7 +65,7 @@ def create_config():
     wallet_uuid = os.environ.get('TRANSFERCHAIN_WALLET_UUID')
     if not wallet_uuid:
         wallet_uuid = str(uuid.uuid4())
-        result = create_wallet(conf, user_id, wallet_uuid)
+        result = create_wallet(conf, wallet_uuid)
         if result.success is False:
             raise exceptions.ValidationError(result.error_message)
         wallet_id = result.wallet_id

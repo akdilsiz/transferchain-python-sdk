@@ -5,7 +5,7 @@ import grpc
 import transferchain.protobuf.service_pb2 as service__pb2
 
 
-class tcRpcStub(object):
+class FileOperationStub(object):
   """Missing associated documentation comment in .proto file."""
 
   def __init__(self, channel):
@@ -15,297 +15,206 @@ class tcRpcStub(object):
         channel: A grpc.Channel.
     """
     self.TransferInit = channel.unary_unary(
-      '/service.tcRpc/TransferInit',
-      request_serializer=service__pb2.TransferInitRequest.SerializeToString,
-      response_deserializer=service__pb2.TransferInitResponse.FromString,
-    )
-    self.AuthTransferInit = channel.unary_unary(
-      '/service.tcRpc/AuthTransferInit',
+      '/service.FileOperation/TransferInit',
       request_serializer=service__pb2.TransferInitRequest.SerializeToString,
       response_deserializer=service__pb2.TransferInitResponse.FromString,
     )
     self.TransferInitV2 = channel.unary_unary(
-      '/service.tcRpc/TransferInitV2',
+      '/service.FileOperation/TransferInitV2',
       request_serializer=service__pb2.TransferInitRequest.SerializeToString,
       response_deserializer=service__pb2.TransferInitResponse.FromString,
     )
     self.Transfer = channel.stream_unary(
-      '/service.tcRpc/Transfer',
-      request_serializer=service__pb2.TransferRequest.SerializeToString,
-      response_deserializer=service__pb2.TransferResponse.FromString,
-    )
-    self.AuthTransfer = channel.stream_unary(
-      '/service.tcRpc/AuthTransfer',
+      '/service.FileOperation/Transfer',
       request_serializer=service__pb2.TransferRequest.SerializeToString,
       response_deserializer=service__pb2.TransferResponse.FromString,
     )
     self.TransferV2 = channel.stream_unary(
-      '/service.tcRpc/TransferV2',
+      '/service.FileOperation/TransferV2',
       request_serializer=service__pb2.TransferRequest.SerializeToString,
       response_deserializer=service__pb2.TransferResponse.FromString,
     )
     self.TransferFinish = channel.unary_unary(
-      '/service.tcRpc/TransferFinish',
-      request_serializer=service__pb2.TransferFinishRequest.SerializeToString,
-      response_deserializer=service__pb2.TransferFinishResponse.FromString,
-    )
-    self.AuthTransferFinish = channel.unary_unary(
-      '/service.tcRpc/AuthTransferFinish',
+      '/service.FileOperation/TransferFinish',
       request_serializer=service__pb2.TransferFinishRequest.SerializeToString,
       response_deserializer=service__pb2.TransferFinishResponse.FromString,
     )
     self.TransferFinishV2 = channel.unary_unary(
-      '/service.tcRpc/TransferFinishV2',
+      '/service.FileOperation/TransferFinishV2',
       request_serializer=service__pb2.TransferFinishRequest.SerializeToString,
       response_deserializer=service__pb2.TransferFinishResponse.FromString,
     )
     self.StorageInit = channel.unary_unary(
-      '/service.tcRpc/StorageInit',
-      request_serializer=service__pb2.StorageInitRequest.SerializeToString,
-      response_deserializer=service__pb2.StorageInitResponse.FromString,
-    )
-    self.AuthStorageInit = channel.unary_unary(
-      '/service.tcRpc/AuthStorageInit',
+      '/service.FileOperation/StorageInit',
       request_serializer=service__pb2.StorageInitRequest.SerializeToString,
       response_deserializer=service__pb2.StorageInitResponse.FromString,
     )
     self.StorageInitV2 = channel.unary_unary(
-      '/service.tcRpc/StorageInitV2',
+      '/service.FileOperation/StorageInitV2',
       request_serializer=service__pb2.StorageInitRequest.SerializeToString,
       response_deserializer=service__pb2.StorageInitResponse.FromString,
     )
     self.StorageFinish = channel.unary_unary(
-      '/service.tcRpc/StorageFinish',
-      request_serializer=service__pb2.StorageFinishRequest.SerializeToString,
-      response_deserializer=service__pb2.StorageFinishResponse.FromString,
-    )
-    self.AuthStorageFinish = channel.unary_unary(
-      '/service.tcRpc/AuthStorageFinish',
+      '/service.FileOperation/StorageFinish',
       request_serializer=service__pb2.StorageFinishRequest.SerializeToString,
       response_deserializer=service__pb2.StorageFinishResponse.FromString,
     )
     self.StorageFinishV2 = channel.unary_unary(
-      '/service.tcRpc/StorageFinishV2',
+      '/service.FileOperation/StorageFinishV2',
       request_serializer=service__pb2.StorageFinishRequest.SerializeToString,
       response_deserializer=service__pb2.StorageFinishResponse.FromString,
     )
     self.UploadInit = channel.unary_unary(
-      '/service.tcRpc/UploadInit',
-      request_serializer=service__pb2.UploadInitRequest.SerializeToString,
-      response_deserializer=service__pb2.UploadInitResponse.FromString,
-    )
-    self.AuthUploadInit = channel.unary_unary(
-      '/service.tcRpc/AuthUploadInit',
+      '/service.FileOperation/UploadInit',
       request_serializer=service__pb2.UploadInitRequest.SerializeToString,
       response_deserializer=service__pb2.UploadInitResponse.FromString,
     )
     self.UploadInitV2 = channel.unary_unary(
-      '/service.tcRpc/UploadInitV2',
+      '/service.FileOperation/UploadInitV2',
       request_serializer=service__pb2.UploadInitRequest.SerializeToString,
       response_deserializer=service__pb2.UploadInitResponse.FromString,
     )
     self.UploadBasic = channel.stream_unary(
-      '/service.tcRpc/UploadBasic',
+      '/service.FileOperation/UploadBasic',
       request_serializer=service__pb2.UploadRequest.SerializeToString,
       response_deserializer=service__pb2.UploadResponse.FromString,
     )
     self.UploadBasicV2 = channel.stream_unary(
-      '/service.tcRpc/UploadBasicV2',
+      '/service.FileOperation/UploadBasicV2',
       request_serializer=service__pb2.UploadRequest.SerializeToString,
       response_deserializer=service__pb2.UploadResponse.FromString,
     )
     self.UploadBasicV3 = channel.stream_unary(
-      '/service.tcRpc/UploadBasicV3',
+      '/service.FileOperation/UploadBasicV3',
       request_serializer=service__pb2.UploadV3Request.SerializeToString,
       response_deserializer=service__pb2.UploadResponse.FromString,
     )
     self.UploadBasicV4 = channel.stream_unary(
-      '/service.tcRpc/UploadBasicV4',
+      '/service.FileOperation/UploadBasicV4',
       request_serializer=service__pb2.UploadV3Request.SerializeToString,
       response_deserializer=service__pb2.UploadResponse.FromString,
     )
     self.TransferToUpload = channel.unary_unary(
-      '/service.tcRpc/TransferToUpload',
+      '/service.FileOperation/TransferToUpload',
       request_serializer=service__pb2.TransferToUploadRequest.SerializeToString,
       response_deserializer=service__pb2.UploadInitResponse.FromString,
     )
     self.TransferToStorage = channel.unary_unary(
-      '/service.tcRpc/TransferToStorage',
-      request_serializer=service__pb2.TransferToStorageRequest.SerializeToString,
-      response_deserializer=service__pb2.UploadInitResponse.FromString,
-    )
-    self.AuthTransferToUpload = channel.unary_unary(
-      '/service.tcRpc/AuthTransferToUpload',
-      request_serializer=service__pb2.TransferToUploadRequest.SerializeToString,
-      response_deserializer=service__pb2.UploadInitResponse.FromString,
-    )
-    self.AuthTransferToStorage = channel.unary_unary(
-      '/service.tcRpc/AuthTransferToStorage',
+      '/service.FileOperation/TransferToStorage',
       request_serializer=service__pb2.TransferToStorageRequest.SerializeToString,
       response_deserializer=service__pb2.UploadInitResponse.FromString,
     )
     self.Download = channel.unary_stream(
-      '/service.tcRpc/Download',
+      '/service.FileOperation/Download',
       request_serializer=service__pb2.DownloadRequest.SerializeToString,
       response_deserializer=service__pb2.DownloadResponse.FromString,
     )
     self.DownloadV2 = channel.unary_stream(
-      '/service.tcRpc/DownloadV2',
-      request_serializer=service__pb2.DownloadV2Request.SerializeToString,
-      response_deserializer=service__pb2.DownloadResponse.FromString,
-    )
-    self.AuthDownload = channel.unary_stream(
-      '/service.tcRpc/AuthDownload',
-      request_serializer=service__pb2.DownloadRequest.SerializeToString,
-      response_deserializer=service__pb2.DownloadResponse.FromString,
-    )
-    self.AuthDownloadV2 = channel.unary_stream(
-      '/service.tcRpc/AuthDownloadV2',
+      '/service.FileOperation/DownloadV2',
       request_serializer=service__pb2.DownloadV2Request.SerializeToString,
       response_deserializer=service__pb2.DownloadResponse.FromString,
     )
     self.DownloadV3 = channel.unary_stream(
-      '/service.tcRpc/DownloadV3',
+      '/service.FileOperation/DownloadV3',
       request_serializer=service__pb2.DownloadRequest.SerializeToString,
       response_deserializer=service__pb2.DownloadResponse.FromString,
     )
     self.DownloadV4 = channel.unary_unary(
-      '/service.tcRpc/DownloadV4',
-      request_serializer=service__pb2.DownloadV4Request.SerializeToString,
-      response_deserializer=service__pb2.DownloadV4Response.FromString,
-    )
-    self.AuthDownloadV4 = channel.unary_unary(
-      '/service.tcRpc/AuthDownloadV4',
+      '/service.FileOperation/DownloadV4',
       request_serializer=service__pb2.DownloadV4Request.SerializeToString,
       response_deserializer=service__pb2.DownloadV4Response.FromString,
     )
     self.DownloadInfo = channel.unary_unary(
-      '/service.tcRpc/DownloadInfo',
-      request_serializer=service__pb2.DownloadInfoRequest.SerializeToString,
-      response_deserializer=service__pb2.DownloadInfoResponse.FromString,
-    )
-    self.AuthDownloadInfo = channel.unary_unary(
-      '/service.tcRpc/AuthDownloadInfo',
+      '/service.FileOperation/DownloadInfo',
       request_serializer=service__pb2.DownloadInfoRequest.SerializeToString,
       response_deserializer=service__pb2.DownloadInfoResponse.FromString,
     )
     self.Delete = channel.unary_unary(
-      '/service.tcRpc/Delete',
-      request_serializer=service__pb2.DeleteRequest.SerializeToString,
-      response_deserializer=service__pb2.DeleteResponse.FromString,
-    )
-    self.AuthDelete = channel.unary_unary(
-      '/service.tcRpc/AuthDelete',
+      '/service.FileOperation/Delete',
       request_serializer=service__pb2.DeleteRequest.SerializeToString,
       response_deserializer=service__pb2.DeleteResponse.FromString,
     )
     self.DeleteV2 = channel.unary_unary(
-      '/service.tcRpc/DeleteV2',
+      '/service.FileOperation/DeleteV2',
       request_serializer=service__pb2.DeleteRequest.SerializeToString,
       response_deserializer=service__pb2.DeleteResponse.FromString,
     )
     self.DeleteV3 = channel.unary_unary(
-      '/service.tcRpc/DeleteV3',
-      request_serializer=service__pb2.DeleteV3Request.SerializeToString,
-      response_deserializer=service__pb2.DeleteResponse.FromString,
-    )
-    self.AuthDeleteV3 = channel.unary_unary(
-      '/service.tcRpc/AuthDeleteV3',
+      '/service.FileOperation/DeleteV3',
       request_serializer=service__pb2.DeleteV3Request.SerializeToString,
       response_deserializer=service__pb2.DeleteResponse.FromString,
     )
     self.Message = channel.unary_unary(
-      '/service.tcRpc/Message',
-      request_serializer=service__pb2.MessageRequest.SerializeToString,
-      response_deserializer=service__pb2.MessageResponse.FromString,
-    )
-    self.AuthMessage = channel.unary_unary(
-      '/service.tcRpc/AuthMessage',
+      '/service.FileOperation/Message',
       request_serializer=service__pb2.MessageRequest.SerializeToString,
       response_deserializer=service__pb2.MessageResponse.FromString,
     )
     self.DropAccount = channel.unary_unary(
-      '/service.tcRpc/DropAccount',
-      request_serializer=service__pb2.DropAccountRequest.SerializeToString,
-      response_deserializer=service__pb2.DropAccountResponse.FromString,
-    )
-    self.AuthDropAccount = channel.unary_unary(
-      '/service.tcRpc/AuthDropAccount',
+      '/service.FileOperation/DropAccount',
       request_serializer=service__pb2.DropAccountRequest.SerializeToString,
       response_deserializer=service__pb2.DropAccountResponse.FromString,
     )
     self.Heartbeat = channel.unary_unary(
-      '/service.tcRpc/Heartbeat',
+      '/service.FileOperation/Heartbeat',
       request_serializer=service__pb2.Empty.SerializeToString,
       response_deserializer=service__pb2.Empty.FromString,
     )
     self.RequestsUpdate = channel.unary_unary(
-      '/service.tcRpc/RequestsUpdate',
+      '/service.FileOperation/RequestsUpdate',
       request_serializer=service__pb2.RequestsUpdateRequest.SerializeToString,
       response_deserializer=service__pb2.RequestsResponse.FromString,
     )
     self.RequestsCreate = channel.unary_unary(
-      '/service.tcRpc/RequestsCreate',
-      request_serializer=service__pb2.RequestsCreateRequest.SerializeToString,
-      response_deserializer=service__pb2.RequestsResponse.FromString,
-    )
-    self.AuthRequestsUpdate = channel.unary_unary(
-      '/service.tcRpc/AuthRequestsUpdate',
-      request_serializer=service__pb2.RequestsUpdateRequest.SerializeToString,
-      response_deserializer=service__pb2.RequestsResponse.FromString,
-    )
-    self.AuthRequestsCreate = channel.unary_unary(
-      '/service.tcRpc/AuthRequestsCreate',
+      '/service.FileOperation/RequestsCreate',
       request_serializer=service__pb2.RequestsCreateRequest.SerializeToString,
       response_deserializer=service__pb2.RequestsResponse.FromString,
     )
     self.DataRoomCreate = channel.unary_unary(
-      '/service.tcRpc/DataRoomCreate',
+      '/service.FileOperation/DataRoomCreate',
       request_serializer=service__pb2.DataRoomCreateRequest.SerializeToString,
       response_deserializer=service__pb2.DataRoomCreateResponse.FromString,
     )
     self.DataRoomDelete = channel.unary_unary(
-      '/service.tcRpc/DataRoomDelete',
+      '/service.FileOperation/DataRoomDelete',
       request_serializer=service__pb2.DataRoomDeleteRequest.SerializeToString,
       response_deserializer=service__pb2.DataRoomDeleteResponse.FromString,
     )
     self.DataRoomPolicyCreate = channel.unary_unary(
-      '/service.tcRpc/DataRoomPolicyCreate',
+      '/service.FileOperation/DataRoomPolicyCreate',
       request_serializer=service__pb2.DataRoomPolicyCreateRequest.SerializeToString,
       response_deserializer=service__pb2.DataRoomPolicyCreateResponse.FromString,
     )
     self.DataRoomPolicyDelete = channel.unary_unary(
-      '/service.tcRpc/DataRoomPolicyDelete',
+      '/service.FileOperation/DataRoomPolicyDelete',
       request_serializer=service__pb2.DataRoomPolicyDeleteRequest.SerializeToString,
       response_deserializer=service__pb2.DataRoomPolicyDeleteResponse.FromString,
     )
+    self.DataRoomLeave = channel.unary_unary(
+      '/service.FileOperation/DataRoomLeave',
+      request_serializer=service__pb2.DataRoomLeaveRequest.SerializeToString,
+      response_deserializer=service__pb2.DataRoomLeaveResponse.FromString,
+    )
     self.DataPolicyCreate = channel.unary_unary(
-      '/service.tcRpc/DataPolicyCreate',
+      '/service.FileOperation/DataPolicyCreate',
       request_serializer=service__pb2.DataPolicyCreateRequest.SerializeToString,
       response_deserializer=service__pb2.DataPolicyCreateResponse.FromString,
     )
     self.DataPolicyDelete = channel.unary_unary(
-      '/service.tcRpc/DataPolicyDelete',
+      '/service.FileOperation/DataPolicyDelete',
       request_serializer=service__pb2.DataPolicyDeleteRequest.SerializeToString,
       response_deserializer=service__pb2.DataPolicyDeleteResponse.FromString,
     )
     self.DataLogs = channel.unary_unary(
-      '/service.tcRpc/DataLogs',
+      '/service.FileOperation/DataLogs',
       request_serializer=service__pb2.DataLogListRequest.SerializeToString,
       response_deserializer=service__pb2.DataLogListResponse.FromString,
     )
 
 
-class tcRpcServicer(object):
+class FileOperationServicer(object):
   """Missing associated documentation comment in .proto file."""
 
   def TransferInit(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthTransferInit(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -323,12 +232,6 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthTransfer(self, request_iterator, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def TransferV2(self, request_iterator, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -336,12 +239,6 @@ class tcRpcServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def TransferFinish(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthTransferFinish(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -359,12 +256,6 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthStorageInit(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def StorageInitV2(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -377,12 +268,6 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthStorageFinish(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def StorageFinishV2(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -390,12 +275,6 @@ class tcRpcServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def UploadInit(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthUploadInit(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -443,18 +322,6 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthTransferToUpload(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthTransferToStorage(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def Download(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -462,18 +329,6 @@ class tcRpcServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def DownloadV2(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthDownload(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthDownloadV2(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -491,31 +346,13 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthDownloadV4(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def DownloadInfo(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthDownloadInfo(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def Delete(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthDelete(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -533,31 +370,13 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthDeleteV3(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def Message(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AuthMessage(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def DropAccount(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthDropAccount(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -576,18 +395,6 @@ class tcRpcServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def RequestsCreate(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthRequestsUpdate(self, request, context):
-    """Missing associated documentation comment in .proto file."""
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def AuthRequestsCreate(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -618,6 +425,12 @@ class tcRpcServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DataRoomLeave(self, request, context):
+    """Missing associated documentation comment in .proto file."""
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def DataPolicyCreate(self, request, context):
     """Missing associated documentation comment in .proto file."""
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -637,15 +450,10 @@ class tcRpcServicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_tcRpcServicer_to_server(servicer, server):
+def add_FileOperationServicer_to_server(servicer, server):
   rpc_method_handlers = {
     'TransferInit': grpc.unary_unary_rpc_method_handler(
       servicer.TransferInit,
-      request_deserializer=service__pb2.TransferInitRequest.FromString,
-      response_serializer=service__pb2.TransferInitResponse.SerializeToString,
-    ),
-    'AuthTransferInit': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthTransferInit,
       request_deserializer=service__pb2.TransferInitRequest.FromString,
       response_serializer=service__pb2.TransferInitResponse.SerializeToString,
     ),
@@ -659,11 +467,6 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.TransferRequest.FromString,
       response_serializer=service__pb2.TransferResponse.SerializeToString,
     ),
-    'AuthTransfer': grpc.stream_unary_rpc_method_handler(
-      servicer.AuthTransfer,
-      request_deserializer=service__pb2.TransferRequest.FromString,
-      response_serializer=service__pb2.TransferResponse.SerializeToString,
-    ),
     'TransferV2': grpc.stream_unary_rpc_method_handler(
       servicer.TransferV2,
       request_deserializer=service__pb2.TransferRequest.FromString,
@@ -671,11 +474,6 @@ def add_tcRpcServicer_to_server(servicer, server):
     ),
     'TransferFinish': grpc.unary_unary_rpc_method_handler(
       servicer.TransferFinish,
-      request_deserializer=service__pb2.TransferFinishRequest.FromString,
-      response_serializer=service__pb2.TransferFinishResponse.SerializeToString,
-    ),
-    'AuthTransferFinish': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthTransferFinish,
       request_deserializer=service__pb2.TransferFinishRequest.FromString,
       response_serializer=service__pb2.TransferFinishResponse.SerializeToString,
     ),
@@ -689,11 +487,6 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.StorageInitRequest.FromString,
       response_serializer=service__pb2.StorageInitResponse.SerializeToString,
     ),
-    'AuthStorageInit': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthStorageInit,
-      request_deserializer=service__pb2.StorageInitRequest.FromString,
-      response_serializer=service__pb2.StorageInitResponse.SerializeToString,
-    ),
     'StorageInitV2': grpc.unary_unary_rpc_method_handler(
       servicer.StorageInitV2,
       request_deserializer=service__pb2.StorageInitRequest.FromString,
@@ -704,11 +497,6 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.StorageFinishRequest.FromString,
       response_serializer=service__pb2.StorageFinishResponse.SerializeToString,
     ),
-    'AuthStorageFinish': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthStorageFinish,
-      request_deserializer=service__pb2.StorageFinishRequest.FromString,
-      response_serializer=service__pb2.StorageFinishResponse.SerializeToString,
-    ),
     'StorageFinishV2': grpc.unary_unary_rpc_method_handler(
       servicer.StorageFinishV2,
       request_deserializer=service__pb2.StorageFinishRequest.FromString,
@@ -716,11 +504,6 @@ def add_tcRpcServicer_to_server(servicer, server):
     ),
     'UploadInit': grpc.unary_unary_rpc_method_handler(
       servicer.UploadInit,
-      request_deserializer=service__pb2.UploadInitRequest.FromString,
-      response_serializer=service__pb2.UploadInitResponse.SerializeToString,
-    ),
-    'AuthUploadInit': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthUploadInit,
       request_deserializer=service__pb2.UploadInitRequest.FromString,
       response_serializer=service__pb2.UploadInitResponse.SerializeToString,
     ),
@@ -759,16 +542,6 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.TransferToStorageRequest.FromString,
       response_serializer=service__pb2.UploadInitResponse.SerializeToString,
     ),
-    'AuthTransferToUpload': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthTransferToUpload,
-      request_deserializer=service__pb2.TransferToUploadRequest.FromString,
-      response_serializer=service__pb2.UploadInitResponse.SerializeToString,
-    ),
-    'AuthTransferToStorage': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthTransferToStorage,
-      request_deserializer=service__pb2.TransferToStorageRequest.FromString,
-      response_serializer=service__pb2.UploadInitResponse.SerializeToString,
-    ),
     'Download': grpc.unary_stream_rpc_method_handler(
       servicer.Download,
       request_deserializer=service__pb2.DownloadRequest.FromString,
@@ -776,16 +549,6 @@ def add_tcRpcServicer_to_server(servicer, server):
     ),
     'DownloadV2': grpc.unary_stream_rpc_method_handler(
       servicer.DownloadV2,
-      request_deserializer=service__pb2.DownloadV2Request.FromString,
-      response_serializer=service__pb2.DownloadResponse.SerializeToString,
-    ),
-    'AuthDownload': grpc.unary_stream_rpc_method_handler(
-      servicer.AuthDownload,
-      request_deserializer=service__pb2.DownloadRequest.FromString,
-      response_serializer=service__pb2.DownloadResponse.SerializeToString,
-    ),
-    'AuthDownloadV2': grpc.unary_stream_rpc_method_handler(
-      servicer.AuthDownloadV2,
       request_deserializer=service__pb2.DownloadV2Request.FromString,
       response_serializer=service__pb2.DownloadResponse.SerializeToString,
     ),
@@ -799,28 +562,13 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.DownloadV4Request.FromString,
       response_serializer=service__pb2.DownloadV4Response.SerializeToString,
     ),
-    'AuthDownloadV4': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthDownloadV4,
-      request_deserializer=service__pb2.DownloadV4Request.FromString,
-      response_serializer=service__pb2.DownloadV4Response.SerializeToString,
-    ),
     'DownloadInfo': grpc.unary_unary_rpc_method_handler(
       servicer.DownloadInfo,
       request_deserializer=service__pb2.DownloadInfoRequest.FromString,
       response_serializer=service__pb2.DownloadInfoResponse.SerializeToString,
     ),
-    'AuthDownloadInfo': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthDownloadInfo,
-      request_deserializer=service__pb2.DownloadInfoRequest.FromString,
-      response_serializer=service__pb2.DownloadInfoResponse.SerializeToString,
-    ),
     'Delete': grpc.unary_unary_rpc_method_handler(
       servicer.Delete,
-      request_deserializer=service__pb2.DeleteRequest.FromString,
-      response_serializer=service__pb2.DeleteResponse.SerializeToString,
-    ),
-    'AuthDelete': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthDelete,
       request_deserializer=service__pb2.DeleteRequest.FromString,
       response_serializer=service__pb2.DeleteResponse.SerializeToString,
     ),
@@ -834,28 +582,13 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.DeleteV3Request.FromString,
       response_serializer=service__pb2.DeleteResponse.SerializeToString,
     ),
-    'AuthDeleteV3': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthDeleteV3,
-      request_deserializer=service__pb2.DeleteV3Request.FromString,
-      response_serializer=service__pb2.DeleteResponse.SerializeToString,
-    ),
     'Message': grpc.unary_unary_rpc_method_handler(
       servicer.Message,
       request_deserializer=service__pb2.MessageRequest.FromString,
       response_serializer=service__pb2.MessageResponse.SerializeToString,
     ),
-    'AuthMessage': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthMessage,
-      request_deserializer=service__pb2.MessageRequest.FromString,
-      response_serializer=service__pb2.MessageResponse.SerializeToString,
-    ),
     'DropAccount': grpc.unary_unary_rpc_method_handler(
       servicer.DropAccount,
-      request_deserializer=service__pb2.DropAccountRequest.FromString,
-      response_serializer=service__pb2.DropAccountResponse.SerializeToString,
-    ),
-    'AuthDropAccount': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthDropAccount,
       request_deserializer=service__pb2.DropAccountRequest.FromString,
       response_serializer=service__pb2.DropAccountResponse.SerializeToString,
     ),
@@ -871,16 +604,6 @@ def add_tcRpcServicer_to_server(servicer, server):
     ),
     'RequestsCreate': grpc.unary_unary_rpc_method_handler(
       servicer.RequestsCreate,
-      request_deserializer=service__pb2.RequestsCreateRequest.FromString,
-      response_serializer=service__pb2.RequestsResponse.SerializeToString,
-    ),
-    'AuthRequestsUpdate': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthRequestsUpdate,
-      request_deserializer=service__pb2.RequestsUpdateRequest.FromString,
-      response_serializer=service__pb2.RequestsResponse.SerializeToString,
-    ),
-    'AuthRequestsCreate': grpc.unary_unary_rpc_method_handler(
-      servicer.AuthRequestsCreate,
       request_deserializer=service__pb2.RequestsCreateRequest.FromString,
       response_serializer=service__pb2.RequestsResponse.SerializeToString,
     ),
@@ -904,6 +627,11 @@ def add_tcRpcServicer_to_server(servicer, server):
       request_deserializer=service__pb2.DataRoomPolicyDeleteRequest.FromString,
       response_serializer=service__pb2.DataRoomPolicyDeleteResponse.SerializeToString,
     ),
+    'DataRoomLeave': grpc.unary_unary_rpc_method_handler(
+      servicer.DataRoomLeave,
+      request_deserializer=service__pb2.DataRoomLeaveRequest.FromString,
+      response_serializer=service__pb2.DataRoomLeaveResponse.SerializeToString,
+    ),
     'DataPolicyCreate': grpc.unary_unary_rpc_method_handler(
       servicer.DataPolicyCreate,
       request_deserializer=service__pb2.DataPolicyCreateRequest.FromString,
@@ -921,12 +649,12 @@ def add_tcRpcServicer_to_server(servicer, server):
     ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-    'service.tcRpc', rpc_method_handlers)
+    'service.FileOperation', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
 # This class is part of an EXPERIMENTAL API.
-class tcRpc(object):
+class FileOperation(object):
   """Missing associated documentation comment in .proto file."""
 
   @staticmethod
@@ -940,24 +668,7 @@ class tcRpc(object):
                    wait_for_ready=None,
                    timeout=None,
                    metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferInit',
-                                         service__pb2.TransferInitRequest.SerializeToString,
-                                         service__pb2.TransferInitResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthTransferInit(request,
-                       target,
-                       options=(),
-                       channel_credentials=None,
-                       call_credentials=None,
-                       insecure=False,
-                       compression=None,
-                       wait_for_ready=None,
-                       timeout=None,
-                       metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthTransferInit',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferInit',
                                          service__pb2.TransferInitRequest.SerializeToString,
                                          service__pb2.TransferInitResponse.FromString,
                                          options, channel_credentials,
@@ -974,7 +685,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferInitV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferInitV2',
                                          service__pb2.TransferInitRequest.SerializeToString,
                                          service__pb2.TransferInitResponse.FromString,
                                          options, channel_credentials,
@@ -991,24 +702,7 @@ class tcRpc(object):
                wait_for_ready=None,
                timeout=None,
                metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/Transfer',
-                                          service__pb2.TransferRequest.SerializeToString,
-                                          service__pb2.TransferResponse.FromString,
-                                          options, channel_credentials,
-                                          insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthTransfer(request_iterator,
-                   target,
-                   options=(),
-                   channel_credentials=None,
-                   call_credentials=None,
-                   insecure=False,
-                   compression=None,
-                   wait_for_ready=None,
-                   timeout=None,
-                   metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/AuthTransfer',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/Transfer',
                                           service__pb2.TransferRequest.SerializeToString,
                                           service__pb2.TransferResponse.FromString,
                                           options, channel_credentials,
@@ -1025,7 +719,7 @@ class tcRpc(object):
                  wait_for_ready=None,
                  timeout=None,
                  metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/TransferV2',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/TransferV2',
                                           service__pb2.TransferRequest.SerializeToString,
                                           service__pb2.TransferResponse.FromString,
                                           options, channel_credentials,
@@ -1042,24 +736,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferFinish',
-                                         service__pb2.TransferFinishRequest.SerializeToString,
-                                         service__pb2.TransferFinishResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthTransferFinish(request,
-                         target,
-                         options=(),
-                         channel_credentials=None,
-                         call_credentials=None,
-                         insecure=False,
-                         compression=None,
-                         wait_for_ready=None,
-                         timeout=None,
-                         metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthTransferFinish',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferFinish',
                                          service__pb2.TransferFinishRequest.SerializeToString,
                                          service__pb2.TransferFinishResponse.FromString,
                                          options, channel_credentials,
@@ -1076,7 +753,7 @@ class tcRpc(object):
                        wait_for_ready=None,
                        timeout=None,
                        metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferFinishV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferFinishV2',
                                          service__pb2.TransferFinishRequest.SerializeToString,
                                          service__pb2.TransferFinishResponse.FromString,
                                          options, channel_credentials,
@@ -1093,24 +770,7 @@ class tcRpc(object):
                   wait_for_ready=None,
                   timeout=None,
                   metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/StorageInit',
-                                         service__pb2.StorageInitRequest.SerializeToString,
-                                         service__pb2.StorageInitResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthStorageInit(request,
-                      target,
-                      options=(),
-                      channel_credentials=None,
-                      call_credentials=None,
-                      insecure=False,
-                      compression=None,
-                      wait_for_ready=None,
-                      timeout=None,
-                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthStorageInit',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/StorageInit',
                                          service__pb2.StorageInitRequest.SerializeToString,
                                          service__pb2.StorageInitResponse.FromString,
                                          options, channel_credentials,
@@ -1127,7 +787,7 @@ class tcRpc(object):
                     wait_for_ready=None,
                     timeout=None,
                     metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/StorageInitV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/StorageInitV2',
                                          service__pb2.StorageInitRequest.SerializeToString,
                                          service__pb2.StorageInitResponse.FromString,
                                          options, channel_credentials,
@@ -1144,24 +804,7 @@ class tcRpc(object):
                     wait_for_ready=None,
                     timeout=None,
                     metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/StorageFinish',
-                                         service__pb2.StorageFinishRequest.SerializeToString,
-                                         service__pb2.StorageFinishResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthStorageFinish(request,
-                        target,
-                        options=(),
-                        channel_credentials=None,
-                        call_credentials=None,
-                        insecure=False,
-                        compression=None,
-                        wait_for_ready=None,
-                        timeout=None,
-                        metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthStorageFinish',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/StorageFinish',
                                          service__pb2.StorageFinishRequest.SerializeToString,
                                          service__pb2.StorageFinishResponse.FromString,
                                          options, channel_credentials,
@@ -1178,7 +821,7 @@ class tcRpc(object):
                       wait_for_ready=None,
                       timeout=None,
                       metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/StorageFinishV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/StorageFinishV2',
                                          service__pb2.StorageFinishRequest.SerializeToString,
                                          service__pb2.StorageFinishResponse.FromString,
                                          options, channel_credentials,
@@ -1195,24 +838,7 @@ class tcRpc(object):
                  wait_for_ready=None,
                  timeout=None,
                  metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/UploadInit',
-                                         service__pb2.UploadInitRequest.SerializeToString,
-                                         service__pb2.UploadInitResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthUploadInit(request,
-                     target,
-                     options=(),
-                     channel_credentials=None,
-                     call_credentials=None,
-                     insecure=False,
-                     compression=None,
-                     wait_for_ready=None,
-                     timeout=None,
-                     metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthUploadInit',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/UploadInit',
                                          service__pb2.UploadInitRequest.SerializeToString,
                                          service__pb2.UploadInitResponse.FromString,
                                          options, channel_credentials,
@@ -1229,7 +855,7 @@ class tcRpc(object):
                    wait_for_ready=None,
                    timeout=None,
                    metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/UploadInitV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/UploadInitV2',
                                          service__pb2.UploadInitRequest.SerializeToString,
                                          service__pb2.UploadInitResponse.FromString,
                                          options, channel_credentials,
@@ -1246,7 +872,7 @@ class tcRpc(object):
                   wait_for_ready=None,
                   timeout=None,
                   metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/UploadBasic',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/UploadBasic',
                                           service__pb2.UploadRequest.SerializeToString,
                                           service__pb2.UploadResponse.FromString,
                                           options, channel_credentials,
@@ -1263,7 +889,7 @@ class tcRpc(object):
                     wait_for_ready=None,
                     timeout=None,
                     metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/UploadBasicV2',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/UploadBasicV2',
                                           service__pb2.UploadRequest.SerializeToString,
                                           service__pb2.UploadResponse.FromString,
                                           options, channel_credentials,
@@ -1280,7 +906,7 @@ class tcRpc(object):
                     wait_for_ready=None,
                     timeout=None,
                     metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/UploadBasicV3',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/UploadBasicV3',
                                           service__pb2.UploadV3Request.SerializeToString,
                                           service__pb2.UploadResponse.FromString,
                                           options, channel_credentials,
@@ -1297,7 +923,7 @@ class tcRpc(object):
                     wait_for_ready=None,
                     timeout=None,
                     metadata=None):
-    return grpc.experimental.stream_unary(request_iterator, target, '/service.tcRpc/UploadBasicV4',
+    return grpc.experimental.stream_unary(request_iterator, target, '/service.FileOperation/UploadBasicV4',
                                           service__pb2.UploadV3Request.SerializeToString,
                                           service__pb2.UploadResponse.FromString,
                                           options, channel_credentials,
@@ -1314,7 +940,7 @@ class tcRpc(object):
                        wait_for_ready=None,
                        timeout=None,
                        metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferToUpload',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferToUpload',
                                          service__pb2.TransferToUploadRequest.SerializeToString,
                                          service__pb2.UploadInitResponse.FromString,
                                          options, channel_credentials,
@@ -1331,41 +957,7 @@ class tcRpc(object):
                         wait_for_ready=None,
                         timeout=None,
                         metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/TransferToStorage',
-                                         service__pb2.TransferToStorageRequest.SerializeToString,
-                                         service__pb2.UploadInitResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthTransferToUpload(request,
-                           target,
-                           options=(),
-                           channel_credentials=None,
-                           call_credentials=None,
-                           insecure=False,
-                           compression=None,
-                           wait_for_ready=None,
-                           timeout=None,
-                           metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthTransferToUpload',
-                                         service__pb2.TransferToUploadRequest.SerializeToString,
-                                         service__pb2.UploadInitResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthTransferToStorage(request,
-                            target,
-                            options=(),
-                            channel_credentials=None,
-                            call_credentials=None,
-                            insecure=False,
-                            compression=None,
-                            wait_for_ready=None,
-                            timeout=None,
-                            metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthTransferToStorage',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/TransferToStorage',
                                          service__pb2.TransferToStorageRequest.SerializeToString,
                                          service__pb2.UploadInitResponse.FromString,
                                          options, channel_credentials,
@@ -1382,7 +974,7 @@ class tcRpc(object):
                wait_for_ready=None,
                timeout=None,
                metadata=None):
-    return grpc.experimental.unary_stream(request, target, '/service.tcRpc/Download',
+    return grpc.experimental.unary_stream(request, target, '/service.FileOperation/Download',
                                           service__pb2.DownloadRequest.SerializeToString,
                                           service__pb2.DownloadResponse.FromString,
                                           options, channel_credentials,
@@ -1399,41 +991,7 @@ class tcRpc(object):
                  wait_for_ready=None,
                  timeout=None,
                  metadata=None):
-    return grpc.experimental.unary_stream(request, target, '/service.tcRpc/DownloadV2',
-                                          service__pb2.DownloadV2Request.SerializeToString,
-                                          service__pb2.DownloadResponse.FromString,
-                                          options, channel_credentials,
-                                          insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDownload(request,
-                   target,
-                   options=(),
-                   channel_credentials=None,
-                   call_credentials=None,
-                   insecure=False,
-                   compression=None,
-                   wait_for_ready=None,
-                   timeout=None,
-                   metadata=None):
-    return grpc.experimental.unary_stream(request, target, '/service.tcRpc/AuthDownload',
-                                          service__pb2.DownloadRequest.SerializeToString,
-                                          service__pb2.DownloadResponse.FromString,
-                                          options, channel_credentials,
-                                          insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDownloadV2(request,
-                     target,
-                     options=(),
-                     channel_credentials=None,
-                     call_credentials=None,
-                     insecure=False,
-                     compression=None,
-                     wait_for_ready=None,
-                     timeout=None,
-                     metadata=None):
-    return grpc.experimental.unary_stream(request, target, '/service.tcRpc/AuthDownloadV2',
+    return grpc.experimental.unary_stream(request, target, '/service.FileOperation/DownloadV2',
                                           service__pb2.DownloadV2Request.SerializeToString,
                                           service__pb2.DownloadResponse.FromString,
                                           options, channel_credentials,
@@ -1450,7 +1008,7 @@ class tcRpc(object):
                  wait_for_ready=None,
                  timeout=None,
                  metadata=None):
-    return grpc.experimental.unary_stream(request, target, '/service.tcRpc/DownloadV3',
+    return grpc.experimental.unary_stream(request, target, '/service.FileOperation/DownloadV3',
                                           service__pb2.DownloadRequest.SerializeToString,
                                           service__pb2.DownloadResponse.FromString,
                                           options, channel_credentials,
@@ -1467,24 +1025,7 @@ class tcRpc(object):
                  wait_for_ready=None,
                  timeout=None,
                  metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DownloadV4',
-                                         service__pb2.DownloadV4Request.SerializeToString,
-                                         service__pb2.DownloadV4Response.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDownloadV4(request,
-                     target,
-                     options=(),
-                     channel_credentials=None,
-                     call_credentials=None,
-                     insecure=False,
-                     compression=None,
-                     wait_for_ready=None,
-                     timeout=None,
-                     metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthDownloadV4',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DownloadV4',
                                          service__pb2.DownloadV4Request.SerializeToString,
                                          service__pb2.DownloadV4Response.FromString,
                                          options, channel_credentials,
@@ -1501,24 +1042,7 @@ class tcRpc(object):
                    wait_for_ready=None,
                    timeout=None,
                    metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DownloadInfo',
-                                         service__pb2.DownloadInfoRequest.SerializeToString,
-                                         service__pb2.DownloadInfoResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDownloadInfo(request,
-                       target,
-                       options=(),
-                       channel_credentials=None,
-                       call_credentials=None,
-                       insecure=False,
-                       compression=None,
-                       wait_for_ready=None,
-                       timeout=None,
-                       metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthDownloadInfo',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DownloadInfo',
                                          service__pb2.DownloadInfoRequest.SerializeToString,
                                          service__pb2.DownloadInfoResponse.FromString,
                                          options, channel_credentials,
@@ -1535,24 +1059,7 @@ class tcRpc(object):
              wait_for_ready=None,
              timeout=None,
              metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/Delete',
-                                         service__pb2.DeleteRequest.SerializeToString,
-                                         service__pb2.DeleteResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDelete(request,
-                 target,
-                 options=(),
-                 channel_credentials=None,
-                 call_credentials=None,
-                 insecure=False,
-                 compression=None,
-                 wait_for_ready=None,
-                 timeout=None,
-                 metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthDelete',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/Delete',
                                          service__pb2.DeleteRequest.SerializeToString,
                                          service__pb2.DeleteResponse.FromString,
                                          options, channel_credentials,
@@ -1569,7 +1076,7 @@ class tcRpc(object):
                wait_for_ready=None,
                timeout=None,
                metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DeleteV2',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DeleteV2',
                                          service__pb2.DeleteRequest.SerializeToString,
                                          service__pb2.DeleteResponse.FromString,
                                          options, channel_credentials,
@@ -1586,24 +1093,7 @@ class tcRpc(object):
                wait_for_ready=None,
                timeout=None,
                metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DeleteV3',
-                                         service__pb2.DeleteV3Request.SerializeToString,
-                                         service__pb2.DeleteResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDeleteV3(request,
-                   target,
-                   options=(),
-                   channel_credentials=None,
-                   call_credentials=None,
-                   insecure=False,
-                   compression=None,
-                   wait_for_ready=None,
-                   timeout=None,
-                   metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthDeleteV3',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DeleteV3',
                                          service__pb2.DeleteV3Request.SerializeToString,
                                          service__pb2.DeleteResponse.FromString,
                                          options, channel_credentials,
@@ -1620,24 +1110,7 @@ class tcRpc(object):
               wait_for_ready=None,
               timeout=None,
               metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/Message',
-                                         service__pb2.MessageRequest.SerializeToString,
-                                         service__pb2.MessageResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthMessage(request,
-                  target,
-                  options=(),
-                  channel_credentials=None,
-                  call_credentials=None,
-                  insecure=False,
-                  compression=None,
-                  wait_for_ready=None,
-                  timeout=None,
-                  metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthMessage',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/Message',
                                          service__pb2.MessageRequest.SerializeToString,
                                          service__pb2.MessageResponse.FromString,
                                          options, channel_credentials,
@@ -1654,24 +1127,7 @@ class tcRpc(object):
                   wait_for_ready=None,
                   timeout=None,
                   metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DropAccount',
-                                         service__pb2.DropAccountRequest.SerializeToString,
-                                         service__pb2.DropAccountResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthDropAccount(request,
-                      target,
-                      options=(),
-                      channel_credentials=None,
-                      call_credentials=None,
-                      insecure=False,
-                      compression=None,
-                      wait_for_ready=None,
-                      timeout=None,
-                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthDropAccount',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DropAccount',
                                          service__pb2.DropAccountRequest.SerializeToString,
                                          service__pb2.DropAccountResponse.FromString,
                                          options, channel_credentials,
@@ -1688,7 +1144,7 @@ class tcRpc(object):
                 wait_for_ready=None,
                 timeout=None,
                 metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/Heartbeat',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/Heartbeat',
                                          service__pb2.Empty.SerializeToString,
                                          service__pb2.Empty.FromString,
                                          options, channel_credentials,
@@ -1705,7 +1161,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/RequestsUpdate',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/RequestsUpdate',
                                          service__pb2.RequestsUpdateRequest.SerializeToString,
                                          service__pb2.RequestsResponse.FromString,
                                          options, channel_credentials,
@@ -1722,41 +1178,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/RequestsCreate',
-                                         service__pb2.RequestsCreateRequest.SerializeToString,
-                                         service__pb2.RequestsResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthRequestsUpdate(request,
-                         target,
-                         options=(),
-                         channel_credentials=None,
-                         call_credentials=None,
-                         insecure=False,
-                         compression=None,
-                         wait_for_ready=None,
-                         timeout=None,
-                         metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthRequestsUpdate',
-                                         service__pb2.RequestsUpdateRequest.SerializeToString,
-                                         service__pb2.RequestsResponse.FromString,
-                                         options, channel_credentials,
-                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-  @staticmethod
-  def AuthRequestsCreate(request,
-                         target,
-                         options=(),
-                         channel_credentials=None,
-                         call_credentials=None,
-                         insecure=False,
-                         compression=None,
-                         wait_for_ready=None,
-                         timeout=None,
-                         metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/AuthRequestsCreate',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/RequestsCreate',
                                          service__pb2.RequestsCreateRequest.SerializeToString,
                                          service__pb2.RequestsResponse.FromString,
                                          options, channel_credentials,
@@ -1773,7 +1195,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataRoomCreate',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataRoomCreate',
                                          service__pb2.DataRoomCreateRequest.SerializeToString,
                                          service__pb2.DataRoomCreateResponse.FromString,
                                          options, channel_credentials,
@@ -1790,7 +1212,7 @@ class tcRpc(object):
                      wait_for_ready=None,
                      timeout=None,
                      metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataRoomDelete',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataRoomDelete',
                                          service__pb2.DataRoomDeleteRequest.SerializeToString,
                                          service__pb2.DataRoomDeleteResponse.FromString,
                                          options, channel_credentials,
@@ -1807,7 +1229,7 @@ class tcRpc(object):
                            wait_for_ready=None,
                            timeout=None,
                            metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataRoomPolicyCreate',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataRoomPolicyCreate',
                                          service__pb2.DataRoomPolicyCreateRequest.SerializeToString,
                                          service__pb2.DataRoomPolicyCreateResponse.FromString,
                                          options, channel_credentials,
@@ -1824,9 +1246,26 @@ class tcRpc(object):
                            wait_for_ready=None,
                            timeout=None,
                            metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataRoomPolicyDelete',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataRoomPolicyDelete',
                                          service__pb2.DataRoomPolicyDeleteRequest.SerializeToString,
                                          service__pb2.DataRoomPolicyDeleteResponse.FromString,
+                                         options, channel_credentials,
+                                         insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+  @staticmethod
+  def DataRoomLeave(request,
+                    target,
+                    options=(),
+                    channel_credentials=None,
+                    call_credentials=None,
+                    insecure=False,
+                    compression=None,
+                    wait_for_ready=None,
+                    timeout=None,
+                    metadata=None):
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataRoomLeave',
+                                         service__pb2.DataRoomLeaveRequest.SerializeToString,
+                                         service__pb2.DataRoomLeaveResponse.FromString,
                                          options, channel_credentials,
                                          insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -1841,7 +1280,7 @@ class tcRpc(object):
                        wait_for_ready=None,
                        timeout=None,
                        metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataPolicyCreate',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataPolicyCreate',
                                          service__pb2.DataPolicyCreateRequest.SerializeToString,
                                          service__pb2.DataPolicyCreateResponse.FromString,
                                          options, channel_credentials,
@@ -1858,7 +1297,7 @@ class tcRpc(object):
                        wait_for_ready=None,
                        timeout=None,
                        metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataPolicyDelete',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataPolicyDelete',
                                          service__pb2.DataPolicyDeleteRequest.SerializeToString,
                                          service__pb2.DataPolicyDeleteResponse.FromString,
                                          options, channel_credentials,
@@ -1875,7 +1314,7 @@ class tcRpc(object):
                wait_for_ready=None,
                timeout=None,
                metadata=None):
-    return grpc.experimental.unary_unary(request, target, '/service.tcRpc/DataLogs',
+    return grpc.experimental.unary_unary(request, target, '/service.FileOperation/DataLogs',
                                          service__pb2.DataLogListRequest.SerializeToString,
                                          service__pb2.DataLogListResponse.FromString,
                                          options, channel_credentials,
