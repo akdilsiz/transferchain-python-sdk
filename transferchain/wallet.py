@@ -40,8 +40,8 @@ def create_wallet(conf, wallet_uuid):
     ```
     """
     headers = {
-        'api_token': conf.api_token,
-        'api_secret': conf.api_secret,
+        'api-token': conf.api_token,
+        'api-secret': conf.api_secret,
         'Content-Type': 'application/json'
     }
 

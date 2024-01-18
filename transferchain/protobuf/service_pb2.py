@@ -21,7 +21,7 @@ _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'service_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'Z3fons-imperi.transferchain.io/backend/tcgrpc/service'
+  DESCRIPTOR._serialized_options = b'Z3transferchain.io/service'
   _TRANSFERINITRESPONSE_BASEUUIDSENTRY._options = None
   _TRANSFERINITRESPONSE_BASEUUIDSENTRY._serialized_options = b'8\001'
   _STORAGEINITRESPONSE_BASEUUIDSENTRY._options = None
