@@ -46,7 +46,7 @@ def get_client():
         return GRPC_CLIENT
     creds = grpc.ssl_channel_credentials(root_certificates=RPC_CERT)
     channel = grpc.secure_channel(RPC_ADDRESS, creds)
-    GRPC_CLIENT = service_pb2_grpc.tcRpcStub(channel)
+    GRPC_CLIENT = service_pb2_grpc.FileOperationStub(channel)
     return GRPC_CLIENT</code></pre>
 </details>
 </section>
@@ -79,7 +79,7 @@ this connection in a global variable.</p></div>
         return GRPC_CLIENT
     creds = grpc.ssl_channel_credentials(root_certificates=RPC_CERT)
     channel = grpc.secure_channel(RPC_ADDRESS, creds)
-    GRPC_CLIENT = service_pb2_grpc.tcRpcStub(channel)
+    GRPC_CLIENT = service_pb2_grpc.FileOperationStub(channel)
     return GRPC_CLIENT</code></pre>
 </details>
 </dd>
