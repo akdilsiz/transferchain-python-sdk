@@ -105,7 +105,7 @@ def generate_sub_user_addresses(user_id, master_user_address,
             error_message='The master address is not published on the blockchain.') # noqa
 
     addresses_payload = []
-    for i in range(0, 250):
+    for i in range(0, 100):
         user_pass = "{}-{}".format(
             get_user_password(user_id, sub_user_id), i)
         user_sub_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
@@ -185,7 +185,7 @@ def generate_user_addresses(user_id, mnemonics):
 
     addresses_payload = []
 
-    for i in range(0, 250):
+    for i in range(0, 100):
         user_pass = "{}-{}".format(get_user_password(user_id), i)
         user_sub_keys = keys.create_keys_with_mnemonic(mnemonics, user_pass)
         address = Address(
